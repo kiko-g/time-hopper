@@ -195,7 +195,6 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("ayo");
             Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
         }
     }
