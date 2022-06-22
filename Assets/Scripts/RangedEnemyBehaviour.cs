@@ -18,10 +18,14 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     Vector3 offset;
 
-    public float health;
+    [Header("Enemy Stats")]
+    public float baseHealth = 50f;
+    public float baseDamage = 10f;
+    public float healthIncreasePerRound = 5f;
+    public float damageIncreasePerRound = 2f;
+    private float health;
+    private float damage;
     public int dropPercentage;
-
-    public float damage = 10f;
 
     bool dropped = false, alreadyAttacked = false, registeredHit = false;
     
@@ -55,6 +59,8 @@ public class RangedEnemyBehaviour : MonoBehaviour
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        health = baseHealth;
+        damage = baseDamage;
         //layerMask = new LayerMask();
         playerOffset = new Vector3(0f, 1f, 0f);
         body = GetComponent<Rigidbody>();
@@ -238,6 +244,11 @@ public class RangedEnemyBehaviour : MonoBehaviour
             Debug.Log("Raycast failed!");
             return false;
         }
+    }
+
+    public void setStats(int roundNum){
+        health = baseHealth + healthIncreasePerRound * (roundNum - 1);
+        damage = baseDamage + damageIncreasePerRound * (roundNum - 1);
     }
 
 }

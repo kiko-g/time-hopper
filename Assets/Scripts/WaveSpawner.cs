@@ -137,7 +137,7 @@ public class WaveSpawner : MonoBehaviour
                     startTime = Time.time;
                     numWaves++;
 
-                    Debug.Log("Still need to defeat " + enemiesToDefeat + " enemies");
+                    //Debug.Log("Still need to defeat " + enemiesToDefeat + " enemies");
                     
                     UpdateNumEnemiesAlive();
 
@@ -201,12 +201,15 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("Start round!");
         roundNr++;
         ShowRoundStartUI();
+        Debug.Log("Round Number: " + roundNr);
         if (roundNr % 5 != 0)
         {
+            Debug.Log("Spawning horde");
             waveSize = waveSize + 1;
             SpawnHorde(waveSize);
             numWaves = 1;
             enemiesToDefeat = waveSize * (roundNr + 2);
+            Debug.Log("Enemies to defeat: " + enemiesToDefeat);
         }
         else {
             // TODO: spawn boss
@@ -252,7 +255,7 @@ public class WaveSpawner : MonoBehaviour
                     break;
                 case "Factory":
                     GameObject spawned = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), Quaternion.identity);
-                    spawned.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr);
+                    spawned.transform.GetChild(0).GetComponent<RangedEnemyBehaviour>().setStats(roundNr);
                     spawned.transform.SetParent(enemiesHolder.transform);
                     UpdateNumEnemiesAlive();
                     num_spawned++;
