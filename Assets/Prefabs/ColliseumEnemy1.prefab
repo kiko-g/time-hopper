@@ -1581,7 +1581,6 @@ GameObject:
   - component: {fileID: 8630934498152707727}
   - component: {fileID: 4128798894971984509}
   - component: {fileID: 7529931041272690365}
-  - component: {fileID: 6251305087576100320}
   - component: {fileID: 3174025724354368232}
   m_Layer: 0
   m_Name: Gladiador
@@ -1682,28 +1681,6 @@ CapsuleCollider:
   m_Height: 1.7071533
   m_Direction: 1
   m_Center: {x: 0.07171631, y: 0.6583252, z: 0}
---- !u!195 &6251305087576100320
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3260859531551124980}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 2
-  m_Speed: 2
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!135 &3174025724354368232
 SphereCollider:
   m_ObjectHideFlags: 0

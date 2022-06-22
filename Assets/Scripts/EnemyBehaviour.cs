@@ -70,8 +70,6 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (transform == null)
             return;
-        //Debug.Log("Y: " + transform.position.y);
-        //Debug.Log("EnableNavMesh: " + enableNavMesh);
         if (transform.position.y <= 3 && !enableNavMesh && IsOnNavMesh()){
             gameObject.AddComponent<NavMeshAgent>();
             navMeshAgent = GetComponent<NavMeshAgent>();
@@ -92,7 +90,7 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
         
-        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Atack"))
+        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Attack"))
         {
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.1f )
             {
