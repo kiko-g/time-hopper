@@ -13,6 +13,7 @@ TagManager:
   - RangedEnemy
   - Lava
   - RangedEnemyHead
+  - HubComputer
   layers:
   - Default
   - TransparentFX
