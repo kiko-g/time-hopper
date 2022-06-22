@@ -295,7 +295,7 @@ MonoBehaviour:
   health: 10
   dropPercentage: 20
   damage: 10
-  currencyPrefab: {fileID: 3803522151357388653, guid: 8cd7200593d8c3440aec7d1d9b5ffb14, type: 3}
+  currencyPrefab: {fileID: 3318164848249605866, guid: 969f01a4a8942434d8d556ff7d72b7cf, type: 3}
   bulletPrefab: {fileID: 6334020501270933036, guid: dcdb461bf31e713418eadd4c65ea4d60, type: 3}
   damageText: {fileID: 7574199013937430373}
   AvoidanceType: 0
