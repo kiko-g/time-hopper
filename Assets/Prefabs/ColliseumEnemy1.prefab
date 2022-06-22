@@ -1582,6 +1582,7 @@ GameObject:
   - component: {fileID: 4128798894971984509}
   - component: {fileID: 7529931041272690365}
   - component: {fileID: 3174025724354368232}
+  - component: {fileID: 7321739725360991606}
   m_Layer: 0
   m_Name: Gladiador
   m_TagString: Enemy
@@ -1694,6 +1695,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.13925171
   m_Center: {x: 0.04309082, y: 1.6322479, z: 0.2728119}
+--- !u!65 &7321739725360991606
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260859531551124980}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.0713501, z: 1.0602188}
+  m_Center: {x: 0, y: 1.5050049, z: 0.20854568}
 --- !u!1 &3293715641807283332
 GameObject:
   m_ObjectHideFlags: 0

@@ -124,6 +124,8 @@ namespace StarterAssets
 
         private const float _threshold = 0.01f;
 
+        private Vector2 lastMoveDir;
+
         private bool _hasAnimator;
 
         public bool interact = false;
@@ -225,6 +227,7 @@ namespace StarterAssets
             screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             healingOverTime = GetComponent<HealingOverTime>();
             walkSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/General Sounds/Character Related/Footsteps/Grass");
+            lastMoveDir = new Vector2(0f, 0f);
             //string[] names = {"Default", "Enemy"};
             //aimColliderMask = LayerMask.GetMask(names);
 
@@ -563,6 +566,7 @@ namespace StarterAssets
                     //walkSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                 }
             } else {
+                lastMoveDir = _input.move;
                 if (!walking){
                     //Debug.Log("Sound starting");
                     walking = true;
@@ -1065,6 +1069,9 @@ namespace StarterAssets
                 CurrencyBehaviour currency = hit.transform.GetComponent<CurrencyBehaviour>();
                 increaseCurrency();
                 currency.DeSpawn();
+            }
+            if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy"){
+                GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);
             }
         }
 
