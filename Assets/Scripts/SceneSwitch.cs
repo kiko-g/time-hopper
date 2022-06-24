@@ -66,18 +66,16 @@ public class SceneSwitch : MonoBehaviour
     }
 
     void Update(){
-        if (SceneManager.GetActiveScene().name != ArenaName)
-            return;
-
         if (GameObject.FindWithTag("LoadingCanvas") == null || GameObject.FindWithTag("LoadingBar") == null)
             return;
 
         _loaderCanvas = GameObject.FindWithTag("LoadingCanvas");
         _progressBar = GameObject.FindWithTag("LoadingBar").GetComponent<Slider>();
 
-        switch(ArenaName) {
+        switch(SceneManager.GetActiveScene().name) {
             case "Factory":
             case "Colliseum":
+            case "Forest":
                 if (_loaderCanvas.active)
                 {
                     _loaderCanvas.GetComponent<Animator>().Play("LoadingFadeOut");
@@ -99,6 +97,7 @@ public class SceneSwitch : MonoBehaviour
     }
     
     public void setArenaName(string name){
+        Debug.Log("TROQUEI DE CENA PARA A " + name);
         ArenaName = name;
     }
 }
