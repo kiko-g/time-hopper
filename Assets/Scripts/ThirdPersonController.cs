@@ -927,6 +927,7 @@ namespace StarterAssets
         {
             if (arenaTrigger!= null){
                 if((nextRound-1) % 5 == 0 && !startRound){
+                    //set the extraction portal active
                     Debug.Log("You're okay to extract");
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                     arenaTrigger.performAction();
