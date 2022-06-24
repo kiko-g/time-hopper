@@ -261,7 +261,7 @@ public class WaveSpawner : MonoBehaviour
                     num_spawned++;
                     break;
                 case "Forest":
-                    GameObject spawnedF = Instantiate(enemyPrefab, new Vector3(Random.Range(-10,10),2,Random.Range(-10,10)), new Quaternion(0, 0, 0, 0));
+                    GameObject spawnedF = Instantiate(enemyPrefab, RandomNavmeshLocation(30f)/*new Vector3(Random.Range(-10,10),2,Random.Range(-10,10))*/, Quaternion.identity);
                     spawnedF.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr);
                     spawnedF.transform.SetParent(enemiesHolder.transform);
                     UpdateNumEnemiesAlive();

@@ -161,6 +161,9 @@ public class GunBehaviour : MonoBehaviour
                     if (hit.collider.GetType() == typeof(SphereCollider)){
                         actualDamage *= 2;
                     }
+                    if(hit.collider.GetType() == typeof(BoxCollider)){
+                        actualDamage = 0;
+                    }
                     EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
                     if (enemy != null){
                         enemy.TakeDamage(actualDamage);

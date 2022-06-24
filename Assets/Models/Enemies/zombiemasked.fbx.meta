@@ -78,7 +78,22 @@ ModelImporter:
   - first:
       74: -5850113311716163276
     second: Armature|Zombie Slam
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 7743b5fbabd95114b99601ec74529613, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: 78f53d87a56e38a4db520afe76ede9bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blue.001
+    second: {fileID: 2100000, guid: 93dd5efffe75adb4daf1437fbd605509, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

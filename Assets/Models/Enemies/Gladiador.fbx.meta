@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 20369b92ac24ab04288bca083affb02c
+guid: e73943dd142a3f948a436202236dc890
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -7,15 +7,53 @@ ModelImporter:
       74: 4723146814002874508
     second: Armature|Attack
   - first:
+      74: 4805745386581417271
+    second: Armature|Block
+  - first:
+      74: -982115091633673366
+    second: Armature|Death
+  - first:
       74: -8945691123924629249
     second: Armature|Idle
   - first:
-      74: -7551964380084998518
-    second: Armature|Run
+      74: 8349542763059015795
+    second: Armature|Walk
+  externalObjects:
   - first:
-      74: -4799524434163024911
-    second: Armature|walk
-  externalObjects: {}
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gold
+    second: {fileID: 2100000, guid: 605c96859dd4ba840b729a627d3e2c25, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal blade
+    second: {fileID: 2100000, guid: 1de72b776fa890a41b8dbacd64c9539e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: brown
+    second: {fileID: 2100000, guid: 328013f33e599f34f9cff8b2bcba7c79, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyes
+    second: {fileID: 2100000, guid: 37c31151c4a31af4f8d3ec5a1e250c8d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal
+    second: {fileID: 2100000, guid: b61ce05350153864caf03413ef135349, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal.001
+    second: {fileID: 2100000, guid: 1764742d4ad776d4a901302dc811d6f1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin
+    second: {fileID: 2100000, guid: 0d8ec50599fa949439d5aa5e26f2c1a4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
