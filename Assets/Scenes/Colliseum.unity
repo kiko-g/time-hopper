@@ -3535,33 +3535,6 @@ RectTransform:
   m_AnchoredPosition: {x: 64, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &911653164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148629403816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6750f79519ee564bb7ba33683074f80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1996843642}
-  sceneSwitch: {fileID: 1670409616}
---- !u!65 &911653165
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148629403816}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.5293865, y: 1.6095817, z: 3.504233}
-  m_Center: {x: -0.51725817, y: 2.9741468, z: -0.2799306}
 --- !u!1 &944417693
 GameObject:
   m_ObjectHideFlags: 0
@@ -8381,8 +8354,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450653150814738}
-  - component: {fileID: 911653165}
-  - component: {fileID: 911653164}
   m_Layer: 0
   m_Name: Coliseu
   m_TagString: Untagged

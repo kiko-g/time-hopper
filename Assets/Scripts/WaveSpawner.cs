@@ -36,6 +36,7 @@ public class WaveSpawner : MonoBehaviour
     private float elapsedTime = 0f, roundTime = 0f, spawnEnemyTime = 0f;
     Vector2 xLimits = new Vector2(-30, 30);
     Vector2 zLimits = new Vector2(-30, 30);
+    private GameObject extractionPortal;
 
     private bool startRoundFlag = false;
 
@@ -46,6 +47,7 @@ public class WaveSpawner : MonoBehaviour
     {
         startTime = Time.time;
         numEnemiesAliveText = numEnemiesAliveUI.GetComponent<Text>();
+        extractionPortal = GameObject.Find("ExtractionPortal").gameObject;
         
         spawnCoords.Add(new Vector3(-5.7f, 6.4f, 39.8f));
         spawnCoords.Add(new Vector3(16.7f, 6.4f, 36.3f));
@@ -87,6 +89,19 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+        if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
+            // set extractionportal active
+            if(extractionPortal != null && roundNr != 0){
+                extractionPortal.SetActive(true);
+                startRoundTextUI.text = "Extraction Portal Open";
+            }
+        }
+        else{
+            if(extractionPortal != null && extractionPortal.activeSelf){
+                extractionPortal.SetActive(false);
+            }
+        }
+
         if (extraEnemyCount > 0)
         {
             // add time delta time to enemyspawntime
@@ -258,6 +273,10 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
+    int getRoundNr()
+    {
+        return roundNr;
+    }
 
     void ShowWaveStartUI(int wave_num)
     {
