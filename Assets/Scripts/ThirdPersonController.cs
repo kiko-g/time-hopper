@@ -266,7 +266,10 @@ namespace StarterAssets
             }
             else{
                 waveSpawner = null;
-                rumbleSpawner = GameObject.Find("RumbleSpawner").GetComponent<RumbleSpawner>();
+                GameObject rumblespawn = GameObject.Find("RumbleSpawner");
+                if(rumblespawn != null){
+                    rumbleSpawner = rumblespawn.GetComponent<RumbleSpawner>();
+                }
             }
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
