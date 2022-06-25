@@ -126,6 +126,8 @@ namespace StarterAssets
 
         private Vector2 lastMoveDir;
 
+        private bool is_dead = false;
+
         private bool _hasAnimator;
 
         public bool interact = false;
@@ -195,6 +197,8 @@ namespace StarterAssets
 
         private GameObject[] rumblePlanes;
 
+        GameObject deathScreen;
+
         MeshRenderer ARMesh = null;
         MeshRenderer SGMesh = null;
         MeshRenderer RLMesh = null;
@@ -252,7 +256,11 @@ namespace StarterAssets
 #endif
             AssignAnimationIDs();
             _animator.SetBool("Pistol", true);
-
+            // find the canvas
+            GameObject canvas = GameObject.Find("Canvas");
+            // get the DeathScreen object from the canvas
+            deathScreen = canvas.transform.Find("DeathScreen").gameObject;
+            Debug.Log(deathScreen);
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -1054,10 +1062,24 @@ namespace StarterAssets
 
         private void Die()
         {
-            Debug.Log("Player died");
-            currencyCounter = 0;
-            updateCurrencyUI();
-            onDeathTrigger.performAction();
+            if(!is_dead){
+                is_dead = true;
+                // set the DeathScreen object to active
+                deathScreen.SetActive(true);
+                // stop receiving inputs
+                _input.enabled = false;
+                // set DeathScreen to active from canvas
+                
+                Debug.Log("Player died");
+                currencyCounter = 0;
+                updateCurrencyUI();
+                float deathTime = Time.time;
+                for(int i = 0; i < 2000; i++){
+                    // do nothing
+                }
+                onDeathTrigger.performAction();
+            }
+            
         }
 
         private void updateCurrencyUI()
