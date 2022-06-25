@@ -292,9 +292,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   range: 10
-  health: 10
-  dropPercentage: 20
-  damage: 10
+  baseHealth: 50
+  baseDamage: 10
+  healthIncreasePerRound: 5
+  damageIncreasePerRound: 2
+  dropPercentage: 25
   currencyPrefab: {fileID: 3318164848249605866, guid: 969f01a4a8942434d8d556ff7d72b7cf, type: 3}
   bulletPrefab: {fileID: 6334020501270933036, guid: dcdb461bf31e713418eadd4c65ea4d60, type: 3}
   damageText: {fileID: 7574199013937430373}

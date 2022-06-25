@@ -507,7 +507,7 @@ MonoBehaviour:
   baseDamage: 5
   healthIncreasePerRound: 5
   damageIncreasePerRound: 2
-  dropPercentage: 20
+  dropPercentage: 25
   currencyPrefab: {fileID: 1661584327474507373, guid: 4fd53502efc0a9841a280f8f8a7b918c, type: 3}
   AvoidanceType: 4
   damageText: {fileID: 7574199013937430373}

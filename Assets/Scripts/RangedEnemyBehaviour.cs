@@ -224,7 +224,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
             dropped = true;
             int dropRng = Random.Range(1, 101);
             if(dropRng <= dropPercentage){
-                Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 1.0f, transform.position.z);
+                Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.0f, transform.position.z);
                 GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
                 Debug.Log("Dropped currency");
                 currency.transform.SetParent(currencyHolder.transform);
