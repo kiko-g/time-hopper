@@ -678,14 +678,15 @@ namespace StarterAssets
 
         private void StartRound()
         {
-            /*if (_input.startRound && !startRound){
+            if (_input.startRound && !startRound){
                 startRound = true;
                 //gunArsenal[selectedGun].FillAmmo();
-                nextRound = waveSpawner.StartRound(nextRound);
+                waveSpawner.setStartRoundFlag(true);
+                _input.startRound = false;
             } else {
                 startRound = false;
                 _input.startRound = false;
-            }*/
+            }
         }
 
         private void Aim()
