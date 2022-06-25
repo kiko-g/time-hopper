@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class HubComputer : MonoBehaviour
+public class HubPause : MonoBehaviour
 {
     public Canvas canvas;
 
