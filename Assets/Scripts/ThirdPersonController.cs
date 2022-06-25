@@ -146,7 +146,7 @@ namespace StarterAssets
         private ArenaTrigger arenaTrigger;
 
         [SerializeField]
-        private WaveSpawner waveSpawner;
+        public WaveSpawner waveSpawner;
 
         [SerializeField]
         private Slider healthBar;

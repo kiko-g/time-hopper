@@ -1245,6 +1245,11 @@ Transform:
   m_Father: {fileID: 1023957551}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &298461147 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+  m_PrefabInstance: {fileID: 316305641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &305412270
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,7 +3062,7 @@ MonoBehaviour:
   reloadTime: 2
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
-  muzzleFlash: {fileID: 0}
+  muzzleFlash: {fileID: 298461147}
   currentAmmoUI: {fileID: 167761155}
   availableAmmoUI: {fileID: 1955832416}
   weaponPriceUI: {fileID: 0}
@@ -6337,6 +6342,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dc30fb58cfa6f54e9b7e1327001045a, type: 3}
+--- !u!198 &1749381996 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198234346748616026, guid: ad2ab49d0a2a17148bd51c93d977bdbc, type: 3}
+  m_PrefabInstance: {fileID: 1347632581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1751716597
 GameObject:
   m_ObjectHideFlags: 0
@@ -7990,7 +8000,7 @@ MonoBehaviour:
   reloadTime: 2
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
-  muzzleFlash: {fileID: 0}
+  muzzleFlash: {fileID: 1749381996}
   currentAmmoUI: {fileID: 167761155}
   availableAmmoUI: {fileID: 1955832416}
   weaponPriceUI: {fileID: 0}

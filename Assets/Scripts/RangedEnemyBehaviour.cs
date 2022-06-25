@@ -214,6 +214,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
     {
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
+        StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
+        player.AddWeaponCurrency(10);
+        player.waveSpawner.decreaseEnemiesToDefeat();
     }
 
     private void DropCurrency(){

@@ -31,7 +31,7 @@ public class WaveSpawner : MonoBehaviour
     private int enemiesToDefeat;
     private int numWaves = 0;
     private float waveTimeout = 60f;
-    private int waveSize = 15;
+    private int waveSize = 4;
     private int roundNr = 0;
     private float elapsedTime = 0f, roundTime = 0f, spawnEnemyTime = 0f;
     Vector2 xLimits = new Vector2(-30, 30);
@@ -137,10 +137,6 @@ public class WaveSpawner : MonoBehaviour
                     startTime = Time.time;
                     numWaves++;
 
-                    //Debug.Log("Still need to defeat " + enemiesToDefeat + " enemies");
-                    
-                    UpdateNumEnemiesAlive();
-
                     if (enemiesToDefeat > 0)
                     {
                         ShowWaveStartUI(numWaves);
@@ -156,38 +152,24 @@ public class WaveSpawner : MonoBehaviour
                     round_active = false;
                 }
             }
-
-            UpdateNumEnemiesAlive();
         }
+    }
+
+    public void decreaseEnemiesToDefeat()
+    {
+        enemiesToDefeat--;
+        if (enemiesToDefeat == 0)
+        {
+            Debug.Log("You killed all enemies");
+            round_active = false;
+            elapsedTime = 0f;
+        }
+        UpdateNumEnemiesAlive();
     }
 
     public void UpdateNumEnemiesAlive()
     {
-        // convert numEnemiesAliveText.text to int and store it previousNumber
-        int previousNumber = int.Parse(numEnemiesAliveText.text);
-        
-        int count = 0;
-        // iterate enemiesHolder and check if enemies animation is not death
-        foreach (Transform child in enemiesHolder.transform)
-        {
-            if (!child.GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Death"))
-            {
-                count++;
-            }
-        }
-
-        if (previousNumber - count > 0)
-        {
-            enemiesToDefeat -= (previousNumber - count);
-            if (enemiesToDefeat == 0)
-            {
-                Debug.Log("You killed all enemies");
-                round_active = false;
-                elapsedTime = 0f;
-            }
-        }
-
-        numEnemiesAliveText.text = count.ToString();
+        numEnemiesAliveText.text = enemiesToDefeat.ToString();
     }
 
     bool checkIfInBounds(float x, float y, float centerX, float centerY, float radius){
@@ -208,12 +190,13 @@ public class WaveSpawner : MonoBehaviour
             waveSize = waveSize + 1;
             SpawnHorde(waveSize);
             numWaves = 1;
-            enemiesToDefeat = waveSize * (roundNr + 2);
-            Debug.Log("Enemies to defeat: " + enemiesToDefeat);
+            enemiesToDefeat = waveSize * (roundNr + 1);
         }
         else {
             // TODO: spawn boss
         }
+
+        UpdateNumEnemiesAlive();
     }
 
     void SpawnHorde(int numEnemies)
@@ -249,7 +232,6 @@ public class WaveSpawner : MonoBehaviour
                     //GameObject enemy = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), new Quaternion(0, 0, 0, 0));
                     enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr);
                     enemy.transform.SetParent(enemiesHolder.transform);
-                    UpdateNumEnemiesAlive();
                     num_spawned++;
 
                     break;
@@ -257,19 +239,16 @@ public class WaveSpawner : MonoBehaviour
                     GameObject spawned = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), Quaternion.identity);
                     spawned.transform.GetChild(0).GetComponent<RangedEnemyBehaviour>().setStats(roundNr);
                     spawned.transform.SetParent(enemiesHolder.transform);
-                    UpdateNumEnemiesAlive();
                     num_spawned++;
                     break;
                 case "Forest":
                     GameObject spawnedF = Instantiate(enemyPrefab, RandomNavmeshLocation(30f)/*new Vector3(Random.Range(-10,10),2,Random.Range(-10,10))*/, Quaternion.identity);
                     spawnedF.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr);
                     spawnedF.transform.SetParent(enemiesHolder.transform);
-                    UpdateNumEnemiesAlive();
                     num_spawned++;
                     break;
             }
         }
-        UpdateNumEnemiesAlive();
     }
 
 
