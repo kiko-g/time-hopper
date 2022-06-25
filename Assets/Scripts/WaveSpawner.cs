@@ -37,6 +37,8 @@ public class WaveSpawner : MonoBehaviour
     Vector2 xLimits = new Vector2(-30, 30);
     Vector2 zLimits = new Vector2(-30, 30);
 
+    private bool startRoundFlag = false;
+
     private List<Vector3> spawnCoords = new List<Vector3>();
 
     // Start is called before the first frame update
@@ -104,7 +106,7 @@ public class WaveSpawner : MonoBehaviour
         //Debug.Log(elapsedTime);
         
         // if elapsed time bigger than 3 and not round active, set round active to true, reset elapsed time and call startround function
-        if (elapsedTime > 3f && !round_active && enemiesHolder.transform.childCount == 0)
+        if (startRoundFlag && !round_active && enemiesHolder.transform.childCount == 0)
         {
             round_active = true;
             elapsedTime = 0f;
@@ -178,9 +180,14 @@ public class WaveSpawner : MonoBehaviour
 
     }
 
+    public void setStartRoundFlag(bool flag){
+        startRoundFlag = flag;
+    }
+
     public void StartRound()
     {
         Debug.Log("Start round!");
+        startRoundFlag = false;
         roundNr++;
         ShowRoundStartUI();
         Debug.Log("Round Number: " + roundNr);

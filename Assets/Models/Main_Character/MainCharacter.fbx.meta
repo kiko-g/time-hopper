@@ -60,6 +60,9 @@ ModelImporter:
   - first:
       74: 9048074145510303542
     second: sword|Meele
+  - first:
+      74: -2943980721043599326
+    second: Armature|aiming001
   externalObjects:
   - first:
       type: UnityEngine:Material

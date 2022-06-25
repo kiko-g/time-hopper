@@ -14,7 +14,8 @@ TagManager:
   - Lava
   - RangedEnemyHead
   - RumblePlane
-  - HubComputer
+  - HubComputerHUD
+  - PauseHUD
   layers:
   - Default
   - TransparentFX
