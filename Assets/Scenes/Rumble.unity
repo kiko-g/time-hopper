@@ -14009,15 +14009,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.667999
+      value: 11.332001
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.0950003
+      value: 5.0950003
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.5
+      value: 103.5
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -59439,8 +59439,8 @@ MonoBehaviour:
     m_Bits: 1
   blade: {fileID: 168999585}
   PS: {fileID: 1029263299}
-  AR: {fileID: 789604365}
-  SG: {fileID: 2103569659}
+  AR: {fileID: 2103569659}
+  SG: {fileID: 789604365}
   RL: {fileID: 0}
   bloodOverlay: {fileID: 836437004}
 --- !u!143 &1996843643

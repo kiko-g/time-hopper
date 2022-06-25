@@ -50760,8 +50760,8 @@ MonoBehaviour:
     m_Bits: 1
   blade: {fileID: 0}
   PS: {fileID: 1143410729}
-  AR: {fileID: 1024794549}
-  SG: {fileID: 985900586}
+  AR: {fileID: 985900586}
+  SG: {fileID: 1024794549}
   RL: {fileID: 0}
   bloodOverlay: {fileID: 998050321}
 --- !u!143 &1996843643
