@@ -206,6 +206,11 @@ public class RangedEnemyBehaviour : MonoBehaviour
         }
     }
 
+    public void setDropPercentage(int dropPercentage)
+    {
+        this.dropPercentage = dropPercentage;
+    }
+
     void OnParticleCollision(){
             TakeDamage(1);
     }
@@ -216,7 +221,11 @@ public class RangedEnemyBehaviour : MonoBehaviour
         animator.SetBool("is_dead", true);
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
         player.AddWeaponCurrency(10);
-        player.waveSpawner.decreaseEnemiesToDefeat();
+        if(player.waveSpawner != null)
+            player.waveSpawner.decreaseEnemiesToDefeat();
+        else if(player.rumbleSpawner != null){
+            player.rumbleSpawner.increaseEnemiesKilled();
+        }
     }
 
     private void DropCurrency(){
@@ -237,14 +246,14 @@ public class RangedEnemyBehaviour : MonoBehaviour
         RaycastHit hit;
         Debug.DrawLine(transform.position + bulletOffset, playerTransform.position + playerOffset, Color.yellow, 1f);
         if (Physics.Linecast(transform.position + bulletOffset, playerTransform.position + playerOffset, out hit, layerMask)){
-            Debug.Log("Raycast hit!");
-            Debug.Log(hit.transform.gameObject.tag);
+            //Debug.Log("Raycast hit!");
+            //Debug.Log(hit.transform.gameObject.tag);
             if (hit.transform.gameObject.tag == "Player"){
                 return true;
             }
             return false;
         } else {
-            Debug.Log("Raycast failed!");
+            //Debug.Log("Raycast failed!");
             return false;
         }
     }

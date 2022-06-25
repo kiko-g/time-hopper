@@ -147,8 +147,8 @@ namespace StarterAssets
         private Trigger trigger;
         private ArenaTrigger arenaTrigger;
 
-        [SerializeField]
         public WaveSpawner waveSpawner;
+        public RumbleSpawner rumbleSpawner = null;
 
         [SerializeField]
         private Slider healthBar;
@@ -260,7 +260,14 @@ namespace StarterAssets
             GameObject canvas = GameObject.Find("Canvas");
             // get the DeathScreen object from the canvas
             deathScreen = canvas.transform.Find("DeathScreen").gameObject;
-            Debug.Log(deathScreen);
+            GameObject wavespawn = GameObject.Find("WaveSpawner");
+            if(wavespawn != null){
+                waveSpawner = wavespawn.GetComponent<WaveSpawner>();
+            }
+            else{
+                waveSpawner = null;
+                rumbleSpawner = GameObject.Find("RumbleSpawner").GetComponent<RumbleSpawner>();
+            }
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -270,10 +277,11 @@ namespace StarterAssets
             //RL.ApplyUpgrades()
 
             gunArsenal.Add(PS);
-            //gunArsenal.Add(AR);
-            //gunArsenal.Add(AR);
-            //gunArsenal.Add(SG);
-            //gunArsenal.Add(RL);
+            if(rumbleSpawner != null){
+                gunArsenal.Add(AR);
+                gunArsenal.Add(SG);
+                //gunArsenal.Add(RL);
+            }
             gunArsenal[selectedGun].gameObject.SetActive(true);
             // find all objects with the tag RumblePlane
             rumblePlanes = GameObject.FindGameObjectsWithTag("RumblePlane");
@@ -282,6 +290,7 @@ namespace StarterAssets
                 int random = Random.Range(0, rumblePlanes.Length);
             // spawn the player at the selected rumble plane
                 transform.position = rumblePlanes[random].gameObject.GetComponent<RumblePlane>().getSpawnPosition();
+                rumbleSpawner.setCurrentScene(rumblePlanes[random].name);
             }
         }
 
@@ -681,7 +690,16 @@ namespace StarterAssets
             if (_input.startRound && !startRound){
                 startRound = true;
                 //gunArsenal[selectedGun].FillAmmo();
-                waveSpawner.setStartRoundFlag(true);
+                if(waveSpawner != null) waveSpawner.setStartRoundFlag(true);
+                else{
+                    if(rumbleSpawner.setStartRoundFlag(true)){
+                        //fill ammo of every Gun in the gunArsenal
+                        foreach(GunBehaviour gun in gunArsenal){
+                            gun.FillAmmo();
+                        }
+                    }
+
+                }
                 _input.startRound = false;
             } else {
                 startRound = false;
@@ -974,6 +992,7 @@ namespace StarterAssets
                 // teleport the player to the randomRumblePlane
                 _controller.enabled = false;
                 transform.position = rumblePlanes[randomRumblePlane].gameObject.GetComponent<RumblePlane>().getTeleportPosition();
+                rumbleSpawner.setCurrentScene(rumblePlanes[randomRumblePlane].name);
                 _controller.enabled = true;
                 other.isTrigger = false;
                 teleportedTime = Time.time;

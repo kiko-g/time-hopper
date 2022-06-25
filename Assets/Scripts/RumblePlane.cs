@@ -28,7 +28,7 @@ public class RumblePlane : MonoBehaviour
             for(float y = 0; y <= yLimit; y+=0.05f){
                 if(!Physics.CheckSphere(new Vector3(transform.position.x + x, y, transform.position.z+1.0f), 0.75f)){
                     teleportPosition = new Vector3(transform.position.x + x, 3.0f + y, transform.position.z + 1.0f);
-                    Debug.Log(teleportPosition);
+                    //Debug.Log(teleportPosition);
                     return;
                 }
             }

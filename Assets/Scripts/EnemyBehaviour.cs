@@ -65,6 +65,11 @@ public class EnemyBehaviour : MonoBehaviour
         navMeshAgent.speed = moveSpeed;
     }
 
+    public void setDropPercentage(int dropPercentage)
+    {
+        this.dropPercentage = dropPercentage;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -180,7 +185,11 @@ public class EnemyBehaviour : MonoBehaviour
         GetComponent<Rigidbody>().isKinematic = true;
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
         player.AddWeaponCurrency(10);
-        player.waveSpawner.decreaseEnemiesToDefeat();
+        if(player.waveSpawner != null)
+            player.waveSpawner.decreaseEnemiesToDefeat();
+        else if(player.rumbleSpawner != null){
+            player.rumbleSpawner.increaseEnemiesKilled();
+        }
     }
 
     private void DropCurrency(){

@@ -23,7 +23,7 @@ public class GunBehaviour : MonoBehaviour
 
     public int availableAmmo;
 
-    private string availableAmmoString;
+    private string availableAmmoString = "0";
 
     public bool is_pistol;
 
@@ -81,7 +81,7 @@ public class GunBehaviour : MonoBehaviour
     void Start()
     {
         recoil = GetComponent<WeaponRecoil>();
-        availableAmmoString = "0";
+        //availableAmmoString = "0";
         if(is_pistol){
             availableAmmoString = "∞";
             FillAmmo();
@@ -242,6 +242,7 @@ public class GunBehaviour : MonoBehaviour
     }
 
     public void FillAmmo(){
+        //Debug.Log("Filling Ammo...");
         currentAmmo = numBulletsPerMagazine;
         if(!is_pistol){
             availableAmmo = numBulletsPerMagazine * defaultNumberOfExtraMagazines;
