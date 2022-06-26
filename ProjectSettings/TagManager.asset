@@ -16,6 +16,7 @@ TagManager:
   - RumblePlane
   - HubComputerHUD
   - PauseHUD
+  - HubComputerHint
   layers:
   - Default
   - TransparentFX

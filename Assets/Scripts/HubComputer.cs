@@ -3,6 +3,8 @@ using UnityEngine;
 public class HubComputer : MonoBehaviour
 {
     public Canvas canvas;
+    public GameObject hint;
+    private bool withinRange;
     private StarterAssets.ThirdPersonController player;
 
     void Start()
@@ -15,9 +17,15 @@ public class HubComputer : MonoBehaviour
 
     void Update()
     {
-        if (WasPressed() && WithinRange(player.transform.position))
+        UpdateWithinRange(player.transform.position);
+        if (withinRange)
         {
-            Toggle(!canvas.enabled);
+            if (!hint.activeInHierarchy) hint.SetActive(true);
+            if (WasPressed()) Toggle(!canvas.enabled);
+        }
+        else
+        {
+            if (hint.activeInHierarchy) hint.SetActive(false);
         }
     }
 
@@ -26,10 +34,10 @@ public class HubComputer : MonoBehaviour
         return Input.GetKeyUp(KeyCode.F);
     }
 
-    bool WithinRange(Vector3 pos)
+    void UpdateWithinRange(Vector3 pos)
     {
         int xMax = -10, xMin = -16, zMax = -5, zMin = -9;
-        return pos.x < xMax && pos.x > xMin && pos.z < zMax && pos.z > zMin;
+        withinRange = (pos.x < xMax && pos.x > xMin && pos.z < zMax && pos.z > zMin);
     }
 
     void Hide()
