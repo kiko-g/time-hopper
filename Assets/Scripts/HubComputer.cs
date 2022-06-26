@@ -4,29 +4,34 @@ public class HubComputer : MonoBehaviour
 {
     public Canvas canvas;
     public GameObject hint;
-    private bool withinRange;
     private StarterAssets.ThirdPersonController player;
 
     void Start()
     {
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
-
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
     }
 
     void Update()
     {
-        UpdateWithinRange(player.transform.position);
-        if (withinRange)
+        if (IsWithinRange(player.transform.position))
         {
             if (!hint.activeInHierarchy) hint.SetActive(true);
             if (WasPressed()) Toggle(!canvas.enabled);
         }
         else
         {
+            Debug.Log(player.transform.position);
             if (hint.activeInHierarchy) hint.SetActive(false);
         }
+    }
+
+    public void Toggle(bool value)
+    {
+        canvas.enabled = value;
+        if (canvas.enabled) player.SwitchInputToUI();
+        else player.SwitchInputToPlayer();
     }
 
     bool WasPressed()
@@ -34,26 +39,14 @@ public class HubComputer : MonoBehaviour
         return Input.GetKeyUp(KeyCode.F);
     }
 
-    void UpdateWithinRange(Vector3 pos)
+    bool IsWithinRange(Vector3 pos)
     {
-        int xMax = -10, xMin = -16, zMax = -5, zMin = -9;
-        withinRange = (pos.x < xMax && pos.x > xMin && pos.z < zMax && pos.z > zMin);
-    }
+        float xMaxLeft = -10.0f, xMinLeft = -16.0f, zMaxLeft = -6.0f, zMinLeft = -9.0f;
+        float xMaxRight = -0.5f, xMinRight = -6.0f, zMaxRight = -6.0f, zMinRight = -9.0f;
 
-    void Hide()
-    {
-        player.SwitchInputToUI();
-    }
+        bool left = (pos.x < xMaxLeft && pos.x > xMinLeft && pos.z < zMaxLeft && pos.z > zMinLeft);
+        bool right = (pos.x < xMaxRight && pos.x > xMinRight && pos.z < zMaxRight && pos.z > zMinRight);
 
-    void Show()
-    {
-        player.SwitchInputToPlayer();
-    }
-
-    public void Toggle(bool value)
-    {
-        canvas.enabled = value;
-        if (canvas.enabled) Hide();
-        else Show();
+        return left || right;
     }
 }
