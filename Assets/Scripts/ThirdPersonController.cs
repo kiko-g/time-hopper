@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -1125,6 +1124,16 @@ namespace StarterAssets
             currencyCounter++;
             Debug.Log("Currrent Currency: " + currencyCounter);
             updateCurrencyUI();
+        }
+
+        public void SwitchInputToUI()
+        {
+            _playerInput.SwitchCurrentActionMap("UI");
+        }
+
+        public void SwitchInputToPlayer()
+        {
+            _playerInput.SwitchCurrentActionMap("Player");
         }
     }
 }
