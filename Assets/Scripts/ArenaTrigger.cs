@@ -23,11 +23,5 @@ public class ArenaTrigger : MonoBehaviour
         sceneSwitch.setArenaName("Hub");
         sceneSwitch.LoadArenaScene();
     }
-
-
-    public void TeleportToHub()
-    {
-        player.transform.position = new Vector3(transform.position.x, 30.1f, transform.position.z);
-    }
  
 }

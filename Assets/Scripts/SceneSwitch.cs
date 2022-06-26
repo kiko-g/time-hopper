@@ -50,18 +50,28 @@ public class SceneSwitch : MonoBehaviour
 
     public async void LoadArenaScene()
     {
-        _loaderCanvas.SetActive(true);
+        if(SceneManager.GetActiveScene().name == "Hub"){
+            _loaderCanvas.SetActive(true);
+            foreach (Transform child in _loaderCanvas.transform)
+                {
+                    if (child.name == ArenaName)
+                    {
+                        child.gameObject.SetActive(true);
+                        break;
+                    }
+                }
+        }
         var scene = SceneManager.LoadSceneAsync(ArenaName);
         scene.allowSceneActivation = false;
+        if(ArenaName != "Hub"){
+            do {
+                await Task.Delay(100);
+                //_progressBar.value = scene.progress;
+                _progressBar.value += 0.05f;
+            } while (scene.progress < 0.9f || _progressBar.value < 0.9f);
 
-        do {
-            await Task.Delay(100);
-            //_progressBar.value = scene.progress;
-            _progressBar.value += 0.05f;
-        } while (scene.progress < 0.9f || _progressBar.value < 0.9f);
-
-        await Task.Delay(1000);
-
+            await Task.Delay(1000);
+        }
         scene.allowSceneActivation = true;
     }
 
@@ -97,7 +107,7 @@ public class SceneSwitch : MonoBehaviour
     }
     
     public void setArenaName(string name){
-        Debug.Log("TROQUEI DE CENA PARA A " + name);
+        //Debug.Log("TROQUEI DE CENA PARA A " + name);
         ArenaName = name;
     }
 }
