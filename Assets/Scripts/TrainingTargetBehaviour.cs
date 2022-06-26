@@ -1,10 +1,11 @@
 
 using UnityEngine;
+using TMPro;
 
 public class TrainingTargetBehaviour : MonoBehaviour
 {
 
-    float maxY = 29.8f;
+    float maxY = 29.2f;
     float startingY;
 
     bool moveUp = true;
@@ -20,6 +21,9 @@ public class TrainingTargetBehaviour : MonoBehaviour
     public int maxDuration;
     public int minDuration;
     
+    [SerializeField]
+    private TextMeshProUGUI damageText;
+
     int duration;
 
     Vector3 pivotPoint;
@@ -30,7 +34,7 @@ public class TrainingTargetBehaviour : MonoBehaviour
     {
         startingY = transform.position.y;
         duration = Random.Range(minDuration, maxDuration);
-        pivotPoint = new Vector3(transform.position.x, 30, transform.position.z);
+        pivotPoint = new Vector3(transform.position.x, 29, transform.position.z);
     }
 
     // Update is called once per frame
@@ -70,11 +74,19 @@ public class TrainingTargetBehaviour : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
+
+        damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
+
+        // damage text rotation equal to transform rotation with 180 degree offset
+        damageText.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, 90, 0));
     }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+
+        damageText.text = damage.ToString();
+        damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
 
         if (health <= 0){
             Die();

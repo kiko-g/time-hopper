@@ -21,6 +21,9 @@ public class WaveSpawner : MonoBehaviour
     private TextMeshProUGUI startRoundTextUI;
 
     [SerializeField]
+    private GameObject enterTooltipUI;
+
+    [SerializeField]
     private GameObject numEnemiesAliveUI;
 
     private Text numEnemiesAliveText;
@@ -85,6 +88,7 @@ public class WaveSpawner : MonoBehaviour
             spawnCoords[i] = spawnCoords[randomIndex];
             spawnCoords[randomIndex] = temp;
         }
+        enterTooltipUI.SetActive(true);
     }
 
     void Update()
@@ -180,6 +184,7 @@ public class WaveSpawner : MonoBehaviour
             Debug.Log("You killed all enemies");
             round_active = false;
             elapsedTime = 0f;
+            enterTooltipUI.SetActive(true);
         }
         UpdateNumEnemiesAlive();
     }
@@ -201,7 +206,8 @@ public class WaveSpawner : MonoBehaviour
 
     public void StartRound()
     {
-        Debug.Log("Start round!");
+        enterTooltipUI.SetActive(false);
+        Debug.Log("Start round!"); 
         startRoundFlag = false;
         roundNr++;
         ShowRoundStartUI();

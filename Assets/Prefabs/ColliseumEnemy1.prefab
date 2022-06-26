@@ -2971,6 +2971,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 153980812299077885}
+  - component: {fileID: 6759708405068444650}
   m_Layer: 0
   m_Name: mixamorig:Head
   m_TagString: Untagged
@@ -2993,6 +2994,19 @@ Transform:
   m_Father: {fileID: 1797881144147208255}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6759708405068444650
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5781916204919233869}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.16
+  m_Center: {x: 0, y: 0.07, z: 0}
 --- !u!1 &5837563605770932385
 GameObject:
   m_ObjectHideFlags: 0
@@ -3655,7 +3669,6 @@ GameObject:
   - component: {fileID: 2460408402146330504}
   - component: {fileID: 8983099705846924494}
   - component: {fileID: 2768337204960147332}
-  - component: {fileID: 8870702057429133410}
   m_Layer: 0
   m_Name: Gladiador
   m_TagString: Enemy
@@ -3752,22 +3765,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.4172783
-  m_Height: 1.7071533
+  m_Height: 1.3607788
   m_Direction: 1
-  m_Center: {x: 0.07171631, y: 0.6583252, z: -0.011005402}
---- !u!135 &8870702057429133410
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7704118233917436007}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.14526367
-  m_Center: {x: 0.13464355, y: 1.585907, z: 0.19896507}
+  m_Center: {x: 0.07171631, y: 0.74520874, z: -0.011005402}
 --- !u!1 &7717541863177936959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3923,8 +3923,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.6162574, y: 5.660374, z: 0.3265789}
-  m_Center: {x: -0.0000000067301613, y: -0.11315756, z: -0.0000000016825403}
+  m_Size: {x: 3.6162574, y: 5.660374, z: 0.7322673}
+  m_Center: {x: -0.00000005321738, y: -0.113157585, z: 0.20284468}
 --- !u!1 &7901439011414949714
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ TagManager:
   - HubComputerHUD
   - PauseHUD
   - HubComputerHint
+  - TrainingStarter
   layers:
   - Default
   - TransparentFX

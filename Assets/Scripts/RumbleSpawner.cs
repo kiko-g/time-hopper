@@ -22,6 +22,9 @@ public class RumbleSpawner : MonoBehaviour
     [SerializeField]
     private GameObject facEnemiesHolder;
 
+    [SerializeField]
+    private GameObject enterTooltipUI;
+
     private float startTime;
     private bool startRoundText;
 
@@ -80,6 +83,7 @@ public class RumbleSpawner : MonoBehaviour
                 factorySpawn = new Vector3(factorySpawn.x, factorySpawn.y + 2f, factorySpawn.z);
             }
         }
+        enterTooltipUI.SetActive(true);
     }
 
     void Update()
@@ -132,6 +136,7 @@ public class RumbleSpawner : MonoBehaviour
                 Destroy(child.gameObject);
             }
             roundTime = Time.time - startTime;
+            enterTooltipUI.SetActive(true);
         }
     }
 
@@ -149,6 +154,7 @@ public class RumbleSpawner : MonoBehaviour
 
     public void StartRound()
     {
+        enterTooltipUI.SetActive(false);
         startTime = Time.time;
         //Debug.Log("Start round!");
         startRoundFlag = false;

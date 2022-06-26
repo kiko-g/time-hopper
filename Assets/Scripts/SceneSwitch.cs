@@ -76,7 +76,7 @@ public class SceneSwitch : MonoBehaviour
             case "Factory":
             case "Colliseum":
             case "Forest":
-                if (_loaderCanvas.active)
+                if (_loaderCanvas.activeSelf)
                 {
                     _loaderCanvas.GetComponent<Animator>().Play("LoadingFadeOut");
                 }

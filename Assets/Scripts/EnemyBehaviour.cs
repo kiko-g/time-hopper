@@ -181,7 +181,7 @@ public class EnemyBehaviour : MonoBehaviour
         animator.SetBool("is_dead", true);
         // deactivate the colliders
         GetComponent<CapsuleCollider>().enabled = false;
-        GetComponent<SphereCollider>().enabled = false;
+        //GetComponent<SphereCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
         player.AddWeaponCurrency(10);

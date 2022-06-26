@@ -139,6 +139,8 @@ namespace StarterAssets
 
         private bool rotateWhenMoving = true;
 
+        private bool training;
+
         private bool canFire = true;
         private float fireTimer = 0f;
         private float shootingSpread = 15f;
@@ -148,6 +150,7 @@ namespace StarterAssets
 
         public WaveSpawner waveSpawner;
         public RumbleSpawner rumbleSpawner = null;
+        private TrainingTargetSpawner trainingSpawner = null;
 
         [SerializeField]
         private Slider healthBar;
@@ -193,6 +196,7 @@ namespace StarterAssets
         private float fallingY = -1234.56789f;
         private float teleportedTime = 0f;
         private bool recentlyTeleported = false;
+        private bool changingScene = false;
 
         private GameObject[] rumblePlanes;
 
@@ -201,6 +205,9 @@ namespace StarterAssets
         MeshRenderer ARMesh = null;
         MeshRenderer SGMesh = null;
         MeshRenderer RLMesh = null;
+
+        [SerializeField]
+        private GameObject TrainingHUD;
 
         // Sound Variables
 
@@ -270,6 +277,10 @@ namespace StarterAssets
                     rumbleSpawner = rumblespawn.GetComponent<RumbleSpawner>();
                 }
             }
+            GameObject trainSpawn = GameObject.Find("TrainingSpawner");
+            if(trainSpawn != null){
+                trainingSpawner = trainSpawn.GetComponent<TrainingTargetSpawner>();
+            }
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -317,7 +328,20 @@ namespace StarterAssets
                 }
                 recentlyTeleported = false;
             }
+            if(trainingSpawner != null){
+                if(!trainingSpawner.active){
+                    training = false;
+                }
 
+                if(!training && TrainingHUD.activeSelf){
+                    if(_input.interact){
+                        _input.interact = false;
+                        trainingSpawner.startTraining();
+                        training = true;
+                        TrainingHUD.SetActive(false);
+                    }
+                }
+            }
 
             if (!canFire){
                 fireTimer += Time.deltaTime;
@@ -388,7 +412,7 @@ namespace StarterAssets
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(screenCenter);
             GameObject UItext = WeaponShopUI.transform.GetChild(0).gameObject;
-            if (Physics.Raycast(ray, out hit, 10f, aimColliderMask))
+            if (Physics.Raycast(ray, out hit, 9f, aimColliderMask))
             {
                 if (hit.collider.gameObject.name == "AR")
                 {
@@ -955,19 +979,18 @@ namespace StarterAssets
         private void checkTrigger()
         {
             if (arenaTrigger!= null){
-                if((nextRound-1) % 5 == 0 && !startRound){
+                if((nextRound-1) % 5 == 0 && !startRound && !changingScene){
                     //set the extraction portal active
                     Debug.Log("You're okay to extract");
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
+                    changingScene = true;
                     arenaTrigger.performAction();
                 }
-                else{
-                    Debug.Log("You can only extract every 5 rounds");
-                }
             }
-            if (trigger!= null){
+            if (trigger!= null && !changingScene){
                 Debug.Log("Entering Arena");
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
+                changingScene = true;
                 trigger.performAction();
             }
         }
@@ -1000,11 +1023,32 @@ namespace StarterAssets
                 teleportedTime = Time.time;
                 recentlyTeleported = true;
             }
+            if(other.gameObject.tag == "TrainingStarter"){
+                if(!training){
+                    TrainingHUD.SetActive(true);
+                    WeaponShopUI.SetActive(false);
+                }
+            }
+        }
+
+        void OnTriggerStay(Collider other){
+            if(other.gameObject.tag == "TrainingStarter"){
+                if(!training){
+                    if(!TrainingHUD.activeSelf){
+                        TrainingHUD.SetActive(true);
+                    }
+                }
+            }
         }
 
         void OnTriggerExit(Collider other){
             trigger = null;
             arenaTrigger = null;
+            if(other.gameObject.tag == "TrainingStarter"){
+                if(TrainingHUD.activeSelf){
+                    TrainingHUD.SetActive(false);
+                }
+            }
         }
 
         void OnParticleCollision(){

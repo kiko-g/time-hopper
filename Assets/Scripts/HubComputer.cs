@@ -22,7 +22,7 @@ public class HubComputer : MonoBehaviour
         }
         else
         {
-            Debug.Log(player.transform.position);
+            //Debug.Log(player.transform.position);
             if (hint.activeInHierarchy) hint.SetActive(false);
         }
     }
