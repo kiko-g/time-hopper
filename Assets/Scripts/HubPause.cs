@@ -1,6 +1,4 @@
 using UnityEngine;
-using StarterAssets;
-using UnityEngine.InputSystem;
 
 public class HubPause : MonoBehaviour
 {
@@ -19,19 +17,24 @@ public class HubPause : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            canvas.enabled = !canvas.enabled;
-            if (canvas.enabled) Hide();
-            else Show();
+            Toggle(!canvas.enabled);
         }
     }
 
-    public void Hide()
+    void Hide()
     {
         player.SwitchInputToUI();
     }
 
-    public void Show()
+    void Show()
     {
         player.SwitchInputToPlayer();
+    }
+
+    public void Toggle(bool value)
+    {
+        canvas.enabled = value;
+        if (value) Hide();
+        else Show();
     }
 }
