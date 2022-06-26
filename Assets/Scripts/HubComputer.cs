@@ -4,14 +4,17 @@ public class HubComputer : MonoBehaviour
 {
     public Canvas canvas;
     public GameObject hint;
+    private Canvas pauseCanvas;
     private StarterAssets.ThirdPersonController player;
 
     void Start()
     {
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
         hint.SetActive(false);
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
+        pauseCanvas = GameObject.FindGameObjectWithTag("PauseHUD").GetComponent<Canvas>();
     }
 
     void Update()
@@ -26,6 +29,8 @@ public class HubComputer : MonoBehaviour
         {
             HideHint();
         }
+
+        if (pauseCanvas.enabled) HideAll();
     }
 
     public void Toggle(bool value)
@@ -67,5 +72,12 @@ public class HubComputer : MonoBehaviour
     void ShowHint() 
     {
         if (!hint.activeInHierarchy) hint.SetActive(true);
+    }
+
+    void HideAll()
+    {
+        canvas.enabled = false;
+        player.SwitchInputToUI();
+        HideHint();
     }
 }
