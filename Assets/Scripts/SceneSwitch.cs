@@ -48,7 +48,7 @@ public class SceneSwitch : MonoBehaviour
         //loadingUI.SetActive(true);
     }
 
-    public async void LoadArenaScene()
+    public async void LoadArenaScene(bool death = false)
     {
         if(SceneManager.GetActiveScene().name == "Hub"){
             _loaderCanvas.SetActive(true);
@@ -71,6 +71,9 @@ public class SceneSwitch : MonoBehaviour
             } while (scene.progress < 0.9f || _progressBar.value < 0.9f);
 
             await Task.Delay(1000);
+        }
+        if(death){
+            await Task.Delay(3000);
         }
         scene.allowSceneActivation = true;
     }

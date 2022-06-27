@@ -1130,22 +1130,15 @@ namespace StarterAssets
         {
             if(!is_dead){
                 is_dead = true;
-                // set the DeathScreen object to active
-                deathScreen.SetActive(true);
-                // stop receiving inputs
                 _input.enabled = false;
-                // set DeathScreen to active from canvas
-                
+                //deathScreen.SetActive(true);
                 Debug.Log("Player died");
                 currencyCounter = 0;
                 updateCurrencyUI();
                 float deathTime = Time.time;
-                for(int i = 0; i < 2000; i++){
-                    // do nothing
-                }
-                onDeathTrigger.performAction();
+                deathScreen.SetActive(true);
+                onDeathTrigger.performAction(true);
             }
-            
         }
 
         private void updateCurrencyUI()

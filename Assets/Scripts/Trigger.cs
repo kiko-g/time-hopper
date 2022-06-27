@@ -11,10 +11,10 @@ public class Trigger : MonoBehaviour
 
     public string ArenaName;
 
-    public void performAction()
+    public void performAction(bool death = false)
     {
         sceneSwitch.setArenaName(ArenaName);
-        sceneSwitch.LoadArenaScene();
+        sceneSwitch.LoadArenaScene(death);
     }
 
     public void TeleportToArena()

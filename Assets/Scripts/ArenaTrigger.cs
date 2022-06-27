@@ -9,7 +9,7 @@ public class ArenaTrigger : MonoBehaviour
 
     private bool triggerActive;
 
-    public void performAction()
+    public void performAction(bool death = false)
     {
         if(player.currencyCounter != 0){
             string arenaCurrency = sceneSwitch.ArenaName+"Currency";
@@ -21,7 +21,7 @@ public class ArenaTrigger : MonoBehaviour
         }
 
         sceneSwitch.setArenaName("Hub");
-        sceneSwitch.LoadArenaScene();
+        sceneSwitch.LoadArenaScene(death);
     }
  
 }
