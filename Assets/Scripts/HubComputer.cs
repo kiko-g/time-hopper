@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HubComputer : MonoBehaviour
 {
     public Canvas canvas;
     public GameObject hint;
+    // public Button backButton;
+    public Button arenasButton;
+    public Button overviewButton;
+    public Button upgradesButton;
     private Canvas pauseCanvas;
     private StarterAssets.ThirdPersonController player;
 
@@ -15,6 +20,10 @@ public class HubComputer : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseHUD").GetComponent<Canvas>();
+
+        arenasButton.onClick.AddListener(OnClickArenas);
+        overviewButton.onClick.AddListener(OnClickOverview);
+        upgradesButton.onClick.AddListener(OnClickUpgrades);
     }
 
     void Update()
@@ -79,5 +88,20 @@ public class HubComputer : MonoBehaviour
         canvas.enabled = false;
         player.SwitchInputToUI();
         HideHint();
+    }
+
+    void OnClickOverview()
+    {
+        Debug.Log("You have clicked the Overview button!");
+    }
+
+    void OnClickArenas()
+    {
+        Debug.Log("You have clicked the Arenas button!");
+    }
+
+    void OnClickUpgrades()
+    {
+        Debug.Log("You have clicked the Upgrades button!");
     }
 }

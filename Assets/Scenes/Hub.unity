@@ -3102,6 +3102,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 549771765}
+  exitButton: {fileID: 664947713}
+  resumeButton: {fileID: 2006242201}
+  settingsButton: {fileID: 1515742296}
+  instructionsButton: {fileID: 1150482673}
 --- !u!114 &549771763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8202,6 +8206,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1724960682}
   hint: {fileID: 693850631}
+  arenasButton: {fileID: 1322655391}
+  overviewButton: {fileID: 170646217}
+  upgradesButton: {fileID: 301093703}
 --- !u!1 &1726716237 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1727348531506677991, guid: dc263f68cd947d146b45c9600be247b9, type: 3}
