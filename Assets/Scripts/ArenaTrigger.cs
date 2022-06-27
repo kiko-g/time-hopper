@@ -19,6 +19,18 @@ public class ArenaTrigger : MonoBehaviour
             Debug.Log("Successfully extracted extra " + player.currencyCounter + " " + arenaCurrency);
             Debug.Log("Current " + arenaCurrency + ": " + PlayerPrefs.GetInt(arenaCurrency));
         }
+        if(player.colCurrency != 0){
+            PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") + player.colCurrency);
+            Debug.Log("Successfully extracted extra " + player.colCurrency + " ColliseumCurrency");
+        }
+        if(player.forCurrency != 0){
+            PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") + player.colCurrency);
+            Debug.Log("Successfully extracted extra " + player.forCurrency + " ForestCurrency");
+        }
+        if(player.facCurrency != 0){
+            PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") + player.colCurrency);
+            Debug.Log("Successfully extracted extra " + player.facCurrency + " FactoryCurrency");
+        }
 
         sceneSwitch.setArenaName("Hub");
         sceneSwitch.LoadArenaScene(death);

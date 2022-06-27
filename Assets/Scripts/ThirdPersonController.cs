@@ -93,6 +93,9 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
         public int currencyCounter = 0;
+        public int colCurrency = 0;
+        public int forCurrency = 0;
+        public int facCurrency = 0;
         public GameObject WeaponShopUI;
         
 
@@ -157,6 +160,15 @@ namespace StarterAssets
 
         [SerializeField]
         private Text currencyAmountUI;
+
+        [SerializeField]
+        private Text colCurrencyAmountUI;
+
+        [SerializeField]
+        private Text facCurrencyAmountUI;
+
+        [SerializeField]
+        private Text forCurrencyAmountUI;
 
         private Vector2 screenCenter;
 
@@ -1197,9 +1209,11 @@ namespace StarterAssets
                 //deathScreen.SetActive(true);
                 Debug.Log("Player died");
                 currencyCounter = 0;
-                updateCurrencyUI();
                 float deathTime = Time.time;
                 deathScreen.SetActive(true);
+                if(onDeathTrigger == null){
+                    onDeathTrigger = GameObject.Find("DeathTrigger").GetComponent<ArenaTrigger>();
+                }
                 onDeathTrigger.performAction(true);
             }
         }
@@ -1209,11 +1223,38 @@ namespace StarterAssets
             currencyAmountUI.text = currencyCounter.ToString();
         }
 
+        private void updateFacCurrency(){
+            facCurrencyAmountUI.text = facCurrency.ToString();
+        }
+
+        private void updateForCurrency(){
+            forCurrencyAmountUI.text = forCurrency.ToString();
+        }
+
+        private void updateColCurrency(){
+            colCurrencyAmountUI.text = colCurrency.ToString();
+        }
+
         void OnControllerColliderHit(ControllerColliderHit hit){
             if(hit.gameObject.tag == "Currency"){
                 CurrencyBehaviour currency = hit.transform.GetComponent<CurrencyBehaviour>();
-                increaseCurrency();
                 currency.DeSpawn();
+                if(rumbleSpawner != null){
+                    if(hit.gameObject.name.Contains("Colliseum")){
+                        colCurrency++;
+                        updateColCurrency();
+                    }
+                    else if(hit.gameObject.name.Contains("Factory")){
+                        facCurrency++;
+                        updateFacCurrency();
+                    }
+                    else if(hit.gameObject.name.Contains("Forest")){
+                        forCurrency++;
+                        updateForCurrency();
+                    }
+
+                }
+                else increaseCurrency();
             }
             if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy"){
                 GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);

@@ -137,6 +137,7 @@ public class RumbleSpawner : MonoBehaviour
             }
             roundTime = Time.time - startTime;
             enterTooltipUI.SetActive(true);
+            enemiesKilled = 0;
         }
     }
 
