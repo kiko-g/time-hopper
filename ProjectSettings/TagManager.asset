@@ -16,7 +16,6 @@ TagManager:
   - RumblePlane
   - HubComputerHUD
   - PauseHUD
-  - HubComputerHint
   - TrainingStarter
   layers:
   - Default
