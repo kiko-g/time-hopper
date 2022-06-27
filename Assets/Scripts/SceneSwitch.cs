@@ -14,7 +14,7 @@ public class SceneSwitch : MonoBehaviour
     [SerializeField]
     private Slider _progressBar;
 
-    private AsyncOperation sceneToLoad = null;
+    //private AsyncOperation sceneToLoad = null;
 
     public string ArenaName;
 

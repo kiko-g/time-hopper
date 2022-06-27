@@ -17,7 +17,7 @@ public class RumblePlane : MonoBehaviour
         // apply rotation to the transform of the game object
         transform.Rotate(0, 0, zrotation);
         int xfactor = 1;
-        int counter = 1;
+        //int counter = 1;
         if(zrotation >= 0){
             this.gameObject.transform.GetChild(0).gameObject.transform.Translate(new Vector3(0.0f,1.35f,0.0f));
         }

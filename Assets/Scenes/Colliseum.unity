@@ -560,7 +560,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: COLISSEUM
+  m_text: COLOSSEUM
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
   m_sharedMaterial: {fileID: -4778838868984246059, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
@@ -6778,7 +6778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 283b41c9d853de9478efd298c4fa219b, type: 3}
+  m_Texture: {fileID: 2800000, guid: 2f90e4d08522d8344b872da68e571c3a, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0

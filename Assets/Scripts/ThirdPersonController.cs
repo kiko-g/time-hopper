@@ -143,7 +143,7 @@ namespace StarterAssets
 
         private bool canFire = true;
         private float fireTimer = 0f;
-        private float shootingSpread = 15f;
+        //private float shootingSpread = 15f;
 
         private Trigger trigger;
         private ArenaTrigger arenaTrigger;
@@ -201,6 +201,7 @@ namespace StarterAssets
         private GameObject[] rumblePlanes;
 
         GameObject deathScreen;
+        Transform arenaPrompt;
 
         MeshRenderer ARMesh = null;
         MeshRenderer SGMesh = null;
@@ -281,6 +282,7 @@ namespace StarterAssets
             if(trainSpawn != null){
                 trainingSpawner = trainSpawn.GetComponent<TrainingTargetSpawner>();
             }
+            arenaPrompt = canvas.transform.Find("ArenaPrompt");
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
@@ -991,6 +993,7 @@ namespace StarterAssets
                 Debug.Log("Entering Arena");
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                 changingScene = true;
+                arenaPrompt.gameObject.SetActive(false);
                 trigger.performAction();
             }
         }
@@ -998,6 +1001,59 @@ namespace StarterAssets
         void OnTriggerEnter(Collider other)
         {
             trigger = other.GetComponent<Trigger>();
+            if(trigger != null){
+                if(arenaPrompt != null){
+                    arenaPrompt.gameObject.SetActive(true);
+                    if(trigger.ArenaName == "Rumble"){
+                        foreach (Transform child in arenaPrompt)
+                        {
+                            if(child.gameObject.name == "Rumble"){
+                                child.gameObject.SetActive(true);
+                            }
+                            else if (child.gameObject.name != "Tooltip"){
+                                child.gameObject.SetActive(false);
+                            }
+                        }
+                    }
+                    else{
+                        arenaPrompt.GetChild(1).gameObject.SetActive(true);
+                        arenaPrompt.GetChild(2).gameObject.SetActive(true);
+                        if(trigger.ArenaName == "Colliseum"){
+                            arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter the Colloseum";
+                            foreach(Transform child in arenaPrompt){
+                                if(child.gameObject.name == "Colliseum"){
+                                    child.gameObject.SetActive(true);
+                                }
+                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency"){
+                                    child.gameObject.SetActive(false);
+                                }
+                            }
+                        }
+                        else if(trigger.ArenaName == "Forest"){
+                            arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter the Snowforest";
+                            foreach(Transform child in arenaPrompt){
+                                if(child.gameObject.name == "Forest"){
+                                    child.gameObject.SetActive(true);
+                                }
+                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency"){
+                                    child.gameObject.SetActive(false);
+                                }
+                            }
+                        }
+                        else if(trigger.ArenaName == "Factory"){
+                            arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter the Factory";
+                            foreach(Transform child in arenaPrompt){
+                                if(child.gameObject.name == "Factory"){
+                                    child.gameObject.SetActive(true);
+                                }
+                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency"){
+                                    child.gameObject.SetActive(false);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             arenaTrigger = other.GetComponent<ArenaTrigger>();
             if(!foundArenaTrigger){
                 foundArenaTrigger = true;
@@ -1042,6 +1098,13 @@ namespace StarterAssets
         }
 
         void OnTriggerExit(Collider other){
+            if(trigger != null){
+                if(arenaPrompt != null){
+                    arenaPrompt.GetChild(1).gameObject.SetActive(false);
+                    arenaPrompt.GetChild(2).gameObject.SetActive(false);
+                    arenaPrompt.gameObject.SetActive(false);
+                }
+            }
             trigger = null;
             arenaTrigger = null;
             if(other.gameObject.tag == "TrainingStarter"){

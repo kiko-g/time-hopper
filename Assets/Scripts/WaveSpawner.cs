@@ -29,7 +29,6 @@ public class WaveSpawner : MonoBehaviour
     private Text numEnemiesAliveText;
 
     private bool round_active = false;
-    private bool last_round = false;
     private int extraEnemyCount;
     private int enemiesToDefeat;
     private int numWaves = 0;
@@ -136,11 +135,6 @@ public class WaveSpawner : MonoBehaviour
             if (startRoundTextUI.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime == 1.0f){
                 startRoundTextUI.gameObject.SetActive(false);
             }
-        }
-
-        if (numWaves <= 0){
-            last_round = true;
-            //round_active = false;
         }
     }
 

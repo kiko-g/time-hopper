@@ -17,9 +17,4 @@ public class Trigger : MonoBehaviour
         sceneSwitch.LoadArenaScene(death);
     }
 
-    public void TeleportToArena()
-    {
-        player.transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
-    }
-
 }
