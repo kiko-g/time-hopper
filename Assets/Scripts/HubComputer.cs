@@ -50,7 +50,7 @@ public class HubComputer : MonoBehaviour
 
     bool WasPressed()
     {
-        return Input.GetKeyUp(KeyCode.F);
+        return Input.GetKeyUp(KeyCode.E);
     }
 
     bool IsWithinRange(Vector3 pos)
@@ -64,12 +64,12 @@ public class HubComputer : MonoBehaviour
         return left || right;
     }
 
-    void HideHint() 
+    void HideHint()
     {
         if (hint.activeInHierarchy) hint.SetActive(false);
     }
 
-    void ShowHint() 
+    void ShowHint()
     {
         if (!hint.activeInHierarchy) hint.SetActive(true);
     }
