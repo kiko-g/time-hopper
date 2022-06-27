@@ -526,12 +526,12 @@
             "actions": [
                 {
                     "name": "Navigate",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "fa31794a-a09c-41b3-87a0-22ab05a26a20",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Submit",
@@ -562,7 +562,7 @@
                 },
                 {
                     "name": "Click",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "501e4bee-a816-48ad-99bd-d4c6b3c75236",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -1033,6 +1033,61 @@
                     "action": "TrackedDeviceOrientation",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Joystick",
+                    "id": "a14a2304-547d-4121-899b-4bb5cdab6e47",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "fedd5ded-173d-4853-9fef-81fa08f72aed",
+                    "path": "<Joystick>/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "321000ad-3d4d-4f02-9785-19e6610a68b7",
+                    "path": "<Joystick>/stick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "c9715249-c40d-40a5-aa26-290451b11abe",
+                    "path": "<Joystick>/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "e74189f8-4433-4ad3-a045-ef6c4326eed5",
+                    "path": "<Joystick>/stick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Point",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

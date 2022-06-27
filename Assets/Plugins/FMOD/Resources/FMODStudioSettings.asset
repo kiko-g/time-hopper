@@ -17,8 +17,8 @@ MonoBehaviour:
   active: 1
   Properties:
     LiveUpdate:
-      Value: 1
-      HasValue: 1
+      Value: 0
+      HasValue: 0
     LiveUpdatePort:
       Value: 9264
       HasValue: 1

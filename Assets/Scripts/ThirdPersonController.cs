@@ -341,6 +341,8 @@ namespace StarterAssets
             SwitchWeapon();
             StartRound();
             Reload();
+            Point();
+            Click();
 
 
             /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("ReloadWalking") && _animator.GetCurrentAnimatorClipInfo){
@@ -1031,6 +1033,23 @@ namespace StarterAssets
                     gunArsenal[i].gameObject.SetActive(false);
                 }
             }
+        }
+
+        /* UI Actions */
+        private void Point()
+        {
+            if(_playerInput.currentActionMap.name != "UI") return;
+
+            Debug.Log(_input.navigate);
+        }
+
+        /* UI Actions */
+        private void Click()
+        {
+            if(_playerInput.currentActionMap.name != "UI") return;
+
+            Debug.Log(_input.click);
+            _input.click = false;
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
