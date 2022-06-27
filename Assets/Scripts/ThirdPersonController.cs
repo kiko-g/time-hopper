@@ -97,7 +97,7 @@ namespace StarterAssets
         public int forCurrency = 0;
         public int facCurrency = 0;
         public GameObject WeaponShopUI;
-        
+
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
@@ -109,12 +109,12 @@ namespace StarterAssets
         private int _animIDFreeFall;
         private int _animIDRun;
         private int _animIDShoot;
-        
+
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         private PlayerInput _playerInput;
 #endif
-        private Animator _animator;
+        public Animator _animator;
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
@@ -136,6 +136,8 @@ namespace StarterAssets
 
         public bool reload = false;
 
+        public bool melee = false;
+
         private bool startRound = false;
 
         private int nextRound = 1;
@@ -143,6 +145,7 @@ namespace StarterAssets
         private bool rotateWhenMoving = true;
 
         private bool training;
+        private bool rotated = false;
 
         private bool canFire = true;
         private float fireTimer = 0f;
@@ -176,8 +179,8 @@ namespace StarterAssets
         private LayerMask aimColliderMask;
 
         [SerializeField]
-        private GameObject blade;
-        
+        public GameObject blade;
+
         [SerializeField]
         private GunBehaviour PS;
 
@@ -209,6 +212,8 @@ namespace StarterAssets
         private float teleportedTime = 0f;
         private bool recentlyTeleported = false;
         private bool changingScene = false;
+
+        public Vector3 bladeOffset = new Vector3(0.0114f, -0.045f, 0.0053f);
 
         private GameObject[] rumblePlanes;
 
@@ -264,7 +269,7 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -273,7 +278,7 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-            AssignAnimationIDs();
+            //AssignAnimationIDs();
             _animator.SetBool("Pistol", true);
             // find the canvas
             GameObject canvas = GameObject.Find("Canvas");
@@ -330,11 +335,19 @@ namespace StarterAssets
             Move();
             Aim();
             Fire();
+            Melee();
             WeaponShop();
             Interact();
             SwitchWeapon();
             StartRound();
             Reload();
+
+
+            /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("ReloadWalking") && _animator.GetCurrentAnimatorClipInfo){
+                _animator.SetBool("Reloading", false);
+                SprintSpeed = 5.335f;
+            }*/
+
 
             if(recentlyTeleported && Time.time - teleportedTime > 0.5f){
                 for(int i = 0; i<rumblePlanes.Length; i++){
@@ -360,7 +373,7 @@ namespace StarterAssets
             if (!canFire){
                 fireTimer += Time.deltaTime;
                 if (fireTimer >= 0.3f){
-                    
+
                     canFire = true;
                     fireTimer = 0;
                 }
@@ -370,7 +383,7 @@ namespace StarterAssets
                 Color temp = bloodOverlay.GetComponent<Image>().color;
                 temp.a -= 0.005f;
                 bloodOverlay.GetComponent<Image>().color = temp;
-                
+
                 if (temp.a < 0)
                 {
                     playerGotHit = false;
@@ -392,7 +405,7 @@ namespace StarterAssets
                 {
                     heartBeatUp = !heartBeatUp;
                 }
-                
+
                 if (heartBeatUp)
                 {
                     heartBeatRatio += 0.01f;
@@ -413,14 +426,14 @@ namespace StarterAssets
             CameraRotation();
         }
 
-        private void AssignAnimationIDs()
+        /*private void AssignAnimationIDs()
         {
             _animIDGrounded = Animator.StringToHash("Grounded");
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDRun = Animator.StringToHash("Run");
             _animIDShoot = Animator.StringToHash("Shoot");
-        }
+        }*/
 
         private void WeaponShop(){
             RaycastHit hit;
@@ -431,7 +444,7 @@ namespace StarterAssets
                 if (hit.collider.gameObject.name == "AR")
                 {
                     ARMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
- 
+
                     if (!gunArsenal.Contains(AR))
                     {
                         if(weaponCurrency >= AR.weaponPrice){
@@ -445,6 +458,7 @@ namespace StarterAssets
                                 gunArsenal[selectedGun].gameObject.SetActive(false);
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
+                                _animator.SetBool("Pistol", false);
                             }
                         }
                         else{
@@ -458,12 +472,12 @@ namespace StarterAssets
                     }
                 }
                 else if (hit.collider.gameObject.name == "ARAmmo"){
-                    
+
                     if(weaponCurrency >= AR.ammoPrice & gunArsenal.Contains(AR)){
                         UItext.GetComponent<Text>().text = "Press [E] to buy Tango-45 AR Ammo (Cost: " + AR.ammoPrice + ")";
                         WeaponShopUI.SetActive(true);
                         if(_input.interact){
-                            if(AR.BuyAmmo(1)){                            
+                            if(AR.BuyAmmo(1)){
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
                             }
@@ -490,10 +504,11 @@ namespace StarterAssets
                                 gunArsenal[selectedGun].gameObject.SetActive(false);
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
+                                _animator.SetBool("Pistol", false);
                             }
                         }
                         else{
-                            
+
                             SGMesh.material.color = Color.red;
                         }
                     }
@@ -533,6 +548,7 @@ namespace StarterAssets
                                 gunArsenal[selectedGun].gameObject.SetActive(false);
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
+                                _animator.SetBool("Pistol", false);
                             }
                         }
                         else{
@@ -579,7 +595,7 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDGrounded, Grounded);
+                //_animator.SetBool(_animIDGrounded, Grounded);
             }
         }
 
@@ -691,13 +707,16 @@ namespace StarterAssets
                 if (_animationBlend >= 1)
                 {
                     //Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Run"));
-                    _animator.SetBool(_animIDRun, true);
+                    //_animator.SetBool(_animIDRun, true);
+                    _animator.SetBool("Running", true);
                 }
                 else {
                     //Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Run"));
-                    _animator.SetBool(_animIDRun, false);
+                    //_animator.SetBool(_animIDRun, false);
+                    _animator.SetBool("Running", false);
+
                 }
-                
+
                 //_animator.SetFloat(_animIDSpeed, _animationBlend);
                 //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
@@ -714,11 +733,30 @@ namespace StarterAssets
             }
         }
 
+        private void Melee()
+        {
+            if (_input.melee && !melee){
+                melee = true;
+                blade.GetComponent<BladeBehaviour>().setActive();
+                //gunArsenal[selectedGun].Reload();
+                _animator.SetBool("Melee", true);
+                //blade.transform.localPosition += new Vector3(0.0f, -0.15f, 0.0f);
+                blade.transform.position += bladeOffset;
+                //blade.transform.position = new Vector3(blade.transform.position.x + 0.02f, blade.transform.position.y - 0.057f, blade.transform.position.z + 0.0110f);
+                //blade.transform.position += blade.transform.TransformDirection(blade.transform.forward);
+            } else {
+                melee = false;
+                _input.melee = false;
+                //_animator.SetBool("Melee", false);
+            }
+        }
+
         private void Reload()
         {
             if (_input.reload && !reload){
                 reload = true;
                 gunArsenal[selectedGun].Reload();
+                _animator.SetBool("Reloading", true);
             } else {
                 reload = false;
                 _input.reload = false;
@@ -768,7 +806,7 @@ namespace StarterAssets
                 mouseGlobalPosition.y = transform.position.y;
                 Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
-                
+
                 _animator.SetBool("Aiming", true);
 
             } else {
@@ -808,12 +846,13 @@ namespace StarterAssets
                 if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
                     mouseGlobalPosition = hit.point;
                 }
-                
+
                 mouseGlobalPosition.y = transform.position.y;
                 Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
 
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
-                _animator.SetBool(_animIDShoot, true);
+                //_animator.SetBool(_animIDShoot, true);
+                _animator.SetBool("Shooting", true);
                 if(canFire){
                     gunArsenal[selectedGun].Shoot(shootingSpreadVec);
                     canFire = false;
@@ -821,7 +860,8 @@ namespace StarterAssets
             }
             else{
                 if(!_animator.GetBool("Aiming")) rotateWhenMoving = true;
-                _animator.SetBool(_animIDShoot, false);
+                //_animator.SetBool(_animIDShoot, false);
+                _animator.SetBool("Shooting", false);
             }
         }
 
@@ -829,6 +869,13 @@ namespace StarterAssets
         {
             if (Grounded)
             {
+                if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolJump")){
+                    if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.6f){
+                        _verticalVelocity = Gravity;
+                    } else {
+                        _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    }
+                }
                 if(fallingY != -1234.56789f){
                     float distanceFallen = fallingY - transform.position.y;
                     fallingY = -1234.56789f;
@@ -843,8 +890,15 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
+                    //_animator.SetBool(_animIDJump, false);
+                    //_animator.SetTrigger("Jumping");
+                    //_animator.ResetTrigger("Jump");
+                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping")){
+                        _animator.SetBool("Jumping", false);
+                    }
+                   //Debug.Log("Grounded");
+                    _animator.SetBool("Falling", false);
+                    //_animator.SetBool(_animIDFreeFall, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -856,21 +910,31 @@ namespace StarterAssets
                 // Jump
                 if (_input.jump && _jumpTimeoutDelta <= 0.0f)
                 {
-                    
-                    
+
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    
+
                     if (_hasAnimator)
                     {
+                        Debug.Log("Should Jump");
                         if(_animator.GetBool("Aiming")) _input.jump = false;
-                        _animator.SetBool(_animIDJump, true);
-                        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Jump")) _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                        //_animator.SetBool(_animIDJump, true);
+                        _animator.SetBool("Jumping", true);
+                        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolRun")){
+                            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                        } else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Running")){
+                            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                        }
+                        Debug.Log("After Trigger");
+                        /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping")){
+                            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                            Debug.Log("Vertical");
+                        }*/
+                        //if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Jump")) _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                     }
 
                     if (!jumping)
                         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Jump/Jump");
                     jumping = true;
-                                    
 
                     // update animator if using character
                 }
@@ -880,12 +944,18 @@ namespace StarterAssets
                 {
                     _jumpTimeoutDelta -= Time.deltaTime;
                 }
+                _input.jump = false;
             }
             else
             {
-                if(!_animator.GetBool(_animIDFreeFall)){
+                /*if(!_animator.GetBool(_animIDFreeFall)){
+                    fallingY = transform.position.y;
+                }*/
+
+                if(!_animator.GetBool("Falling")){
                     fallingY = transform.position.y;
                 }
+
                 jumping = false;
                 // reset the jump timeout timer
                 _jumpTimeoutDelta = JumpTimeout;
@@ -900,9 +970,13 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
+                        //_animator.SetBool(_animIDFreeFall, true);
+                        _animator.SetBool("Falling", true);
+                        _animator.SetBool("Jumping", false);
                     }
                 }
+
+                //_animator.SetBool("Jumping", false);
 
                 // if we are not grounded, do not jump
                 _input.jump = false;
@@ -927,16 +1001,16 @@ namespace StarterAssets
                 }
             }
             else if(_input.weapon3){
-                if(gunArsenal.Count >= 3){                    
+                if(gunArsenal.Count >= 3){
                     _animator.SetBool("Pistol", false);
                     selectedGun = 2;
-                }                
+                }
             }
             else if(_input.weapon4){
                 if(gunArsenal.Count >= 4){
                     _animator.SetBool("Pistol", false);
                     selectedGun = 3;
-                }                            
+                }
             }
             if(_input.weaponScroll != 0){
                 selectedGun = (selectedGun + gunArsenal.Count + _input.weaponScroll) % gunArsenal.Count;
@@ -987,7 +1061,7 @@ namespace StarterAssets
 
         private void OnLand(AnimationEvent animationEvent)
         {
-            
+
         }
 
         private void checkTrigger()
@@ -1020,6 +1094,7 @@ namespace StarterAssets
                         foreach (Transform child in arenaPrompt)
                         {
                             if(child.gameObject.name == "Rumble"){
+                                arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter Rumble Arena";
                                 child.gameObject.SetActive(true);
                             }
                             else if (child.gameObject.name != "Tooltip"){
@@ -1141,7 +1216,7 @@ namespace StarterAssets
             }
 
             healingOverTime.PlayerTookDamage();
-            
+
             UpdateHealthUI();
 
             if (Health > 20 && !heartBeat)
@@ -1155,8 +1230,8 @@ namespace StarterAssets
                 {
                     scale = 2.5f - hitsNumber * 0.5f;
                 }
-                
-                
+
+
                 bloodOverlay.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1);
                 Color temp = bloodOverlay.GetComponent<Image>().color;
                 if (hitsNumber >= 5)
