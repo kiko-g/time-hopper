@@ -1042,7 +1042,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 11.25123, y: 34.365143, z: 32.329723}
-  m_Center: {x: 22.2, y: -5, z: 22.806181}
+  m_Center: {x: 33, y: -5, z: 25}
 --- !u!1 &239744504
 GameObject:
   m_ObjectHideFlags: 0
@@ -14242,15 +14242,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.982
+      value: 11.332001
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.5950003
+      value: 5.0950003
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.5
+      value: 103.5
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -59823,8 +59823,8 @@ MonoBehaviour:
   SG: {fileID: 789604365}
   RL: {fileID: 0}
   bloodOverlay: {fileID: 836437004}
-  TrainingHUD: {fileID: 0}
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
+  TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
 CharacterController:
   m_ObjectHideFlags: 0
