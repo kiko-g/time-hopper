@@ -40,9 +40,15 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     public ObstacleAvoidanceType AvoidanceType;
 
-    private Vector3 bulletOffset = new Vector3(0f, 1f, 0f);
+    private Vector3 bulletOffset = new Vector3(0f, 1.5f, 0f);
 
     private float upDir =  0f;
+
+    private float shootingTimer = 0f;
+
+    private bool shootingTimerActive = false;
+    
+    private float shootingTimerThreshold = 0.8f;
 
     private GameObject currencyHolder;
 
@@ -89,8 +95,25 @@ public class RangedEnemyBehaviour : MonoBehaviour
             Destroy(transform.parent.gameObject, animTime - 0.5f);
             return;
         }
+
+        if (shootingTimerActive){
+            if (alreadyShot){
+                shootingTimerActive = false;
+                shootingTimer = 0f;
+                //Debug.Log("Stopped Shooting Timer!");
+            } else {
+                shootingTimer += Time.deltaTime;
+                if (shootingTimer >= shootingTimerThreshold){
+                    //Debug.Log("Shooting!");
+                    Shoot();
+                    alreadyShot = true;
+                    shootingTimer =  0f;
+                    shootingTimerActive = false;
+                }
+            }
+        }
         
-        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Shooting"))
+        /*if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Shooting"))
         {
             //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1);
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 <= 0.7f && animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 > 0.4f && !alreadyShot)
@@ -100,7 +123,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 >= 0.85f)
             {
                 alreadyShot = false;
-            }
+            }*/
             
             /*if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
@@ -116,7 +139,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
                 }
                 registeredHit = true;
             }*/
-        }
+        //}
 
         if (Vector3.Distance(transform.position, playerTransform.position) <= range && hasLineOfSightToPlayer()){
             // navMeshAgent.isStopped = true;
@@ -134,13 +157,13 @@ public class RangedEnemyBehaviour : MonoBehaviour
             // navMeshAgent.isStopped = false;
             navMeshAgent.enabled = true;
             navMeshAgent.SetDestination(playerTransform.position);
-            transform.LookAt(playerTransform);
+            //transform.LookAt(playerTransform);
 
-            upDir = transform.forward.y;
+            //upDir = transform.forward.y;
 
-            Vector3 eulerAngles = transform.rotation.eulerAngles;
-            eulerAngles = new Vector3(0, eulerAngles.y, 0);
-            transform.rotation = Quaternion.Euler(eulerAngles);
+            //Vector3 eulerAngles = transform.rotation.eulerAngles;
+            //eulerAngles = new Vector3(0, eulerAngles.y, 0);
+            //transform.rotation = Quaternion.Euler(eulerAngles);
 
             //transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
@@ -188,12 +211,19 @@ public class RangedEnemyBehaviour : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, transform.position + bulletOffset, new Quaternion(0, 0, 0, 0));
         bullet.GetComponent<BulletBehaviour>().setDamage(damage);
         //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
-        bullet.GetComponent<Rigidbody>().AddForce(dest * 200f);
+        bullet.GetComponent<Rigidbody>().AddForce(dest * 250f);
+    }
+
+    public void StartShootingTimer()
+    {
+        //Debug.Log("Started Shooting Timer!");
+        alreadyShot = false;
+        shootingTimerActive = true;
+        shootingTimer = 0f;
     }
 
     public void TakeDamage(float damage)
     {
-
         if(!animator.GetBool("is_dead")){
             health -= damage;
 
@@ -244,7 +274,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
     private bool hasLineOfSightToPlayer()
     {
         RaycastHit hit;
-        Debug.DrawLine(transform.position + bulletOffset, playerTransform.position + playerOffset, Color.yellow, 1f);
+        //Debug.DrawLine(transform.position + bulletOffset, playerTransform.position + playerOffset, Color.yellow, 1f);
         if (Physics.Linecast(transform.position + bulletOffset, playerTransform.position + playerOffset, out hit, layerMask)){
             //Debug.Log("Raycast hit!");
             //Debug.Log(hit.transform.gameObject.tag);
