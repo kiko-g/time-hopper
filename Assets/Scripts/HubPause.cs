@@ -33,11 +33,13 @@ public class HubPause : MonoBehaviour
 
     void Hide()
     {
+        Time.timeScale = 0f;
         player.SwitchInputToUI();
     }
 
     void Show()
     {
+        Time.timeScale = 1f;
         player.SwitchInputToPlayer();
     }
 

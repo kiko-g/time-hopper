@@ -1038,17 +1038,19 @@ namespace StarterAssets
         /* UI Actions */
         private void Point()
         {
+            // FIXME:
             if(_playerInput.currentActionMap.name != "UI") return;
 
-            Debug.Log(_input.navigate);
+            // Debug.Log(_input.navigate);
         }
 
         /* UI Actions */
         private void Click()
         {
+            // FIXME:
             if(_playerInput.currentActionMap.name != "UI") return;
 
-            Debug.Log(_input.click);
+            // Debug.Log(_input.click);
             _input.click = false;
         }
 

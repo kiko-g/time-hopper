@@ -3,27 +3,43 @@ using UnityEngine.UI;
 
 public class HubComputer : MonoBehaviour
 {
-    public Canvas canvas;
-    public GameObject hint;
-    // public Button backButton;
     public Button arenasButton;
     public Button overviewButton;
     public Button upgradesButton;
+
+    public GameObject arenasCore;
+    public GameObject overviewCore;
+    public GameObject upgradesCore;
+
+    public GameObject arenasButtonActive;
+    public GameObject overviewButtonActive;
+    public GameObject upgradesButtonActive;
+
+    public Canvas canvas;
+    public GameObject hint;
     private Canvas pauseCanvas;
     private StarterAssets.ThirdPersonController player;
 
     void Start()
     {
         canvas = GetComponent<Canvas>();
-        canvas.enabled = false;
-        hint.SetActive(false);
-
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseHUD").GetComponent<Canvas>();
-
+        
         arenasButton.onClick.AddListener(OnClickArenas);
         overviewButton.onClick.AddListener(OnClickOverview);
         upgradesButton.onClick.AddListener(OnClickUpgrades);
+
+        hint.SetActive(false);
+        canvas.enabled = false;
+
+        arenasCore.SetActive(false);
+        upgradesCore.SetActive(false);
+        overviewCore.SetActive(true); // Overview is the default tab
+
+        arenasButtonActive.SetActive(false);
+        upgradesButtonActive.SetActive(false);
+        overviewButtonActive.SetActive(true); // Overview is the default tab
     }
 
     void Update()
@@ -47,11 +63,13 @@ public class HubComputer : MonoBehaviour
         canvas.enabled = value;
         if (canvas.enabled)
         {
+            Time.timeScale = 0f;
             player.SwitchInputToUI();
             HideHint();
         }
         else
         {
+            Time.timeScale = 1f;
             player.SwitchInputToPlayer();
             ShowHint();
         }
@@ -93,15 +111,24 @@ public class HubComputer : MonoBehaviour
     void OnClickOverview()
     {
         Debug.Log("You have clicked the Overview button!");
+        overviewButtonActive.SetActive(true);
+        arenasButtonActive.SetActive(false);
+        upgradesButtonActive.SetActive(false);
     }
 
     void OnClickArenas()
     {
         Debug.Log("You have clicked the Arenas button!");
+        overviewButtonActive.SetActive(false);
+        arenasButtonActive.SetActive(true);
+        upgradesButtonActive.SetActive(false);
     }
 
     void OnClickUpgrades()
     {
         Debug.Log("You have clicked the Upgrades button!");
+        arenasButtonActive.SetActive(false);
+        overviewButtonActive.SetActive(false);
+        upgradesButtonActive.SetActive(true);
     }
 }
