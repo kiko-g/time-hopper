@@ -3,11 +3,18 @@ using UnityEngine.UI;
 
 public class HubPause : MonoBehaviour
 {
-    public Canvas canvas;
     public Button exitButton;
     public Button resumeButton;
     public Button settingsButton;
     public Button instructionsButton;
+    public Button backSettingsButton;
+    public Button backInstructionsButton;
+
+    public GameObject core;
+    public GameObject settingsCore;
+    public GameObject instructionsCore;
+
+    public Canvas canvas;
     private StarterAssets.ThirdPersonController player;
 
     void Start()
@@ -21,6 +28,12 @@ public class HubPause : MonoBehaviour
         resumeButton.onClick.AddListener(OnClickResume);
         settingsButton.onClick.AddListener(OnClickSettings);
         instructionsButton.onClick.AddListener(OnClickInstructions);
+        backSettingsButton.onClick.AddListener(OnClickBackSettings);
+        backInstructionsButton.onClick.AddListener(OnClickBackInstructions);
+
+        core.SetActive(true); // Main is the default core
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(false);
     }
 
     void Update()
@@ -45,6 +58,9 @@ public class HubPause : MonoBehaviour
             Time.timeScale = 1f;
             player.SwitchInputToPlayer();
             Cursor.lockState = CursorLockMode.Locked;
+            core.SetActive(true); // Main is the default core
+            settingsCore.SetActive(false);
+            instructionsCore.SetActive(false);
         }
     }
 
@@ -65,12 +81,30 @@ public class HubPause : MonoBehaviour
 
     void OnClickSettings()
     {
-        Debug.Log("You have clicked the Settings button!");
+        core.SetActive(false);
+        settingsCore.SetActive(true);
+        instructionsCore.SetActive(false);
     }
 
     void OnClickInstructions()
     {
-        Debug.Log("You have clicked the Instructions button!");
+        core.SetActive(false);
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(true);
+    }
+
+    void OnClickBackSettings()
+    {
+        core.SetActive(true);
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(false);
+    }
+
+    void OnClickBackInstructions()
+    {
+        core.SetActive(true);
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(false);
     }
 
     void ExitApplication()
