@@ -31,37 +31,36 @@ public class HubPause : MonoBehaviour
         }
     }
 
-    void Hide()
-    {
-        Time.timeScale = 0f;
-        player.SwitchInputToUI();
-        Cursor.lockState = CursorLockMode.None;
-        Debug.Log("Unlock mouse!");
-    }
-
-    void Show()
-    {
-        Time.timeScale = 1f;
-        player.SwitchInputToPlayer();
-        Cursor.lockState = CursorLockMode.Locked;
-        Debug.Log("Lock mouse!");
-    }
-
     public void Toggle(bool value)
     {
         canvas.enabled = value;
-        if (value) Hide();
-        else Show();
+        if (value)
+        {
+            Time.timeScale = 0f;
+            player.SwitchInputToUI();
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            player.SwitchInputToPlayer();
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     void OnClickExit()
     {
-        Debug.Log("You have clicked the Exit button!");
+        canvas.enabled = false;
+        Time.timeScale = 1f;
+        ExitApplication();
     }
 
     void OnClickResume()
     {
-        Debug.Log("You have clicked the Resume button!");
+        canvas.enabled = false;
+        Time.timeScale = 1f;
+        player.SwitchInputToPlayer();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnClickSettings()
@@ -72,5 +71,14 @@ public class HubPause : MonoBehaviour
     void OnClickInstructions()
     {
         Debug.Log("You have clicked the Instructions button!");
+    }
+
+    void ExitApplication()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

@@ -112,7 +112,6 @@ public class HubComputer : MonoBehaviour
 
     void OnClickOverview()
     {
-        Debug.Log("You have clicked the Overview button!");
         overviewButtonActive.SetActive(true);
         arenasButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(false);
@@ -124,7 +123,6 @@ public class HubComputer : MonoBehaviour
 
     void OnClickArenas()
     {
-        Debug.Log("You have clicked the Arenas button!");
         overviewButtonActive.SetActive(false);
         arenasButtonActive.SetActive(true);
         upgradesButtonActive.SetActive(false);
@@ -136,7 +134,6 @@ public class HubComputer : MonoBehaviour
 
     void OnClickUpgrades()
     {
-        Debug.Log("You have clicked the Upgrades button!");
         arenasButtonActive.SetActive(false);
         overviewButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(true);
