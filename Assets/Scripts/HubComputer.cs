@@ -63,12 +63,14 @@ public class HubComputer : MonoBehaviour
         canvas.enabled = value;
         if (canvas.enabled)
         {
+            Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0f;
             player.SwitchInputToUI();
             HideHint();
         }
         else
         {
+            Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1f;
             player.SwitchInputToPlayer();
             ShowHint();

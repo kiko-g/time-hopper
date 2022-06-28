@@ -35,12 +35,16 @@ public class HubPause : MonoBehaviour
     {
         Time.timeScale = 0f;
         player.SwitchInputToUI();
+        Cursor.lockState = CursorLockMode.None;
+        Debug.Log("Unlock mouse!");
     }
 
     void Show()
     {
         Time.timeScale = 1f;
         player.SwitchInputToPlayer();
+        Cursor.lockState = CursorLockMode.Locked;
+        Debug.Log("Lock mouse!");
     }
 
     public void Toggle(bool value)
