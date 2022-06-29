@@ -229,6 +229,8 @@ namespace StarterAssets
         [SerializeField]
         private GameObject TrainingHUD;
 
+        private Transform WeaponsHUD;
+
         // Sound Variables
 
         private FMOD.Studio.EventInstance walkSound;
@@ -301,6 +303,7 @@ namespace StarterAssets
             if(trainSpawn != null){
                 trainingSpawner = trainSpawn.GetComponent<TrainingTargetSpawner>();
             }
+            WeaponsHUD = canvas.transform.Find("ReloadHUD");
             arenaPrompt = canvas.transform.Find("ArenaPrompt");
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
@@ -313,8 +316,11 @@ namespace StarterAssets
             gunArsenal.Add(PS);
             if(rumbleSpawner != null){
                 gunArsenal.Add(AR);
+                addGunHUD("AR");
                 gunArsenal.Add(SG);
-                //gunArsenal.Add(RL);
+                addGunHUD("SG");
+                gunArsenal.Add(RL);
+                addGunHUD("RL");
             }
             gunArsenal[selectedGun].gameObject.SetActive(true);
             // find all objects with the tag RumblePlane
@@ -439,6 +445,12 @@ namespace StarterAssets
             _animIDShoot = Animator.StringToHash("Shoot");
         }*/
 
+        private void addGunHUD(string weapon){
+            string objectToActivate = weapon + (selectedGun+1).ToString();
+            WeaponsHUD.Find(objectToActivate).gameObject.SetActive(true);
+            WeaponsHUD.Find("Pos"+(selectedGun+1).ToString()+"Text").gameObject.SetActive(true);
+        }
+
         private void WeaponShop(){
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(screenCenter);
@@ -462,10 +474,13 @@ namespace StarterAssets
                                 gunArsenal[selectedGun].gameObject.SetActive(false);
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
+                                addGunHUD("AR");
                                 _animator.SetBool("Pistol", false);
                             }
                         }
                         else{
+                            UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + AR.weaponPrice + ")";
+                            WeaponShopUI.SetActive(true);
                             ARMesh.material.color = Color.red;
                         }
                     }
@@ -508,11 +523,13 @@ namespace StarterAssets
                                 gunArsenal[selectedGun].gameObject.SetActive(false);
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
+                                addGunHUD("SG");
                                 _animator.SetBool("Pistol", false);
                             }
                         }
                         else{
-
+                            UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + SG.weaponPrice + ")";
+                            WeaponShopUI.SetActive(true);
                             SGMesh.material.color = Color.red;
                         }
                     }
@@ -544,6 +561,8 @@ namespace StarterAssets
                     if (!gunArsenal.Contains(RL))
                     {
                         if(weaponCurrency >= RL.weaponPrice){
+                            UItext.GetComponent<Text>().text = "Press [E] to buy Bazooka M270 RL (Cost: " + RL.weaponPrice + ")";
+                            WeaponShopUI.SetActive(true);
                             RLMesh.material.color = Color.green;
                             if (_input.interact)
                             {
@@ -552,10 +571,13 @@ namespace StarterAssets
                                 gunArsenal[selectedGun].gameObject.SetActive(false);
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
+                                addGunHUD("RL");
                                 _animator.SetBool("Pistol", false);
                             }
                         }
                         else{
+                            UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + RL.weaponPrice + ")";
+                            WeaponShopUI.SetActive(true);
                             RLMesh.material.color = Color.red;
                         }
                     }
@@ -565,12 +587,18 @@ namespace StarterAssets
                 }
                 else if (hit.collider.gameObject.name == "RLAmmo"){
                     if(weaponCurrency >= RL.ammoPrice & gunArsenal.Contains(RL)){
+                        UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG Ammo (Cost: " + SG.ammoPrice + ")";
+                        WeaponShopUI.SetActive(true);
                         if(_input.interact){
                             _input.interact = false;
                             if(RL.BuyAmmo(1)){
                                 weaponCurrency -= RL.ammoPrice;
                             }
                         }
+                    }
+                     else{
+                        UItext.GetComponent<Text>().text = "Baligant XU772 SG not acquired";
+                        WeaponShopUI.SetActive(true);
                     }
                 }
                 else{
@@ -580,10 +608,20 @@ namespace StarterAssets
                     if(SGMesh != null){
                         SGMesh.material.color = SG.GetComponent<MeshRenderer>().material.color;
                     }
-                    /*if(RLMesh != null){
+                    if(RLMesh != null){
                         RLMesh.material.color = RL.GetComponent<MeshRenderer>().material.color;
-                    }*/
+                    }
                     WeaponShopUI.SetActive(false);
+                }
+            }
+            foreach(Transform child in WeaponsHUD){
+                if(child.gameObject.name.Contains("Icon")){
+                    if(child.gameObject.name == "Icon" + gunArsenal[selectedGun].gameObject.name){
+                        child.gameObject.SetActive(true);
+                    }
+                    else{
+                        child.gameObject.SetActive(false);
+                    }
                 }
             }
         }
@@ -1036,6 +1074,16 @@ namespace StarterAssets
                 }
                 else{
                     gunArsenal[i].gameObject.SetActive(false);
+                }
+            }
+            foreach(Transform child in WeaponsHUD){
+                if(child.gameObject.name.Contains("Icon")){
+                    if(child.gameObject.name == "Icon" + gunArsenal[selectedGun].gameObject.name){
+                        child.gameObject.SetActive(true);
+                    }
+                    else{
+                        child.gameObject.SetActive(false);
+                    }
                 }
             }
         }

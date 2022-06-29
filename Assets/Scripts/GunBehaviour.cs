@@ -58,12 +58,6 @@ public class GunBehaviour : MonoBehaviour
     private Text availableAmmoUI;
 
     [SerializeField]
-    private TextMesh weaponPriceUI;
-
-    [SerializeField]
-    private TextMesh ammoPriceUI;
-
-    [SerializeField]
     private LayerMask aimColliderMask = new LayerMask();
 
     WeaponRecoil recoil;
