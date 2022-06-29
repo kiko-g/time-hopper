@@ -25,10 +25,13 @@ public class RumbleSpawner : MonoBehaviour
     [SerializeField]
     private GameObject enterTooltipUI;
 
+    [SerializeField]
+    private BackgroundMusicPlayer backgroundMusicPlayer;
+
     private float startTime;
     private bool startRoundText;
 
-    private string currentScene;
+    public string currentScene;
 
     [SerializeField]
     private TextMeshProUGUI startRoundTextUI;
@@ -116,6 +119,7 @@ public class RumbleSpawner : MonoBehaviour
 
     public void setCurrentScene(string sceneName)
     {
+        backgroundMusicPlayer.startNewMusic(sceneName);
         currentScene = sceneName;
     }
 

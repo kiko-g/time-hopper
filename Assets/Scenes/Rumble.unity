@@ -1503,6 +1503,7 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 3.5
   reloading: 0
+  hasFullMagazine: 1
   impactEffects: []
   muzzleFlash: {fileID: 553697500}
   currentAmmoUI: {fileID: 1268736918}
@@ -10838,6 +10839,7 @@ MonoBehaviour:
   fireRateTimer: 1
   reloadTime: 2
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 316305642}
@@ -22476,6 +22478,7 @@ MonoBehaviour:
   fireRateTimer: 0.4
   reloadTime: 1.5
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 486503530}
@@ -41052,9 +41055,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1354911053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b258cd1f59232e841af70cdd6f439e49, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ed49fa41e32dff47b4f9dd850779a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1996843642}
+  rumbleSpawner: {fileID: 1708955332}
 --- !u!4 &1354911055
 Transform:
   m_ObjectHideFlags: 0
@@ -53210,6 +53215,8 @@ MonoBehaviour:
   forEnemiesHolder: {fileID: 736721339}
   facEnemiesHolder: {fileID: 545937777}
   enterTooltipUI: {fileID: 1535124868}
+  backgroundMusicPlayer: {fileID: 0}
+  currentScene: 
   startRoundTextUI: {fileID: 1600820641}
   enemiesLeftUI: {fileID: 700479030}
   roundNr: 0
@@ -64883,6 +64890,7 @@ MonoBehaviour:
   SG: {fileID: 789604365}
   RL: {fileID: 267951716}
   bloodOverlay: {fileID: 836437004}
+  changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
   TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
@@ -65635,6 +65643,7 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 2
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1347632582}
