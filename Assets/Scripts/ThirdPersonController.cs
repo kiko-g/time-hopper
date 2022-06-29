@@ -133,8 +133,6 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
-        public bool interact = false;
-
         public bool reload = false;
 
         public bool melee = false;
@@ -604,7 +602,7 @@ namespace StarterAssets
             {
                 //_animator.SetBool(_animIDGrounded, Grounded);
             }*/
-            Debug.Log(_controller.isGrounded);
+            //Debug.Log(_controller.isGrounded);
             Grounded = _controller.isGrounded;
         }
 
@@ -733,11 +731,9 @@ namespace StarterAssets
 
         private void Interact()
         {
-            if (_input.interact && !interact){
-                interact = true;
+            if (_input.interact){
                 checkTrigger();
             } else {
-                interact = false;
                 _input.interact = false;
             }
         }
@@ -1096,6 +1092,7 @@ namespace StarterAssets
 
         private void checkTrigger()
         {
+            _input.interact = false;
             if (arenaTrigger!= null){
                 if((nextRound-1) % 5 == 0 && !startRound && !changingScene){
                     //set the extraction portal active
@@ -1105,7 +1102,8 @@ namespace StarterAssets
                     arenaTrigger.performAction();
                 }
             }
-            if (trigger!= null && !changingScene){
+            if (trigger != null && !changingScene){
+
                 Debug.Log("Entering Arena");
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                 changingScene = true;
@@ -1118,7 +1116,6 @@ namespace StarterAssets
         {
             trigger = other.GetComponent<Trigger>();
             if(trigger != null){
-                Debug.Log("Entered Trigger!");
                 if(arenaPrompt != null){
                     arenaPrompt.gameObject.SetActive(true);
                     if(trigger.ArenaName == "Rumble"){
@@ -1212,6 +1209,10 @@ namespace StarterAssets
                         TrainingHUD.SetActive(true);
                     }
                 }
+            }
+            Trigger auxTrigger = other.GetComponent<Trigger>();
+            if(auxTrigger != null){
+                trigger = auxTrigger;
             }
         }
 
