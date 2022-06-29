@@ -828,7 +828,7 @@ namespace StarterAssets
         private void Reload()
         {
             if (_input.reload && !reload){
-                if (gunArsenal[selectedGun].reloading || gunArsenal[selectedGun].hasFullMagazine){
+                if (gunArsenal[selectedGun].reloading || gunArsenal[selectedGun].hasFullMagazine || gunArsenal[selectedGun].availableAmmo == 0){
                     return;
                 }
                 reload = true;
@@ -854,7 +854,6 @@ namespace StarterAssets
                             gun.FillAmmo();
                         }
                     }
-
                 }
                 _input.startRound = false;
             } else {

@@ -2,11 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
-using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossBehaviour : MonoBehaviour
 {
@@ -64,6 +60,11 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField]
     private Slider bossHealth;
     private bool inPain1 = false, inPain2 = false;
+    private string colliseum_base = "footstep_coliseu_boss_";
+    private string factory_base = "footstep_factory_boss_";
+    private string forest_base = "footstep_newworld_boss_";
+
+    private string footstepsBase;
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +81,22 @@ public class BossBehaviour : MonoBehaviour
 
         // Generate random float move speed between 1 and 3 with different random seed for each enemy
         moveSpeed = 4f;
+
+        switch(SceneManager.GetActiveScene().name)
+        {
+            case "Colliseum":
+                footstepsBase = colliseum_base;
+                break;
+            case "Factory":
+                footstepsBase = factory_base;
+                break;
+            case "Forest":
+                footstepsBase = forest_base;
+                break;
+            default:
+                footstepsBase = colliseum_base;
+                break;
+        }
         
     }
 
@@ -88,6 +105,11 @@ public class BossBehaviour : MonoBehaviour
         navMeshAgent.obstacleAvoidanceType = AvoidanceType;
         navMeshAgent.avoidancePriority = Random.Range(0, 100);
         navMeshAgent.speed = 2.5f;
+    }
+
+    void Step(){
+        int id = Random.Range(1, 3);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Footstep/" + footstepsBase + id, transform.position);
     }
     
     // Update is called once per frame
@@ -147,6 +169,7 @@ public class BossBehaviour : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Zombie scream"))
         {
             transform.LookAt(playerTransform);
+            upDir = transform.forward.y;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.35f && animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.65f){
                 Vector3 offset = new Vector3(-0.4f, 0, 0);
                 Vector3 dest = transform.forward;
@@ -318,7 +341,6 @@ public class BossBehaviour : MonoBehaviour
     {
         animator.SetBool("screaming", true);
         animator.SetBool("is_running", false);
-        upDir = transform.forward.y;
     }
 
     public void SlamAttack()
