@@ -538,7 +538,7 @@ namespace StarterAssets
                         WeaponShopUI.SetActive(true);
                     }
                 }
-                /*else if (hit.collider.gameObject.name == "RL")
+                else if (hit.collider.gameObject.name == "RL")
                 {
                     RLMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
                     if (!gunArsenal.Contains(RL))
@@ -572,7 +572,7 @@ namespace StarterAssets
                             }
                         }
                     }
-                }*/
+                }
                 else{
                     if(ARMesh != null){
                         ARMesh.material.color = AR.GetComponent<MeshRenderer>().material.color;

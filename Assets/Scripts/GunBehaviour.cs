@@ -7,6 +7,8 @@ public class GunBehaviour : MonoBehaviour
 
     public float damage;
 
+    public float propulsionForce;
+
     public float range;
 
     public int weaponPrice;
@@ -68,6 +70,7 @@ public class GunBehaviour : MonoBehaviour
 
     [Header("Bullet")]
     public GameObject bullet;
+    public GameObject grenadePrefab;
     public Transform muzzle;
     public float fadeDuration = 0.2f;
 
@@ -75,6 +78,7 @@ public class GunBehaviour : MonoBehaviour
     [Header("Shotgun")]
     public int numBulletsPerShot;
     public bool is_shotgun;
+    public bool is_rocketlauncher;
     public float innacuracyDistance;
     
     
@@ -147,6 +151,12 @@ public class GunBehaviour : MonoBehaviour
                     CreateBullet(cam.position + shootingDir * range);
                 }   
             }
+        }
+        else if (is_rocketlauncher) {
+            //instantiate grenade
+            GameObject grenadeInstance = Instantiate(grenadePrefab, muzzle.position, muzzle.rotation);
+            //addForce
+            grenadeInstance.GetComponent<Rigidbody>().AddForce(GetShootingDirection() * propulsionForce, ForceMode.Impulse);
         }
         else{
             RaycastHit hit;
@@ -253,11 +263,13 @@ public class GunBehaviour : MonoBehaviour
 
     Vector3 GetShootingDirection(){
         Vector3 targetPos = cam.position + cam.forward * range;
-        targetPos = new Vector3(
-            targetPos.x + Random.Range(-innacuracyDistance, innacuracyDistance),
-            targetPos.y + Random.Range(-innacuracyDistance, innacuracyDistance),
-            targetPos.z + Random.Range(-innacuracyDistance, innacuracyDistance)
-        );
+        if (!is_rocketlauncher) {
+            targetPos = new Vector3(
+                targetPos.x + Random.Range(-innacuracyDistance, innacuracyDistance),
+                targetPos.y + Random.Range(-innacuracyDistance, innacuracyDistance),
+                targetPos.z + Random.Range(-innacuracyDistance, innacuracyDistance)
+            );
+        }
 
         Vector3 direction = targetPos - cam.position;
         return direction.normalized;
