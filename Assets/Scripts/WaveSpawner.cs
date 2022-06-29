@@ -9,7 +9,7 @@ public class WaveSpawner : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject enemyPrefab;
+    private GameObject enemyPrefab, bossPrefab;
 
     [SerializeField]
     private GameObject enemiesHolder;
@@ -125,7 +125,7 @@ public class WaveSpawner : MonoBehaviour
         elapsedTime += Time.deltaTime;
 
         //Debug.Log(elapsedTime);
-        
+
         // if elapsed time bigger than 3 and not round active, set round active to true, reset elapsed time and call startround function
         if (startRoundFlag && !round_active && enemiesHolder.transform.childCount == 0)
         {
@@ -173,6 +173,11 @@ public class WaveSpawner : MonoBehaviour
         }
     }
 
+    public void resetRound()
+    {
+        round_active = false;
+    }
+
     public void decreaseEnemiesToDefeat()
     {
         enemiesToDefeat--;
@@ -208,6 +213,7 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("Start round!"); 
         startRoundFlag = false;
         roundNr++;
+
         ShowRoundStartUI();
         Debug.Log("Round Number: " + roundNr);
         if (roundNr % 5 != 0)
@@ -219,7 +225,10 @@ public class WaveSpawner : MonoBehaviour
             enemiesToDefeat = waveSize * (roundNr + 1);
         }
         else {
-            // TODO: spawn boss
+            SpawnBoss();
+            //get gameobject with tag BossStats
+            GameObject bossStats = GameObject.FindGameObjectWithTag("BossStats");
+            bossStats.GetComponent<Animator>().Play("BossStatsFadeIn", -1, 0f);
         }
 
         UpdateNumEnemiesAlive();
@@ -275,6 +284,45 @@ public class WaveSpawner : MonoBehaviour
                     break;
             }
         }
+    }
+
+    void SpawnBoss()
+    {
+        Vector3 position = new Vector3(0, 0, 0);
+        
+        switch(SceneManager.GetActiveScene().name)
+        {
+            case "Colliseum":
+                position = new Vector3(0, 10, 0);
+                break;
+            case "Factory":
+                position = new Vector3(5, 25, 12);
+                break;
+            case "Forest":
+                position = new Vector3(25, 10, -5);
+                break;
+            default:
+                break;
+        }
+
+        GameObject boss = Instantiate(bossPrefab, position, new Quaternion(0, 0, 0, 0));
+        boss.transform.GetChild(0).GetComponent<BossBehaviour>().setStats(roundNr);
+        boss.transform.SetParent(enemiesHolder.transform);
+    }
+
+    public void clearAllEnemies()
+    {
+        // find all tags with Enemy
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        
+        // iterate enemies and call die function for each
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+        
+        enemiesToDefeat = 0;
+        UpdateNumEnemiesAlive();
     }
 
     int getRoundNr()

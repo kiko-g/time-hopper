@@ -17,6 +17,12 @@ TagManager:
   - HubComputerHUD
   - PauseHUD
   - TrainingStarter
+  - BossHealth
+  - Boss
+  - SlamParticles
+  - BossStats
+  - BossHead
+  - BossBullet
   layers:
   - Default
   - TransparentFX

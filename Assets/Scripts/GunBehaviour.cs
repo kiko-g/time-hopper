@@ -181,6 +181,15 @@ public class GunBehaviour : MonoBehaviour
                     if (enemy != null){
                         enemy.TakeDamage(actualDamage);
                     }
+                } else if(hit.transform.tag == "Boss"){
+                    float actualDamage = damage;
+                    if (hit.collider.GetType() == typeof(SphereCollider)){
+                        actualDamage *= 2;
+                    }
+                    BossBehaviour enemy = hit.transform.GetComponent<BossBehaviour>();
+                    if (enemy != null){
+                        enemy.TakeDamage(actualDamage);
+                    }
                 } else if(hit.transform.name == "target_test"){
                     TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
                     if (target != null){
