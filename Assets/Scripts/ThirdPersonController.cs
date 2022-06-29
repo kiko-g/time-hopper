@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -316,11 +318,15 @@ namespace StarterAssets
             gunArsenal.Add(PS);
             if(rumbleSpawner != null){
                 gunArsenal.Add(AR);
+                selectedGun = gunArsenal.Count-1;
                 addGunHUD("AR");
                 gunArsenal.Add(SG);
+                selectedGun = gunArsenal.Count-1;
                 addGunHUD("SG");
                 gunArsenal.Add(RL);
+                selectedGun = gunArsenal.Count-1;
                 addGunHUD("RL");
+                selectedGun = 0;
             }
             gunArsenal[selectedGun].gameObject.SetActive(true);
             // find all objects with the tag RumblePlane
@@ -344,6 +350,22 @@ namespace StarterAssets
             Aim();
             Fire();
             Melee();
+            if(trainingSpawner != null){
+                if(!trainingSpawner.active){
+                    training = false;
+                }
+
+                if(!training && TrainingHUD.activeSelf){
+                    Debug.Log(_input.interact);
+                    if(_input.interact){
+                        Debug.Log("Vou começar o treino");
+                        trainingSpawner.startTraining();
+                        _input.interact = false;
+                        training = true;
+                        TrainingHUD.SetActive(false);
+                    }
+                }
+            }
             WeaponShop();
             Interact();
             SwitchWeapon();
@@ -365,20 +387,7 @@ namespace StarterAssets
                 }
                 recentlyTeleported = false;
             }
-            if(trainingSpawner != null){
-                if(!trainingSpawner.active){
-                    training = false;
-                }
-
-                if(!training && TrainingHUD.activeSelf){
-                    if(_input.interact){
-                        _input.interact = false;
-                        trainingSpawner.startTraining();
-                        training = true;
-                        TrainingHUD.SetActive(false);
-                    }
-                }
-            }
+            
 
             if (!canFire){
                 fireTimer += Time.deltaTime;
@@ -475,7 +484,10 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("AR");
-                                updateCurrencyUI();
+                                //if the current scene is not "Hub", update the currency ui
+                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                    updateCurrencyUI();
+                                }
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -500,7 +512,9 @@ namespace StarterAssets
                             if(AR.BuyAmmo(1)){
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
-                                updateCurrencyUI();
+                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                    updateCurrencyUI();
+                                }
                             }
                         }
                     }
@@ -526,7 +540,9 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("SG");
-                                updateCurrencyUI();
+                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                    updateCurrencyUI();
+                                }
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -550,7 +566,9 @@ namespace StarterAssets
                             _input.interact = false;
                             if(SG.BuyAmmo(1)){
                                 weaponCurrency -= SG.ammoPrice;
-                                updateCurrencyUI();
+                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                    updateCurrencyUI();
+                                }
                             }
                         }
                     }
@@ -576,7 +594,9 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("RL");
-                                updateCurrencyUI();
+                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                    updateCurrencyUI();
+                                }
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -587,6 +607,8 @@ namespace StarterAssets
                         }
                     }
                     else{
+                        UItext.GetComponent<Text>().text = "Bazooka M270 RL already acquired";
+                        WeaponShopUI.SetActive(true);
                         RLMesh.material.color = Color.red;
                     }
                 }
@@ -598,7 +620,9 @@ namespace StarterAssets
                             _input.interact = false;
                             if(RL.BuyAmmo(1)){
                                 weaponCurrency -= RL.ammoPrice;
-                                updateCurrencyUI();
+                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                    updateCurrencyUI();
+                                }
                             }
                         }
                     }
@@ -1250,6 +1274,7 @@ namespace StarterAssets
                 recentlyTeleported = true;
             }
             if(other.gameObject.tag == "TrainingStarter"){
+                Debug.Log("Entrei no trigger");
                 if(!training){
                     TrainingHUD.SetActive(true);
                     WeaponShopUI.SetActive(false);
@@ -1265,9 +1290,11 @@ namespace StarterAssets
                     }
                 }
             }
-            Trigger auxTrigger = other.GetComponent<Trigger>();
-            if(auxTrigger != null){
-                trigger = auxTrigger;
+            else{
+                Trigger auxTrigger = other.GetComponent<Trigger>();
+                if(auxTrigger != null){
+                    trigger = auxTrigger;
+                }
             }
         }
 
