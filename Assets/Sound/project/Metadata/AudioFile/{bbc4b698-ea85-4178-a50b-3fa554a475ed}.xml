@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{bbc4b698-ea85-4178-a50b-3fa554a475ed}">
+		<property name="assetPath">
+			<value>soundtrack_hub_music1_2.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>30</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2c4e0fe2-0719-4c6b-89cd-f026e4ec8d37}</destination>
+		</relationship>
+	</object>
+</objects>

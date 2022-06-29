@@ -942,6 +942,7 @@ MonoBehaviour:
   is_pistol: 1
   fireRateTimer: 0
   reloadTime: 2
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1761664262}
@@ -958,6 +959,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 0
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!1 &44250180
 GameObject:
   m_ObjectHideFlags: 0
@@ -7981,6 +7983,7 @@ MonoBehaviour:
   is_pistol: 1
   fireRateTimer: 1
   reloadTime: 2
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1948164245}
@@ -7997,6 +8000,7 @@ MonoBehaviour:
   is_shotgun: 1
   is_rocketlauncher: 0
   innacuracyDistance: 2
+  gun_sound: shot_gun_1
 --- !u!114 &457555810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9306,6 +9310,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2911736426955009642, guid: dc263f68cd947d146b45c9600be247b9, type: 3}
+--- !u!1 &549740822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 471066714}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &549740824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549740822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &549771760
 GameObject:
   m_ObjectHideFlags: 0
@@ -10034,6 +10056,7 @@ MonoBehaviour:
   is_pistol: 1
   fireRateTimer: 0
   reloadTime: 3.5
+  reloading: 0
   impactEffects: []
   muzzleFlash: {fileID: 126957472}
   currentAmmoUI: {fileID: 1621923785}
@@ -10049,6 +10072,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 1
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!4 &570924887 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b3613e266360b04ea793e7339e8eb2c, type: 3}
@@ -13446,6 +13470,7 @@ MonoBehaviour:
   is_pistol: 1
   fireRateTimer: 0.4
   reloadTime: 1.5
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1761664262}
@@ -13462,6 +13487,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 0
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!1 &779783790
 GameObject:
   m_ObjectHideFlags: 0
@@ -25164,7 +25190,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
   m_PrefabInstance: {fileID: 471066714}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 549740822}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
@@ -30292,6 +30318,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1819190299 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 1402827283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1819190300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819190299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &1821015634
 GameObject:
   m_ObjectHideFlags: 0
@@ -37950,6 +37994,7 @@ GameObject:
   - component: {fileID: 5885216829670671795}
   - component: {fileID: 135756641613574975}
   - component: {fileID: 4416926083347132239}
+  - component: {fileID: 4416926083347132228}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -37957,6 +38002,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4416926083347132228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926083347132227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4fb6739300f8ed45ae0c2f391f6a990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4416926083347132232
 MonoBehaviour:
   m_ObjectHideFlags: 0
