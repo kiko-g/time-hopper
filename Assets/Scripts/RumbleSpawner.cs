@@ -43,7 +43,9 @@ public class RumbleSpawner : MonoBehaviour
     private int totalEnemiesToDefeat;
     private int enemiesKilled = 0;
     private int enemiesLeft = 0;
-    private int roundNr = 0;
+    public int roundNr = 0;
+    public int numKills = 0;
+    public float timePlayed = 0f;
     private float roundTime = 0f, spawnEnemyTime = 0f;
     //Vector2 xLimits = new Vector2(-30, 30);
     //Vector2 zLimits = new Vector2(-30, 30);
@@ -88,6 +90,7 @@ public class RumbleSpawner : MonoBehaviour
 
     void Update()
     {
+        timePlayed += Time.deltaTime;
         if (startRoundFlag && !round_active && enemiesLeft == 0)
         {
             round_active = true;
@@ -118,6 +121,7 @@ public class RumbleSpawner : MonoBehaviour
 
     public void increaseEnemiesKilled(){
         enemiesKilled++;
+        numKills++;
         enemiesLeft = totalEnemiesToDefeat - enemiesKilled;
         enemiesLeftText.text = enemiesLeft.ToString();
         if(enemiesLeft == 0){

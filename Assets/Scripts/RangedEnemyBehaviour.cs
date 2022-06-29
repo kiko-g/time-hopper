@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 
 public class RangedEnemyBehaviour : MonoBehaviour
@@ -34,6 +36,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     [SerializeField]
     private GameObject bulletPrefab;
+
+    [SerializeField]
+    private GameObject rumblePrefab;
 
     [SerializeField]
     private TextMeshProUGUI damageText;
@@ -267,6 +272,15 @@ public class RangedEnemyBehaviour : MonoBehaviour
                 GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
                 Debug.Log("Dropped currency");
                 currency.transform.SetParent(currencyHolder.transform);
+            }
+            if(SceneManager.GetActiveScene().name == "Rumble"){
+                dropRng = Random.Range(1,101);
+                if(dropRng <= 10){
+                    Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
+                    GameObject currency = Instantiate(rumblePrefab, spawnPos, new Quaternion(0, 0, 0, 0));
+                    Debug.Log("Dropped legendary currency");
+                    currency.transform.SetParent(currencyHolder.transform);
+                }
             }
         }
     }

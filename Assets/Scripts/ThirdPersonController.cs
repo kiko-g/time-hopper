@@ -96,6 +96,7 @@ namespace StarterAssets
         public int colCurrency = 0;
         public int forCurrency = 0;
         public int facCurrency = 0;
+        public int rumCurrency = 0;
         public GameObject WeaponShopUI;
 
 
@@ -172,6 +173,9 @@ namespace StarterAssets
 
         [SerializeField]
         private Text forCurrencyAmountUI;
+
+        [SerializeField]
+        private Text rumCurrencyAmountUI;
 
         private Vector2 screenCenter;
 
@@ -1330,6 +1334,10 @@ namespace StarterAssets
             forCurrencyAmountUI.text = forCurrency.ToString();
         }
 
+        private void updateRumCurrency(){
+            rumCurrencyAmountUI.text = rumCurrency.ToString();
+        }
+
         private void updateColCurrency(){
             colCurrencyAmountUI.text = colCurrency.ToString();
         }
@@ -1350,6 +1358,10 @@ namespace StarterAssets
                     else if(hit.gameObject.name.Contains("Forest")){
                         forCurrency++;
                         updateForCurrency();
+                    }
+                    else if(hit.gameObject.name.Contains("Rumble")){
+                        rumCurrency++;
+                        updateRumCurrency();
                     }
 
                 }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -25,6 +27,9 @@ public class EnemyBehaviour : MonoBehaviour
     
     [SerializeField]
     private GameObject currencyPrefab;
+
+    [SerializeField]
+    private GameObject rumblePrefab;
 
     private GameObject currencyHolder;
     
@@ -202,7 +207,18 @@ public class EnemyBehaviour : MonoBehaviour
                 Debug.Log("Dropped currency");
                 currency.transform.SetParent(currencyHolder.transform);
             }
+            // check if the current scene is named Rumble
+            if(SceneManager.GetActiveScene().name == "Rumble"){
+                dropRng = Random.Range(1,101);
+                if(dropRng <= 10){
+                    Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
+                    GameObject currency = Instantiate(rumblePrefab, spawnPos, new Quaternion(0, 0, 0, 0));
+                    Debug.Log("Dropped legendary currency");
+                    currency.transform.SetParent(currencyHolder.transform);
+                }
+            }
         }
+
     }
 
     //on collision enter, if tag is "Player" then ignore collision

@@ -3717,6 +3717,7 @@ MonoBehaviour:
   damageIncreasePerRound: 2
   dropPercentage: 25
   currencyPrefab: {fileID: 975483126235229509, guid: b868aec09068e994cb67ee1503034c2e, type: 3}
+  rumblePrefab: {fileID: 1661584327474507373, guid: 477cb5b627d98b14abe837c20ff00171, type: 3}
   AvoidanceType: 4
   damageText: {fileID: 678008008990873827}
 --- !u!95 &2460408402146330504
