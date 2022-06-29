@@ -31,10 +31,12 @@ public class WaveSpawner : MonoBehaviour
     private bool round_active = false;
     private int extraEnemyCount;
     private int enemiesToDefeat;
+    public int numKills = 0;
     private int numWaves = 0;
+    public float timePlayed = 0f;
     private float waveTimeout = 60f;
     private int waveSize = 4;
-    private int roundNr = 0;
+    public int roundNr = 0;
     private float elapsedTime = 0f, roundTime = 0f, spawnEnemyTime = 0f;
     Vector2 xLimits = new Vector2(-30, 30);
     Vector2 zLimits = new Vector2(-30, 30);
@@ -92,6 +94,7 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+        timePlayed += Time.deltaTime;
         if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){
@@ -173,6 +176,7 @@ public class WaveSpawner : MonoBehaviour
     public void decreaseEnemiesToDefeat()
     {
         enemiesToDefeat--;
+        numKills++;
         if (enemiesToDefeat == 0)
         {
             Debug.Log("You killed all enemies");

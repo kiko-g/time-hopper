@@ -1,13 +1,27 @@
+using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HubPause : MonoBehaviour
 {
-    public Canvas canvas;
     public Button exitButton;
     public Button resumeButton;
     public Button settingsButton;
     public Button instructionsButton;
+    public Button backSettingsButton;
+    public Button backInstructionsButton;
+
+    public GameObject core;
+    public GameObject settingsCore;
+    public GameObject instructionsCore;
+
+    public Slider sliderSFX;
+    public Slider sliderMusic;
+    public TextMeshProUGUI textSFX;
+    public TextMeshProUGUI textMusic;
+
+    public Canvas canvas;
     private StarterAssets.ThirdPersonController player;
 
     void Start()
@@ -21,50 +35,104 @@ public class HubPause : MonoBehaviour
         resumeButton.onClick.AddListener(OnClickResume);
         settingsButton.onClick.AddListener(OnClickSettings);
         instructionsButton.onClick.AddListener(OnClickInstructions);
+        backSettingsButton.onClick.AddListener(OnClickBackSettings);
+        backInstructionsButton.onClick.AddListener(OnClickBackInstructions);
+
+        core.SetActive(true); // Main is the default core
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(false);
+
+        sliderSFX.value = 0.7f;
+        sliderMusic.value = 0.7f;
     }
 
     void Update()
     {
+        UpdateSliders();
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             Toggle(!canvas.enabled);
         }
     }
 
-    void Hide()
+    void UpdateSliders()
     {
-        player.SwitchInputToUI();
-    }
+        // TODO: Apply slider value to audio values
+        AudioListener.volume = sliderSFX.value;
 
-    void Show()
-    {
-        player.SwitchInputToPlayer();
+        textSFX.text = "Sound Effects Volume (" + Mathf.RoundToInt(sliderSFX.value * 100) + "%)";
+        textMusic.text = "Music Volume (" + Mathf.RoundToInt(sliderMusic.value * 100) + "%)";
     }
 
     public void Toggle(bool value)
     {
         canvas.enabled = value;
-        if (value) Hide();
-        else Show();
+        if (value)
+        {
+            Time.timeScale = 0f;
+            player.SwitchInputToUI();
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            player.SwitchInputToPlayer();
+            Cursor.lockState = CursorLockMode.Locked;
+            core.SetActive(true); // Main is the default core
+            settingsCore.SetActive(false);
+            instructionsCore.SetActive(false);
+        }
     }
 
     void OnClickExit()
     {
-        Debug.Log("You have clicked the Exit button!");
+        canvas.enabled = false;
+        Time.timeScale = 1f;
+        ExitApplication();
     }
 
     void OnClickResume()
     {
-        Debug.Log("You have clicked the Resume button!");
+        canvas.enabled = false;
+        Time.timeScale = 1f;
+        player.SwitchInputToPlayer();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnClickSettings()
     {
-        Debug.Log("You have clicked the Settings button!");
+        core.SetActive(false);
+        settingsCore.SetActive(true);
+        instructionsCore.SetActive(false);
     }
 
     void OnClickInstructions()
     {
-        Debug.Log("You have clicked the Instructions button!");
+        core.SetActive(false);
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(true);
+    }
+
+    void OnClickBackSettings()
+    {
+        core.SetActive(true);
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(false);
+    }
+
+    void OnClickBackInstructions()
+    {
+        core.SetActive(true);
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(false);
+    }
+
+    void ExitApplication()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
