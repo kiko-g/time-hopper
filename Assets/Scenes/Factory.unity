@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1996843642}
-  waveSpawner: {fileID: 0}
+  waveSpawner: {fileID: 944417694}
   sceneSwitch: {fileID: 1670409616}
 --- !u!65 &57919592
 BoxCollider:

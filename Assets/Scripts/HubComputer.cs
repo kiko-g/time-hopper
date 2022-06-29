@@ -9,6 +9,10 @@ public class HubComputer : MonoBehaviour
     public Button overviewButton;
     public Button upgradesButton;
 
+    private bool rumbleUnlocked;
+    private bool rumbleAvailable;
+    public Button unlockRumbleButton;
+
     public GameObject arenasCore;
     public GameObject overviewCore;
     public GameObject upgradesCore;
@@ -65,9 +69,13 @@ public class HubComputer : MonoBehaviour
         arenasButton.onClick.AddListener(OnClickArenas);
         overviewButton.onClick.AddListener(OnClickOverview);
         upgradesButton.onClick.AddListener(OnClickUpgrades);
+        unlockRumbleButton.onClick.AddListener(OnClickUnlockRumble);
 
         hint.SetActive(false);
         canvas.enabled = false;
+
+        rumbleUnlocked = false; // FIXME: use player prefs value
+        rumbleAvailable = false;
 
         arenasCore.SetActive(false);
         upgradesCore.SetActive(false);
@@ -110,7 +118,6 @@ public class HubComputer : MonoBehaviour
         forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
         //rumbleCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100);
         //rumbleCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
-
     }
 
     string buildRoundString(int numRounds)
@@ -168,6 +175,12 @@ public class HubComputer : MonoBehaviour
 
     void Update()
     {
+        if (canvas.enabled)
+        {
+            UpdateRumbleAvailability();
+            UpdateRumbleAvailability();
+        }
+
         if (IsWithinRange(player.transform.position))
         {
             if (canvas.enabled) HideHint();
@@ -233,6 +246,29 @@ public class HubComputer : MonoBehaviour
         canvas.enabled = false;
         player.SwitchInputToUI();
         HideHint();
+    }
+
+    void UpdateRumbleAvailability()
+    {
+        if (rumbleAvailable || rumbleUnlocked) return;
+        if (PlayerPrefs.GetInt("FactoryCurrency") >= 100 && PlayerPrefs.GetInt("ForestCurrency") >= 100 && PlayerPrefs.GetInt("ColliseumCurrency") >= 100)
+        {
+            rumbleAvailable = true;
+            unlockRumbleButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            rumbleAvailable = false;
+            unlockRumbleButton.gameObject.SetActive(false);
+        }
+    }
+
+    void OnClickUnlockRumble()
+    {
+        // FIXME: save to player prefs (subtract currency and save unlocked)
+        rumbleUnlocked = false;
+        rumbleAvailable = false;
+        unlockRumbleButton.gameObject.SetActive(false);
     }
 
     void OnClickOverview()

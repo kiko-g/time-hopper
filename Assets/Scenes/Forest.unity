@@ -7289,7 +7289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1996843642}
-  waveSpawner: {fileID: 0}
+  waveSpawner: {fileID: 944417694}
   sceneSwitch: {fileID: 1670409616}
 --- !u!65 &1306279176
 BoxCollider:
@@ -16075,4 +16075,3 @@ Transform:
   m_Father: {fileID: 2544483622364061064}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-g
