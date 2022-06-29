@@ -475,6 +475,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("AR");
+                                updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -499,6 +500,7 @@ namespace StarterAssets
                             if(AR.BuyAmmo(1)){
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
+                                updateCurrencyUI();
                             }
                         }
                     }
@@ -524,6 +526,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("SG");
+                                updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -547,6 +550,7 @@ namespace StarterAssets
                             _input.interact = false;
                             if(SG.BuyAmmo(1)){
                                 weaponCurrency -= SG.ammoPrice;
+                                updateCurrencyUI();
                             }
                         }
                     }
@@ -572,6 +576,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("RL");
+                                updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -593,6 +598,7 @@ namespace StarterAssets
                             _input.interact = false;
                             if(RL.BuyAmmo(1)){
                                 weaponCurrency -= RL.ammoPrice;
+                                updateCurrencyUI();
                             }
                         }
                     }
