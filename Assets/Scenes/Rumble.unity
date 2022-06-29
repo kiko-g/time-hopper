@@ -64867,7 +64867,7 @@ MonoBehaviour:
   reload: 0
   melee: 0
   waveSpawner: {fileID: 0}
-  rumbleSpawner: {fileID: 0}
+  rumbleSpawner: {fileID: 1708955332}
   healthBar: {fileID: 1541401280}
   currencyAmountUI: {fileID: 896242603}
   colCurrencyAmountUI: {fileID: 2124075390}

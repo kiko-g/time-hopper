@@ -38,6 +38,8 @@ public class GunBehaviour : MonoBehaviour
     public bool reloading = false;
 
     private float reloadStart;
+
+    public bool hasFullMagazine = true;
     
     private Transform cam;
 
@@ -105,9 +107,6 @@ public class GunBehaviour : MonoBehaviour
 
     public void Shoot(Vector2 shootingSpreadVec)
     {
-        // print gameobject layer
-        
-        //Debug.Log("Shooting");
         if (currentAmmo <= 0 || reloading){
             return;
         }
@@ -230,6 +229,7 @@ public class GunBehaviour : MonoBehaviour
             }
         }
         updateReloadUI();
+        hasFullMagazine = false;
         if(currentAmmo == 0){
             Reload();
         }
@@ -266,6 +266,7 @@ public class GunBehaviour : MonoBehaviour
             }
             availableAmmoString = availableAmmo.ToString();
         }
+        hasFullMagazine = true;
         updateReloadUI();
     }
 

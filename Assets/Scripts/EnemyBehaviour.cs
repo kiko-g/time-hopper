@@ -2,7 +2,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
-
+using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -47,9 +48,18 @@ public class EnemyBehaviour : MonoBehaviour
 
     private Rigidbody body;
 
+    private string[] sentences = new string[] {"voicerecording_gladiator_sentence1_1", "voicerecording_gladiator_sentence1_2", "voicerecording_gladiator_sentence1_3", "voicerecording_gladiator_sentence2_1", "voicerecording_gladiator_sentence2_2", "voicerecording_gladiator_sentence3_1", "voicerecording_gladiator_sentence3_2", "voicerecording_gladiator_sentence4_1", "voicerecording_gladiator_sentence4_2"};
+
+    public float sentenceLowerBoundTimeout = 5f;
+    public float sentenceHigherBoundTimeout = 20f;
+
+    private IEnumerator speakingCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
+        
+        speakingCoroutine = sentencesCoroutine();
         body = GetComponent<Rigidbody>();
         //navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
@@ -60,6 +70,10 @@ public class EnemyBehaviour : MonoBehaviour
         
         // Generate random float move speed between 1 and 3 with different random seed for each enemy
         moveSpeed = Random.Range(1f,3f);
+
+        StartCoroutine(speakingCoroutine);
+
+        Debug.Log("Start Coroutine");
         
     }
 
@@ -73,6 +87,17 @@ public class EnemyBehaviour : MonoBehaviour
     public void setDropPercentage(int dropPercentage)
     {
         this.dropPercentage = dropPercentage;
+    }
+
+    IEnumerator sentencesCoroutine(){
+        while (true){
+            int sentenceIndex = Random.Range(0, sentences.Length);
+            string sentence = sentences[sentenceIndex];
+            float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
+            Debug.Log("Timeout: " + timeout);
+            yield return new WaitForSeconds(timeout);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentence, transform.position);
+        }
     }
 
     // Update is called once per frame
@@ -132,7 +157,7 @@ public class EnemyBehaviour : MonoBehaviour
             if (enableNavMesh){
                 navMeshAgent.enabled = true;
                 navMeshAgent.SetDestination(playerTransform.position);
-                Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
+                //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
             }
                         
             transform.LookAt(playerTransform);
@@ -182,6 +207,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Die()
     {
+        StopCoroutine(speakingCoroutine);
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
         // deactivate the colliders

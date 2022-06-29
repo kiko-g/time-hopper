@@ -828,7 +828,7 @@ namespace StarterAssets
         private void Reload()
         {
             if (_input.reload && !reload){
-                if (gunArsenal[selectedGun].reloading){
+                if (gunArsenal[selectedGun].reloading || gunArsenal[selectedGun].hasFullMagazine){
                     return;
                 }
                 reload = true;

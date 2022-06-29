@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 using UnityEngine.SceneManagement;
-
-
+using System.Collections;
 
 public class RangedEnemyBehaviour : MonoBehaviour
 {
@@ -66,9 +65,17 @@ public class RangedEnemyBehaviour : MonoBehaviour
     [SerializeField]
     private LayerMask layerMask;
 
+    private string[] sentences = new string[] {"voicerecording_robot_sentence1_1", "voicerecording_robot_sentence1_2", "voicerecording_robot_sentence1_3", "voicerecording_robot_sentence2_1", "voicerecording_robot_sentence2_2", "voicerecording_robot_sentence2_3", "voicerecording_robot_sentence3_1", "voicerecording_robot_sentence3_2"};
+
+    public float sentenceLowerBoundTimeout = 5f;
+    public float sentenceHigherBoundTimeout = 20f;
+
+    private IEnumerator speakingCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
+        speakingCoroutine = sentencesCoroutine();
         navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
         damage = baseDamage;
@@ -80,6 +87,18 @@ public class RangedEnemyBehaviour : MonoBehaviour
         currencyHolder = GameObject.Find("CurrencyHolder");
         navMeshAgent.obstacleAvoidanceType = AvoidanceType;
         navMeshAgent.avoidancePriority = Random.Range(0, 100);
+        StartCoroutine(speakingCoroutine);
+    }
+
+    IEnumerator sentencesCoroutine(){
+        while (true){
+            int sentenceIndex = Random.Range(0, sentences.Length);
+            string sentence = sentences[sentenceIndex];
+            float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
+            Debug.Log("Timeout: " + timeout);
+            yield return new WaitForSeconds(timeout);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentence, transform.position);
+        }
     }
 
     // Update is called once per frame
@@ -252,6 +271,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     private void Die()
     {
+        StopCoroutine(speakingCoroutine);
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
