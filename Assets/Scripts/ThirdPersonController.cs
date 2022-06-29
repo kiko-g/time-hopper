@@ -588,6 +588,7 @@ namespace StarterAssets
 
         private void GroundedCheck()
         {
+            /*
             // set sphere position, with offset
             Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
                 transform.position.z);
@@ -598,7 +599,9 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 //_animator.SetBool(_animIDGrounded, Grounded);
-            }
+            }*/
+            Debug.Log(_controller.isGrounded);
+            Grounded = _controller.isGrounded;
         }
 
         private void CameraRotation()
@@ -915,6 +918,7 @@ namespace StarterAssets
                 {
 
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
                     if (_hasAnimator)
                     {
@@ -922,11 +926,11 @@ namespace StarterAssets
                         if(_animator.GetBool("Aiming")) _input.jump = false;
                         //_animator.SetBool(_animIDJump, true);
                         _animator.SetBool("Jumping", true);
-                        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolRun")){
+                        /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolRun")){
                             _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                         } else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Running")){
                             _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                        }
+                        }*/
                         Debug.Log("After Trigger");
                         /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping")){
                             _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
