@@ -83,6 +83,12 @@ public class HubComputer : MonoBehaviour
 
         rumbleUnlocked = false; // FIXME: use player prefs value
         UpdateUIValues();
+        colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100)), 1f, 1f);
+        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
+        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100)), 1f, 1f);
+        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
+        forestCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100)), 1f, 1f);
+        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
     }
 
     string buildRoundString(int numRounds)
