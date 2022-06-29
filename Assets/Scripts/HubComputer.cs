@@ -42,6 +42,15 @@ public class HubComputer : MonoBehaviour
     public GameObject forestCurrency;
     public GameObject rumbleCurrency;
 
+    public Slider colliseumCurrencySlider;
+    public GameObject colliseumCurrencySliderText;
+    public Slider factoryCurrencySlider;
+    public GameObject factoryCurrencySliderText;
+    public Slider forestCurrencySlider;
+    public GameObject forestCurrencySliderText;
+    public Slider rumbleCurrencySlider;
+    public GameObject rumbleCurrencySliderText;
+
     public Canvas canvas;
     public GameObject hint;
     private Canvas pauseCanvas;
@@ -93,6 +102,15 @@ public class HubComputer : MonoBehaviour
         forestCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
         rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("RumbleCurrency"));
 
+        //colliseumCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100);
+        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
+        //factoryCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100);
+        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
+        //forestCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100);
+        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
+        //rumbleCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100);
+        //rumbleCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
+
     }
 
     string buildRoundString(int numRounds)
@@ -126,6 +144,12 @@ public class HubComputer : MonoBehaviour
     {
         return currency.ToString("000");
     }
+
+    string buildSliderCurrencyString(int currency)
+    {
+        return Math.Min(currency, 100).ToString() + "/100";
+    }
+
 
     string buildTimeString(int time)
     {
