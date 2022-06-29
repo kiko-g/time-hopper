@@ -115,27 +115,36 @@ public class HubComputer : MonoBehaviour
 
     string buildRoundString(int numRounds)
     {
-        if (numRounds == 1){
+        if (numRounds == 1)
+        {
             return numRounds.ToString() + " round";
-        } else {
+        }
+        else
+        {
             return numRounds.ToString() + " rounds";
         }
     }
 
     string buildKillsString(int numKills)
     {
-        if (numKills == 1){
+        if (numKills == 1)
+        {
             return numKills.ToString() + " enemy";
-        } else {
+        }
+        else
+        {
             return numKills.ToString() + " enemies";
         }
     }
 
     string buildAttemptsString(int numAttempts)
     {
-        if (numAttempts == 1){
+        if (numAttempts == 1)
+        {
             return numAttempts.ToString() + " attempt";
-        } else {
+        }
+        else
+        {
             return numAttempts.ToString() + " attempts";
         }
     }
