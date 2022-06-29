@@ -46,14 +46,12 @@ public class HubComputer : MonoBehaviour
     public GameObject forestCurrency;
     public GameObject rumbleCurrency;
 
-    public Slider colliseumCurrencySlider;
+    public GameObject colliseumCurrencyDone;
     public GameObject colliseumCurrencySliderText;
-    public Slider factoryCurrencySlider;
+    public GameObject factoryCurrencyDone;
     public GameObject factoryCurrencySliderText;
-    public Slider forestCurrencySlider;
+    public GameObject forestCurrencyDone;
     public GameObject forestCurrencySliderText;
-    public Slider rumbleCurrencySlider;
-    public GameObject rumbleCurrencySliderText;
 
     public Canvas canvas;
     public GameObject hint;
@@ -110,14 +108,12 @@ public class HubComputer : MonoBehaviour
         forestCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
         rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("RumbleCurrency"));
 
-        //colliseumCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100);
+        colliseumCurrencyDone.transform.localScale = new Vector3((float)Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100), 1f, 1f);
         colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
-        //factoryCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100);
+        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100)), 1f, 1f);
         factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
-        //forestCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100);
+        forestCurrencyDone.transform.localScale = new Vector3((float)Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100), 1f, 1f);
         forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
-        //rumbleCurrencySlider.value = Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100);
-        //rumbleCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
     }
 
     string buildRoundString(int numRounds)

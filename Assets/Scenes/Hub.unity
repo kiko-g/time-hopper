@@ -2094,7 +2094,7 @@ GameObject:
   - component: {fileID: 131396308}
   - component: {fileID: 131396307}
   m_Layer: 5
-  m_Name: Done
+  m_Name: CurrencyForestDone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9548,7 +9548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0/4
+  m_text: 0/3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
   m_sharedMaterial: {fileID: -4778838868984246059, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
@@ -28574,14 +28574,12 @@ MonoBehaviour:
   factoryCurrency: {fileID: 1427438391}
   forestCurrency: {fileID: 1351426717}
   rumbleCurrency: {fileID: 595003013}
-  colliseumCurrencySlider: {fileID: 0}
+  colliseumCurrencyDone: {fileID: 1739020869}
   colliseumCurrencySliderText: {fileID: 1265834486}
-  factoryCurrencySlider: {fileID: 0}
+  factoryCurrencyDone: {fileID: 1902040714}
   factoryCurrencySliderText: {fileID: 1814945479}
-  forestCurrencySlider: {fileID: 0}
+  forestCurrencyDone: {fileID: 131396305}
   forestCurrencySliderText: {fileID: 397252723}
-  rumbleCurrencySlider: {fileID: 0}
-  rumbleCurrencySliderText: {fileID: 0}
   canvas: {fileID: 1724960682}
   hint: {fileID: 693850631}
 --- !u!1 &1726716237 stripped
@@ -28843,7 +28841,7 @@ GameObject:
   - component: {fileID: 1739020872}
   - component: {fileID: 1739020871}
   m_Layer: 5
-  m_Name: Done
+  m_Name: CurrencyColiseumDone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31513,7 +31511,7 @@ GameObject:
   - component: {fileID: 1902040717}
   - component: {fileID: 1902040716}
   m_Layer: 5
-  m_Name: Done
+  m_Name: CurrencyFactoryDone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
