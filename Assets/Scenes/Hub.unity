@@ -28678,6 +28678,7 @@ MonoBehaviour:
   colCurrency: 0
   forCurrency: 0
   facCurrency: 0
+  rumCurrency: 0
   WeaponShopUI: {fileID: 279471062}
   _animator: {fileID: 0}
   aimCamera: {fileID: 1501105217}
@@ -28691,6 +28692,7 @@ MonoBehaviour:
   colCurrencyAmountUI: {fileID: 0}
   facCurrencyAmountUI: {fileID: 0}
   forCurrencyAmountUI: {fileID: 0}
+  rumCurrencyAmountUI: {fileID: 0}
   aimColliderMask:
     serializedVersion: 2
     m_Bits: 1
