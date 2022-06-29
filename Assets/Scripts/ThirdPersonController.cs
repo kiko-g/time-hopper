@@ -1109,6 +1109,7 @@ namespace StarterAssets
         {
             trigger = other.GetComponent<Trigger>();
             if(trigger != null){
+                Debug.Log("Entered Trigger!");
                 if(arenaPrompt != null){
                     arenaPrompt.gameObject.SetActive(true);
                     if(trigger.ArenaName == "Rumble"){
@@ -1206,6 +1207,8 @@ namespace StarterAssets
         }
 
         void OnTriggerExit(Collider other){
+            if (other.name == "Blade") return;
+            trigger = other.GetComponent<Trigger>();
             if(trigger != null){
                 if(arenaPrompt != null){
                     arenaPrompt.GetChild(1).gameObject.SetActive(false);
