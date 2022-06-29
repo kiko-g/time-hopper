@@ -28661,7 +28661,7 @@ MonoBehaviour:
   sensitivity: 1
   JumpHeight: 1.2
   Gravity: -15
-  JumpTimeout: 0.3
+  JumpTimeout: 0
   FallTimeout: 0.15
   Grounded: 1
   GroundedOffset: -0.14
