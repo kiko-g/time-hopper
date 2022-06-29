@@ -15239,7 +15239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: field of view
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: far clip plane
@@ -15263,7 +15263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.5
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21119,6 +21119,18 @@ MonoBehaviour:
   factoryKills: {fileID: 896496958}
   forestKills: {fileID: 1833142185}
   rumbleKills: {fileID: 841355079}
+  colliseumTime: {fileID: 1342885195}
+  factoryTime: {fileID: 164325656}
+  forestTime: {fileID: 167739992}
+  rumbleTime: {fileID: 911637943}
+  colliseumAttempts: {fileID: 722751494}
+  factoryAttempts: {fileID: 2014563024}
+  forestAttempts: {fileID: 2002274032}
+  rumbleAttempts: {fileID: 781939976}
+  colliseumCurrency: {fileID: 658128658}
+  factoryCurrency: {fileID: 1427438391}
+  forestCurrency: {fileID: 1351426717}
+  rumbleCurrency: {fileID: 595003013}
   canvas: {fileID: 1724960682}
   hint: {fileID: 693850631}
 --- !u!1 &1726716237 stripped

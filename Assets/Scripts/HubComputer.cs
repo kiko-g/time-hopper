@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class HubComputer : MonoBehaviour
 {
@@ -25,6 +26,21 @@ public class HubComputer : MonoBehaviour
     public GameObject factoryKills;
     public GameObject forestKills;
     public GameObject rumbleKills;
+
+    public GameObject colliseumTime;
+    public GameObject factoryTime;
+    public GameObject forestTime;
+    public GameObject rumbleTime;
+
+    public GameObject colliseumAttempts;
+    public GameObject factoryAttempts;
+    public GameObject forestAttempts;
+    public GameObject rumbleAttempts;
+
+    public GameObject colliseumCurrency;
+    public GameObject factoryCurrency;
+    public GameObject forestCurrency;
+    public GameObject rumbleCurrency;
 
     public Canvas canvas;
     public GameObject hint;
@@ -62,6 +78,21 @@ public class HubComputer : MonoBehaviour
         forestKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("ForestKills"));
         rumbleKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("RumbleKills"));
 
+        colliseumTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("ColliseumTimePlayed"));
+        factoryTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("FactoryTimePlayed"));
+        forestTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("ForestTimePlayed"));
+        rumbleTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("RumbleTimePlayed"));
+
+        colliseumAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("ColliseumAttempts"));
+        factoryAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("FactoryAttempts"));
+        forestAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("ForestAttempts"));
+        rumbleAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("RumbleAttempts"));
+
+        colliseumCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
+        factoryCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
+        forestCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
+        rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("RumbleCurrency"));
+
     }
 
     string buildRoundString(int numRounds)
@@ -80,6 +111,26 @@ public class HubComputer : MonoBehaviour
         } else {
             return numKills.ToString() + " enemies";
         }
+    }
+
+    string buildAttemptsString(int numAttempts)
+    {
+        if (numAttempts == 1){
+            return numAttempts.ToString() + " attempt";
+        } else {
+            return numAttempts.ToString() + " attempts";
+        }
+    }
+
+    string buildCurrencyString(int currency)
+    {
+        return currency.ToString("000");
+    }
+
+    string buildTimeString(int time)
+    {
+        TimeSpan timeInfo = TimeSpan.FromSeconds(time);
+        return "" + timeInfo.Hours + "h" + timeInfo.Minutes + "min Time Played";
     }
 
     void Update()

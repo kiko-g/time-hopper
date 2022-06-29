@@ -42,6 +42,15 @@ public class ArenaTrigger : MonoBehaviour
             int currentKills = PlayerPrefs.GetInt(arenaKills);
             PlayerPrefs.SetInt(arenaKills, Mathf.Max(currentKills, waveSpawner.numKills));
         }
+        if (waveSpawner.timePlayed != 0f){
+            string arenaTime = sceneSwitch.ArenaName+"TimePlayed";
+            int currentTimePlayed = PlayerPrefs.GetInt(arenaTime);
+            PlayerPrefs.SetInt(arenaTime, currentTimePlayed + ((int)waveSpawner.timePlayed));
+            int currentTimePlayedNew = PlayerPrefs.GetInt("ColliseumTimePlayed");
+        }
+
+        string arenaAttempts = sceneSwitch.ArenaName+"Attempts";
+        PlayerPrefs.SetInt(arenaAttempts, PlayerPrefs.GetInt(arenaAttempts) + 1);
 
         sceneSwitch.setArenaName("Hub");
         sceneSwitch.LoadArenaScene(death);

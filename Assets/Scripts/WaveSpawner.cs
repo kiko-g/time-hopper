@@ -33,6 +33,7 @@ public class WaveSpawner : MonoBehaviour
     private int enemiesToDefeat;
     public int numKills = 0;
     private int numWaves = 0;
+    public float timePlayed = 0f;
     private float waveTimeout = 60f;
     private int waveSize = 4;
     public int roundNr = 0;
@@ -93,6 +94,7 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
+        timePlayed += Time.deltaTime;
         if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){

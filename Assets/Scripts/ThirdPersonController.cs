@@ -1307,7 +1307,7 @@ namespace StarterAssets
                 _input.enabled = false;
                 //deathScreen.SetActive(true);
                 Debug.Log("Player died");
-                currencyCounter = 0;
+                //currencyCounter = 0;
                 float deathTime = Time.time;
                 deathScreen.SetActive(true);
                 if(onDeathTrigger == null){

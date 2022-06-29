@@ -109,7 +109,7 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f && !registeredHit)
             {
-                if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
+                if (Vector3.Distance(transform.position, playerTransform.position) < 3)
                 {
                     playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage);
                 }
