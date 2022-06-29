@@ -35,7 +35,7 @@ public class GunBehaviour : MonoBehaviour
 
     public float reloadTime;
 
-    private bool reloading = false;
+    public bool reloading = false;
 
     private float reloadStart;
     
@@ -74,7 +74,8 @@ public class GunBehaviour : MonoBehaviour
     public bool is_shotgun;
     public bool is_rocketlauncher;
     public float innacuracyDistance;
-    
+
+    public string gun_sound = "shot_gun_1";
     
     void Start()
     {
@@ -98,12 +99,16 @@ public class GunBehaviour : MonoBehaviour
         }
     }
 
+    public void setGunSound(string gunSound){
+        gun_sound = gunSound;
+    }
+
     public void Shoot(Vector2 shootingSpreadVec)
     {
         // print gameobject layer
         
         //Debug.Log("Shooting");
-        if (currentAmmo <= 0 | reloading){
+        if (currentAmmo <= 0 || reloading){
             return;
         }
         if(Time.time - lastShotTime <= fireRateTimer){
@@ -112,7 +117,7 @@ public class GunBehaviour : MonoBehaviour
         lastShotTime = Time.time;
         currentAmmo--;
         muzzleFlash.Play();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Gun Shooting/Pistol");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/Guns/" + gun_sound, transform.position);
         recoil.TriggerRecoil();
         Ray ray = Camera.main.ScreenPointToRay(screenCenter + shootingSpreadVec);
         if (is_shotgun){

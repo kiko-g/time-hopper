@@ -20,6 +20,7 @@ public class FireBehaviour : MonoBehaviour
         if(randomTime != -1f){
             if(Time.time - lastFireTime >= randomTime){
                 particleSystem.Play();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/fireeruption", transform.position);
                 lastFireTime = Time.time;
                 randomTime = -1f;
             }

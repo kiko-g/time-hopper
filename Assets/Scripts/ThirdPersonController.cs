@@ -260,7 +260,7 @@ namespace StarterAssets
 
             screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             healingOverTime = GetComponent<HealingOverTime>();
-            walkSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/General Sounds/Character Related/Footsteps/Grass");
+            //walkSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/General Sounds/Character Related/Footsteps/Grass");
             lastMoveDir = new Vector2(0f, 0f);
             //string[] names = {"Default", "Enemy"};
             //aimColliderMask = LayerMask.GetMask(names);
@@ -316,6 +316,9 @@ namespace StarterAssets
             //RL.ApplyUpgrades()
 
             gunArsenal.Add(PS);
+            PS.setGunSound("shot_gun_2");
+            AR.setGunSound("shot_gun_1");
+            SG.setGunSound("shot_gun_3");
             if(rumbleSpawner != null){
                 gunArsenal.Add(AR);
                 selectedGun = gunArsenal.Count-1;
@@ -719,7 +722,7 @@ namespace StarterAssets
                     //Debug.Log("Sound starting");
                     walking = true;
                     // Comecar som
-                    FMODUnity.RuntimeManager.AttachInstanceToGameObject(walkSound, transform);
+                    //FMODUnity.RuntimeManager.AttachInstanceToGameObject(walkSound, transform);
                     walkSound.start();
                     walkSound.release();
                 }
@@ -827,8 +830,12 @@ namespace StarterAssets
         private void Reload()
         {
             if (_input.reload && !reload){
+                if (gunArsenal[selectedGun].reloading){
+                    return;
+                }
                 reload = true;
                 gunArsenal[selectedGun].Reload();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/Guns/reload_gun1");
                 _animator.SetBool("Reloading", true);
             } else {
                 reload = false;
@@ -1009,7 +1016,7 @@ namespace StarterAssets
                     }
 
                     if (!jumping)
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Jump/Jump");
+                        //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Jump/Jump");
                     jumping = true;
 
                     // update animator if using character
@@ -1159,11 +1166,6 @@ namespace StarterAssets
                 GroundedRadius);
         }
 
-        private void OnFootstep(AnimationEvent animationEvent)
-        {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Footstep/Footstep");
-        }
-
         private void OnLand(AnimationEvent animationEvent)
         {
 
@@ -1176,7 +1178,7 @@ namespace StarterAssets
                 if((nextRound-1) % 5 == 0 && !startRound && !changingScene){
                     //set the extraction portal active
                     Debug.Log("You're okay to extract");
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
+                    //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                     changingScene = true;
                     arenaTrigger.performAction();
                 }
@@ -1184,7 +1186,7 @@ namespace StarterAssets
             if (trigger != null && !changingScene){
 
                 Debug.Log("Entering Arena");
-                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
+                //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                 changingScene = true;
                 arenaPrompt.gameObject.SetActive(false);
                 trigger.performAction();
@@ -1331,6 +1333,8 @@ namespace StarterAssets
                 return;
             }
 
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_punch_gladiator");
+
             healingOverTime.PlayerTookDamage();
 
             UpdateHealthUI();
@@ -1450,6 +1454,8 @@ namespace StarterAssets
                     rumCurrency++;
                     updateRumCurrency();
                 }
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/pick_coin");
+                Debug.Log("Som!");
             }
             if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy"){
                 GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);

@@ -278,6 +278,7 @@ MonoBehaviour:
   is_pistol: 0
   fireRateTimer: 0
   reloadTime: 3.5
+  reloading: 0
   impactEffects: []
   muzzleFlash: {fileID: 1722127589}
   currentAmmoUI: {fileID: 1862294539}
@@ -293,6 +294,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 1
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!1 &29538594
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,6 +1640,24 @@ Transform:
   m_Father: {fileID: 1558773561}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &244050289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 500973323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &244050292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244050289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &246679015
 GameObject:
   m_ObjectHideFlags: 0
@@ -4702,6 +4722,7 @@ MonoBehaviour:
   is_pistol: 0
   fireRateTimer: 1
   reloadTime: 2
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 316305642}
@@ -4718,6 +4739,7 @@ MonoBehaviour:
   is_shotgun: 1
   is_rocketlauncher: 0
   innacuracyDistance: 2
+  gun_sound: shot_gun_1
 --- !u!114 &789604366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6362,6 +6384,7 @@ MonoBehaviour:
   is_pistol: 1
   fireRateTimer: 0.4
   reloadTime: 1.5
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 486503530}
@@ -6378,6 +6401,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 0
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!114 &1029263300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7269,6 +7293,7 @@ GameObject:
   - component: {fileID: 1306279177}
   - component: {fileID: 1306279176}
   - component: {fileID: 1306279175}
+  - component: {fileID: 1306279180}
   m_Layer: 0
   m_Name: ExtractionPortal
   m_TagString: Untagged
@@ -7368,6 +7393,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1306279180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306279174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1732104397
+      Data2: 1149530907
+      Data3: 825192377
+      Data4: 1928903265
+    Path: event:/Project/SoundScape/newworld
+  Event: 
+  PlayEvent: 1
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1320970664
 GameObject:
   m_ObjectHideFlags: 0
@@ -7765,6 +7820,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+--- !u!1 &1409882409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 1409882408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1409882410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409882409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &1420048615
 GameObject:
   m_ObjectHideFlags: 0
@@ -10022,7 +10095,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
   m_PrefabInstance: {fileID: 1409882408}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1409882409}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
@@ -10413,6 +10486,7 @@ GameObject:
   - component: {fileID: 1996843639}
   - component: {fileID: 1996843646}
   - component: {fileID: 1996843647}
+  - component: {fileID: 1996843648}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -10710,6 +10784,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003ceca388a638444bff7a3f490202ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1996843648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996843638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4fb6739300f8ed45ae0c2f391f6a990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2003206477
 GameObject:
   m_ObjectHideFlags: 0
@@ -11000,6 +11086,7 @@ MonoBehaviour:
   is_pistol: 0
   fireRateTimer: 0
   reloadTime: 2
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1347632582}
@@ -11016,6 +11103,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 0
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!114 &2103569660
 MonoBehaviour:
   m_ObjectHideFlags: 0

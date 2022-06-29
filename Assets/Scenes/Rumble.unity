@@ -1391,6 +1391,7 @@ MonoBehaviour:
   is_pistol: 0
   fireRateTimer: 0
   reloadTime: 3.5
+  reloading: 0
   impactEffects: []
   muzzleFlash: {fileID: 553697500}
   currentAmmoUI: {fileID: 1268736918}
@@ -1406,6 +1407,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 1
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!1 &271125244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,6 +2278,24 @@ Transform:
   m_Father: {fileID: 1576211821}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &407949646 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 1409882408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &407949647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407949646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &415059533
 GameObject:
   m_ObjectHideFlags: 0
@@ -7806,6 +7826,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+--- !u!1 &500973324 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2070925441746177671, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
+  m_PrefabInstance: {fileID: 500973323}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &500973325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500973324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1 &505449580
 GameObject:
   m_ObjectHideFlags: 0
@@ -10261,6 +10299,7 @@ MonoBehaviour:
   is_pistol: 0
   fireRateTimer: 1
   reloadTime: 2
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 316305642}
@@ -10277,6 +10316,7 @@ MonoBehaviour:
   is_shotgun: 1
   is_rocketlauncher: 0
   innacuracyDistance: 2
+  gun_sound: shot_gun_1
 --- !u!114 &789604366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21415,6 +21455,7 @@ MonoBehaviour:
   is_pistol: 1
   fireRateTimer: 0.4
   reloadTime: 1.5
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 486503530}
@@ -21431,6 +21472,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 0
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!114 &1029263300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61803,7 +61845,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2070925441746177913, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
   m_PrefabInstance: {fileID: 1409882408}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 407949646}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
@@ -62515,6 +62557,7 @@ GameObject:
   - component: {fileID: 1996843639}
   - component: {fileID: 1996843646}
   - component: {fileID: 1996843647}
+  - component: {fileID: 1996843648}
   m_Layer: 7
   m_Name: PlayerArmature
   m_TagString: Player
@@ -62810,6 +62853,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 003ceca388a638444bff7a3f490202ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1996843648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996843638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4fb6739300f8ed45ae0c2f391f6a990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1997539317
@@ -63228,6 +63283,7 @@ MonoBehaviour:
   is_pistol: 0
   fireRateTimer: 0
   reloadTime: 2
+  reloading: 0
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1347632582}
@@ -63244,6 +63300,7 @@ MonoBehaviour:
   is_shotgun: 0
   is_rocketlauncher: 0
   innacuracyDistance: 0
+  gun_sound: shot_gun_1
 --- !u!114 &2103569660
 MonoBehaviour:
   m_ObjectHideFlags: 0

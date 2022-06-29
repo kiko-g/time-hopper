@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{04b178ef-0b88-4ac2-8fb2-6d7d42bf9dd5}">
+		<property name="assetPath">
+			<value>footstep_newworld_boss_2.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.51279166666666665</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2c4e0fe2-0719-4c6b-89cd-f026e4ec8d37}</destination>
+		</relationship>
+	</object>
+</objects>
