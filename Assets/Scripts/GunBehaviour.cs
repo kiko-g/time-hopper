@@ -129,22 +129,38 @@ public class GunBehaviour : MonoBehaviour
                     effect.transform.forward = -transform.forward;
                     Destroy(effect.gameObject, effect.main.duration);
                     if (hit.transform.tag == "Enemy"){
+                        float actualDamage = damage;
+                        if (hit.collider.GetType() == typeof(SphereCollider)){
+                            actualDamage *= 2;
+                        }
                         EnemyBehaviour enemy = hit.transform.GetComponent<EnemyBehaviour>();
                         if (enemy != null){
-                            enemy.TakeDamage(damage);
+                            enemy.TakeDamage(actualDamage);
                         }
                     } else if (hit.transform.tag == "RangedEnemy"){
+                        float actualDamage = damage;
+                        if (hit.collider.GetType() == typeof(SphereCollider)){
+                            actualDamage *= 2;
+                        }
                         RangedEnemyBehaviour enemy = hit.transform.GetComponent<RangedEnemyBehaviour>();
                         if (enemy != null){
-                            enemy.TakeDamage(damage);
+                            enemy.TakeDamage(actualDamage);
                         }
                     } else if(hit.transform.name == "target_test"){
                         TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
                         if (target != null){
                             target.TakeDamage(damage);
                         }
+                    } else if(hit.transform.tag == "Boss"){
+                        float actualDamage = damage;
+                        if (hit.collider.GetType() == typeof(SphereCollider)){
+                            actualDamage *= 2;
+                        }
+                        BossBehaviour enemy = hit.transform.GetComponent<BossBehaviour>();
+                        if (enemy != null){
+                            enemy.TakeDamage(actualDamage);
+                        }
                     }
-                    CreateBullet(hit.point);
                 }
                 else{
                     CreateBullet(cam.position + shootingDir * range);
@@ -155,7 +171,13 @@ public class GunBehaviour : MonoBehaviour
             //instantiate grenade
             GameObject grenadeInstance = Instantiate(grenadePrefab, muzzle.position, muzzle.rotation);
             //addForce
-            grenadeInstance.GetComponent<Rigidbody>().AddForce(GetShootingDirection() * propulsionForce, ForceMode.Impulse);
+            grenadeInstance.GetComponent<GrenadeExplosion>().damage = damage;
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit, range, aimColliderMask)){
+                //add force to the hit direction
+                Vector3 direction = hit.point - grenadeInstance.transform.position;
+                grenadeInstance.GetComponent<Rigidbody>().AddForce(direction.normalized * propulsionForce, ForceMode.Impulse);
+            }
         }
         else{
             RaycastHit hit;

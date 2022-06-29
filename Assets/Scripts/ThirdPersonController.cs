@@ -359,9 +359,7 @@ namespace StarterAssets
                 }
 
                 if(!training && TrainingHUD.activeSelf){
-                    Debug.Log(_input.interact);
                     if(_input.interact){
-                        Debug.Log("Vou começar o treino");
                         trainingSpawner.startTraining();
                         _input.interact = false;
                         training = true;
@@ -998,7 +996,7 @@ namespace StarterAssets
 
                     if (_hasAnimator)
                     {
-                        Debug.Log("Should Jump");
+                        //Debug.Log("Should Jump");
                         if(_animator.GetBool("Aiming")) _input.jump = false;
                         //_animator.SetBool(_animIDJump, true);
                         _animator.SetBool("Jumping", true);
@@ -1007,7 +1005,7 @@ namespace StarterAssets
                         } else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Running")){
                             _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                         }*/
-                        Debug.Log("After Trigger");
+                        //Debug.Log("After Trigger");
                         /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping")){
                             _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                             Debug.Log("Vertical");
@@ -1276,7 +1274,7 @@ namespace StarterAssets
                 recentlyTeleported = true;
             }
             if(other.gameObject.tag == "TrainingStarter"){
-                Debug.Log("Entrei no trigger");
+                //Debug.Log("Entrei no trigger");
                 if(!training){
                     TrainingHUD.SetActive(true);
                     WeaponShopUI.SetActive(false);
