@@ -21115,6 +21115,10 @@ MonoBehaviour:
   factoryBestRound: {fileID: 1102443634}
   forestBestRound: {fileID: 840194437}
   rumbleBestRound: {fileID: 274260368}
+  colliseumKills: {fileID: 1476473322}
+  factoryKills: {fileID: 896496958}
+  forestKills: {fileID: 1833142185}
+  rumbleKills: {fileID: 841355079}
   canvas: {fileID: 1724960682}
   hint: {fileID: 693850631}
 --- !u!1 &1726716237 stripped
