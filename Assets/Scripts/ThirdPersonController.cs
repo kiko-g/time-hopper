@@ -828,6 +828,7 @@ namespace StarterAssets
 
         private void Fire()
         {
+            if (_animator.GetBool("Reloading")) return;
             if (_input.fire) {
                 rotateWhenMoving = false;
 
