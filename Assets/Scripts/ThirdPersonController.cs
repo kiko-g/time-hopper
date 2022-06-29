@@ -215,7 +215,7 @@ namespace StarterAssets
         private float fallingY = -1234.56789f;
         private float teleportedTime = 0f;
         private bool recentlyTeleported = false;
-        private bool changingScene = false;
+        public bool changingScene = false;
 
         public Vector3 bladeOffset = new Vector3(0.0114f, -0.045f, 0.0053f);
 
