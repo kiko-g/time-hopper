@@ -31,6 +31,30 @@ public class SceneSwitch : MonoBehaviour
         if(!PlayerPrefs.HasKey("RumbleCurrency")){
             PlayerPrefs.SetInt("RumbleCurrency", 0);
         }
+        if(!PlayerPrefs.HasKey("ColliseumRounds")){
+            PlayerPrefs.SetInt("ColliseumRounds", 0);
+        }
+        if(!PlayerPrefs.HasKey("FactoryRounds")){
+            PlayerPrefs.SetInt("FactoryRounds", 0);
+        }
+        if(!PlayerPrefs.HasKey("ForestRounds")){
+            PlayerPrefs.SetInt("ForestRounds", 0);
+        }
+        if(!PlayerPrefs.HasKey("RumbleRounds")){
+            PlayerPrefs.SetInt("RumbleRounds", 0);
+        }
+        if(!PlayerPrefs.HasKey("ColliseumKills")){
+            PlayerPrefs.SetInt("ColliseumKills", 0);
+        }
+        if(!PlayerPrefs.HasKey("FactoryKills")){
+            PlayerPrefs.SetInt("FactoryKills", 0);
+        }
+        if(!PlayerPrefs.HasKey("ForestKills")){
+            PlayerPrefs.SetInt("ForestKills", 0);
+        }
+        if(!PlayerPrefs.HasKey("RumbleKills")){
+            PlayerPrefs.SetInt("RumbleKills", 0);
+        }
         PlayerPrefs.Save();
 
         if (Instance == null) 

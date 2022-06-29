@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HubComputer : MonoBehaviour
 {
@@ -14,6 +15,16 @@ public class HubComputer : MonoBehaviour
     public GameObject arenasButtonActive;
     public GameObject overviewButtonActive;
     public GameObject upgradesButtonActive;
+
+    public GameObject colliseumBestRound;
+    public GameObject factoryBestRound;
+    public GameObject forestBestRound;
+    public GameObject rumbleBestRound;
+
+    public GameObject colliseumKills;
+    public GameObject factoryKills;
+    public GameObject forestKills;
+    public GameObject rumbleKills;
 
     public Canvas canvas;
     public GameObject hint;
@@ -40,6 +51,35 @@ public class HubComputer : MonoBehaviour
         arenasButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(false);
         overviewButtonActive.SetActive(true); // Overview is the default tab
+
+        colliseumBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("ColliseumRounds"));
+        factoryBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("FactoryRounds"));
+        forestBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("ForestRounds"));
+        rumbleBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("RumbleRounds"));
+
+        colliseumKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("ColliseumKills"));
+        factoryKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("FactoryKills"));
+        forestKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("ForestKills"));
+        rumbleKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("RumbleKills"));
+
+    }
+
+    string buildRoundString(int numRounds)
+    {
+        if (numRounds == 1){
+            return numRounds.ToString() + " round";
+        } else {
+            return numRounds.ToString() + " rounds";
+        }
+    }
+
+    string buildKillsString(int numKills)
+    {
+        if (numKills == 1){
+            return numKills.ToString() + " enemy";
+        } else {
+            return numKills.ToString() + " enemies";
+        }
     }
 
     void Update()

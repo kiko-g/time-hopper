@@ -21111,6 +21111,10 @@ MonoBehaviour:
   arenasButtonActive: {fileID: 1385413899}
   overviewButtonActive: {fileID: 1594780406}
   upgradesButtonActive: {fileID: 721131459}
+  colliseumBestRound: {fileID: 1508934053}
+  factoryBestRound: {fileID: 1102443634}
+  forestBestRound: {fileID: 840194437}
+  rumbleBestRound: {fileID: 274260368}
   canvas: {fileID: 1724960682}
   hint: {fileID: 693850631}
 --- !u!1 &1726716237 stripped
