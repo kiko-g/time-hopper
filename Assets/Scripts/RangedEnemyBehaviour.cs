@@ -255,7 +255,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
-        player.AddWeaponCurrency(10);
+        player.AddWeaponCurrency(5);
         if(player.waveSpawner != null)
             player.waveSpawner.decreaseEnemiesToDefeat();
         else if(player.rumbleSpawner != null){

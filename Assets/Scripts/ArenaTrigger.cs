@@ -12,14 +12,6 @@ public class ArenaTrigger : MonoBehaviour
 
     public void performAction(bool death = false)
     {
-        if(player.currencyCounter != 0){
-            string arenaCurrency = sceneSwitch.ArenaName+"Currency";
-            int currentCurrency = PlayerPrefs.GetInt(arenaCurrency);
-            
-            PlayerPrefs.SetInt(arenaCurrency, currentCurrency + player.currencyCounter);
-            Debug.Log("Successfully extracted extra " + player.currencyCounter + " " + arenaCurrency);
-            Debug.Log("Current " + arenaCurrency + ": " + PlayerPrefs.GetInt(arenaCurrency));
-        }
         if(player.colCurrency != 0){
             PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") + player.colCurrency);
             Debug.Log("Successfully extracted extra " + player.colCurrency + " ColliseumCurrency");
