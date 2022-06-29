@@ -54,6 +54,8 @@ public class HubComputer : MonoBehaviour
     public GameObject forestCurrencyDone;
     public GameObject forestCurrencySliderText;
 
+    public GameObject RumblePortal;
+
     public Canvas canvas;
     public GameObject hint;
     private Canvas pauseCanvas;
@@ -81,14 +83,20 @@ public class HubComputer : MonoBehaviour
         arenasButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(false);
 
-        rumbleUnlocked = false; // FIXME: use player prefs value
+        if (PlayerPrefs.GetInt("RumbleUnlocked") == 1)
+        {
+            rumbleUnlocked = true;
+            RumblePortal.SetActive(true);
+        }
+        else
+        {
+            rumbleUnlocked = false;
+            RumblePortal.SetActive(false);
+        }
+
         UpdateUIValues();
-        colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100)), 1f, 1f);
-        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
-        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100)), 1f, 1f);
-        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
-        forestCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100)), 1f, 1f);
-        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
+        UpdateRumbleProgress();
+        
     }
 
     string buildRoundString(int numRounds)
@@ -177,20 +185,8 @@ public class HubComputer : MonoBehaviour
         rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("RumbleCurrency"));
 
         // rumble unlock progress bars (overview core)
-        colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100)), 1f, 1f);
-        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
-        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100)), 1f, 1f);
-        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
-        forestCurrencyDone.transform.localScale = new Vector3((float)Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100), 1f, 1f);
-        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
-
-        int newRumbleProgressNumber = 0;
-        if (colliseumCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
-        if (factoryCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
-        if (forestCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
-        rumbleProgress.text = newRumbleProgressNumber.ToString() + "/3";
-
-        rumbleAvailable = (newRumbleProgressNumber == 3);
+        UpdateRumbleProgress();
+        
     }
 
     void Update()
@@ -264,9 +260,29 @@ public class HubComputer : MonoBehaviour
         HideHint();
     }
 
+    void UpdateRumbleProgress()
+    {
+        colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100)), 1f, 1f);
+        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
+        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100)), 1f, 1f);
+        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
+        forestCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100)), 1f, 1f);
+        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
+
+        int newRumbleProgressNumber = 0;
+        if (colliseumCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
+        if (factoryCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
+        if (forestCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
+        rumbleProgress.text = newRumbleProgressNumber.ToString() + "/3";
+
+        rumbleAvailable = (newRumbleProgressNumber == 3);
+    }
+
     void UpdateRumbleAvailability()
     {
-        if (rumbleAvailable || rumbleUnlocked) return;
+        //Debug.Log("available: " + rumbleAvailable);
+        //Debug.Log("unlocked: " + rumbleUnlocked);
+        if (rumbleUnlocked) return;
         if (PlayerPrefs.GetInt("FactoryCurrency") >= 100 && PlayerPrefs.GetInt("ForestCurrency") >= 100 && PlayerPrefs.GetInt("ColliseumCurrency") >= 100)
         {
             rumbleAvailable = true;
@@ -282,9 +298,17 @@ public class HubComputer : MonoBehaviour
     void OnClickUnlockRumble()
     {
         // FIXME: save to player prefs (subtract currency and save unlocked)
-        rumbleUnlocked = false;
-        rumbleAvailable = false;
+        rumbleUnlocked = true;
+        // update playerprefs
+        PlayerPrefs.SetInt("RumbleUnlocked", 1);
+        // subtract currencies in playerprefs
+        PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - 100);
+        PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - 100);
+        PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - 100);
+        RumblePortal.SetActive(true);
         unlockRumbleButton.gameObject.SetActive(false);
+        UpdateUIValues();
+        UpdateRumbleProgress();
     }
 
     void OnClickOverview()

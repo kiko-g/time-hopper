@@ -73,7 +73,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         StartCoroutine(speakingCoroutine);
 
-        Debug.Log("Start Coroutine");
+        //Debug.Log("Start Coroutine");
         
     }
 
@@ -84,9 +84,10 @@ public class EnemyBehaviour : MonoBehaviour
         navMeshAgent.speed = moveSpeed;
     }
 
-    public void setDropPercentage(int dropPercentage)
+    public void setDropPercentage(int dropP)
     {
-        this.dropPercentage = dropPercentage;
+        dropPercentage = dropP;
+        Debug.Log(dropPercentage);
     }
 
     IEnumerator sentencesCoroutine(){
@@ -94,7 +95,7 @@ public class EnemyBehaviour : MonoBehaviour
             int sentenceIndex = Random.Range(0, sentences.Length);
             string sentence = sentences[sentenceIndex];
             float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
-            Debug.Log("Timeout: " + timeout);
+            //Debug.Log("Timeout: " + timeout);
             yield return new WaitForSeconds(timeout);
             FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentence, transform.position);
         }

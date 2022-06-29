@@ -12,7 +12,7 @@ public class GrenadeExplosion : MonoBehaviour
     private Collider[] hitColliders;
 
     void OnCollisionEnter(Collision col) {
-        Debug.Log(col.contacts[0].point.ToString());
+        //Debug.Log(col.contacts[0].point.ToString());
         Destroy(gameObject);
         doExplosion(col.contacts[0].point);
     }
@@ -57,7 +57,7 @@ public class GrenadeExplosion : MonoBehaviour
                 // deal damage
                 TrainingTargetBehaviour target = hit.transform.parent.GetComponent<TrainingTargetBehaviour>();
                 if(target != null){
-                    Debug.Log("dealing " + damage);
+                    //Debug.Log("dealing " + damage);
                     target.TakeDamage(damage);
                 }
             }

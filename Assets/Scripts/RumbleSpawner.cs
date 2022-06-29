@@ -128,7 +128,12 @@ public class RumbleSpawner : MonoBehaviour
         numKills++;
         enemiesLeft = totalEnemiesToDefeat - enemiesKilled;
         enemiesLeftText.text = enemiesLeft.ToString();
-        if(enemiesLeft == 0){
+        if(!round_active && !spawning){
+            enemiesLeft = 0;
+            enemiesKilled = 0;
+            enemiesLeftText.text = enemiesLeft.ToString();
+        }
+        if(enemiesLeft <= 0){
             spawning = false;
             round_active = false;
             foreach (Transform child in colEnemiesHolder.transform)
@@ -146,6 +151,7 @@ public class RumbleSpawner : MonoBehaviour
             roundTime = Time.time - startTime;
             enterTooltipUI.SetActive(true);
             enemiesKilled = 0;
+            enemiesLeft = 0;
         }
     }
 
@@ -163,6 +169,9 @@ public class RumbleSpawner : MonoBehaviour
 
     public void StartRound()
     {
+        if(PlayerPrefs.GetInt("RumbleUnlocked") == 1){
+            PlayerPrefs.SetInt("RumbleUnlocked", 0);
+        }
         enterTooltipUI.SetActive(false);
         startTime = Time.time;
         //Debug.Log("Start round!");
@@ -248,8 +257,8 @@ public class RumbleSpawner : MonoBehaviour
                 break;
         }
 
-        EnemyBehaviour enemyBehaviour = enemy.GetComponent<EnemyBehaviour>();
-        RangedEnemyBehaviour rangedEnemyBehaviour = enemy.GetComponent<RangedEnemyBehaviour>();
+        EnemyBehaviour enemyBehaviour = enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>();
+        RangedEnemyBehaviour rangedEnemyBehaviour = enemy.transform.GetChild(0).GetComponent<RangedEnemyBehaviour>();
         if(enemyBehaviour != null){
             enemyBehaviour.setDropPercentage(50);
         }

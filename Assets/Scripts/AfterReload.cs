@@ -10,7 +10,7 @@ public class AfterReload : StateMachineBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
         player.SprintSpeed = 2.0f;
-        Debug.Log("Changed sprint speed: " + player.SprintSpeed);
+        //Debug.Log("Changed sprint speed: " + player.SprintSpeed);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -24,7 +24,7 @@ public class AfterReload : StateMachineBehaviour
     {
         player._animator.SetBool("Reloading", false);
         player.SprintSpeed = 5.335f;
-        Debug.Log("Finished Reload!");
+        //Debug.Log("Finished Reload!");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

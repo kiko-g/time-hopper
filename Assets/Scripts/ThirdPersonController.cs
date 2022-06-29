@@ -1452,7 +1452,7 @@ namespace StarterAssets
                     updateRumCurrency();
                 }
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/pick_coin");
-                Debug.Log("Som!");
+                //Debug.Log("Som!");
             }
             if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy"){
                 GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);
