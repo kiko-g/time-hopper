@@ -189,7 +189,7 @@ public class EnemyBehaviour : MonoBehaviour
         //GetComponent<SphereCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
-        player.AddWeaponCurrency(10);
+        player.AddWeaponCurrency(5);
         if(player.waveSpawner != null)
             player.waveSpawner.decreaseEnemiesToDefeat();
         else if(player.rumbleSpawner != null){

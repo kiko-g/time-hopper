@@ -475,6 +475,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("AR");
+                                updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -499,6 +500,7 @@ namespace StarterAssets
                             if(AR.BuyAmmo(1)){
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
+                                updateCurrencyUI();
                             }
                         }
                     }
@@ -524,6 +526,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("SG");
+                                updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -547,6 +550,7 @@ namespace StarterAssets
                             _input.interact = false;
                             if(SG.BuyAmmo(1)){
                                 weaponCurrency -= SG.ammoPrice;
+                                updateCurrencyUI();
                             }
                         }
                     }
@@ -572,6 +576,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("RL");
+                                updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -593,6 +598,7 @@ namespace StarterAssets
                             _input.interact = false;
                             if(RL.BuyAmmo(1)){
                                 weaponCurrency -= RL.ammoPrice;
+                                updateCurrencyUI();
                             }
                         }
                     }
@@ -865,6 +871,7 @@ namespace StarterAssets
 
         public void AddWeaponCurrency(int ammount){
             weaponCurrency+=ammount;
+            updateCurrencyUI();
         }
 
         private void Fire()
@@ -1377,7 +1384,7 @@ namespace StarterAssets
 
         private void updateCurrencyUI()
         {
-            currencyAmountUI.text = currencyCounter.ToString();
+            currencyAmountUI.text = weaponCurrency.ToString();
         }
 
         private void updateFacCurrency(){
@@ -1400,36 +1407,26 @@ namespace StarterAssets
             if(hit.gameObject.tag == "Currency"){
                 CurrencyBehaviour currency = hit.transform.GetComponent<CurrencyBehaviour>();
                 currency.DeSpawn();
-                if(rumbleSpawner != null){
-                    if(hit.gameObject.name.Contains("Colliseum")){
-                        colCurrency++;
-                        updateColCurrency();
-                    }
-                    else if(hit.gameObject.name.Contains("Factory")){
-                        facCurrency++;
-                        updateFacCurrency();
-                    }
-                    else if(hit.gameObject.name.Contains("Forest")){
-                        forCurrency++;
-                        updateForCurrency();
-                    }
-                    else if(hit.gameObject.name.Contains("Rumble")){
-                        rumCurrency++;
-                        updateRumCurrency();
-                    }
-
+                if(hit.gameObject.name.Contains("Colliseum")){
+                    colCurrency++;
+                    updateColCurrency();
                 }
-                else increaseCurrency();
+                else if(hit.gameObject.name.Contains("Factory")){
+                    facCurrency++;
+                    updateFacCurrency();
+                }
+                else if(hit.gameObject.name.Contains("Forest")){
+                    forCurrency++;
+                    updateForCurrency();
+                }
+                else if(hit.gameObject.name.Contains("Rumble")){
+                    rumCurrency++;
+                    updateRumCurrency();
+                }
             }
             if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy"){
                 GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);
             }
-        }
-
-        void increaseCurrency(){
-            currencyCounter++;
-            Debug.Log("Currrent Currency: " + currencyCounter);
-            updateCurrencyUI();
         }
 
         public void SwitchInputToUI()
