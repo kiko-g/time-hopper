@@ -95,7 +95,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
             int sentenceIndex = Random.Range(0, sentences.Length);
             string sentence = sentences[sentenceIndex];
             float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
-            Debug.Log("Timeout: " + timeout);
+            //Debug.Log("Timeout: " + timeout);
             yield return new WaitForSeconds(timeout);
             FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentence, transform.position);
         }

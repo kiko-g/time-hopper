@@ -46,7 +46,7 @@ public class BackgroundMusicPlayer : MonoBehaviour
         //music.start();
         //music.release();
         //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Soundtrack/" + musicBase + currentMusicClip);
-        Debug.Log("Started Playing Music: " + "event:/Project/Soundtrack/" + musicBase + currentMusicClip);
+        //Debug.Log("Started Playing Music: " + "event:/Project/Soundtrack/" + musicBase + currentMusicClip);
 
     }
 
@@ -54,6 +54,6 @@ public class BackgroundMusicPlayer : MonoBehaviour
     void Update()
     {
         //music.getPlaybackState(out playbackState);
-        Debug.Log("Playback State: " + playbackState);
+        //Debug.Log("Playback State: " + playbackState);
     }
 }

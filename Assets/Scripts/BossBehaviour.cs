@@ -232,7 +232,7 @@ public class BossBehaviour : MonoBehaviour
                 if (enableNavMesh){
                     navMeshAgent.enabled = true;
                     navMeshAgent.SetDestination(playerTransform.position);
-                    Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
+                    //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
                 }
                             
                 transform.LookAt(playerTransform);

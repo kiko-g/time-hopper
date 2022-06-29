@@ -5671,6 +5671,14 @@ PrefabInstance:
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: -7136622550182105865, guid: dc263f68cd947d146b45c9600be247b9, type: 3}
+      propertyPath: m_Name
+      value: RumblePortal
+      objectReference: {fileID: 0}
+    - target: {fileID: -7136622550182105865, guid: dc263f68cd947d146b45c9600be247b9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7136622550182105865, guid: dc263f68cd947d146b45c9600be247b9, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -16890,7 +16898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &965985993
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28612,6 +28620,7 @@ MonoBehaviour:
   factoryCurrencySliderText: {fileID: 1814945479}
   forestCurrencyDone: {fileID: 131396305}
   forestCurrencySliderText: {fileID: 397252723}
+  RumblePortal: {fileID: 1137543404}
   canvas: {fileID: 1724960682}
   hint: {fileID: 693850631}
 --- !u!1 &1726716237 stripped

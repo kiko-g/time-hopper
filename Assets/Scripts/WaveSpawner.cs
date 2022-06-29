@@ -158,7 +158,7 @@ public class WaveSpawner : MonoBehaviour
                     if (enemiesToDefeat > 0)
                     {
                         ShowWaveStartUI(numWaves);
-                        Debug.Log("Spawning wave with size " + (waveSize - enemiesHolder.transform.childCount));
+                        //Debug.Log("Spawning wave with size " + (waveSize - enemiesHolder.transform.childCount));
                         if (waveSize - enemiesHolder.transform.childCount <= enemiesToDefeat)
                             SpawnHorde(waveSize - enemiesHolder.transform.childCount);
                         else
@@ -184,7 +184,7 @@ public class WaveSpawner : MonoBehaviour
         numKills++;
         if (enemiesToDefeat == 0)
         {
-            Debug.Log("You killed all enemies");
+            //Debug.Log("You killed all enemies");
             round_active = false;
             elapsedTime = 0f;
             enterTooltipUI.SetActive(true);
@@ -210,15 +210,15 @@ public class WaveSpawner : MonoBehaviour
     public void StartRound()
     {
         enterTooltipUI.SetActive(false);
-        Debug.Log("Start round!"); 
+        //Debug.Log("Start round!"); 
         startRoundFlag = false;
         roundNr++;
 
         ShowRoundStartUI();
-        Debug.Log("Round Number: " + roundNr);
+        //Debug.Log("Round Number: " + roundNr);
         if (roundNr % 5 != 0)
         {
-            Debug.Log("Spawning horde");
+            //Debug.Log("Spawning horde");
             waveSize = waveSize + 1;
             SpawnHorde(waveSize);
             numWaves = 1;
