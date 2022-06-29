@@ -11,6 +11,7 @@ public class HubComputer : MonoBehaviour
 
     private bool rumbleUnlocked;
     private bool rumbleAvailable;
+    public TextMeshProUGUI rumbleProgress;
     public Button unlockRumbleButton;
 
     public GameObject arenasCore;
@@ -72,48 +73,16 @@ public class HubComputer : MonoBehaviour
         hint.SetActive(false);
         canvas.enabled = false;
 
-        rumbleUnlocked = false; // FIXME: use player prefs value
-        rumbleAvailable = false;
-
+        overviewCore.SetActive(true); // Overview is the default tab
         arenasCore.SetActive(false);
         upgradesCore.SetActive(false);
-        overviewCore.SetActive(true); // Overview is the default tab
 
+        overviewButtonActive.SetActive(true); // Overview is the default tab
         arenasButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(false);
-        overviewButtonActive.SetActive(true); // Overview is the default tab
 
-        colliseumBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("ColliseumRounds"));
-        factoryBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("FactoryRounds"));
-        forestBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("ForestRounds"));
-        rumbleBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("RumbleRounds"));
-
-        colliseumKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("ColliseumKills"));
-        factoryKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("FactoryKills"));
-        forestKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("ForestKills"));
-        rumbleKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("RumbleKills"));
-
-        colliseumTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("ColliseumTimePlayed"));
-        factoryTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("FactoryTimePlayed"));
-        forestTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("ForestTimePlayed"));
-        rumbleTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("RumbleTimePlayed"));
-
-        colliseumAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("ColliseumAttempts"));
-        factoryAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("FactoryAttempts"));
-        forestAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("ForestAttempts"));
-        rumbleAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("RumbleAttempts"));
-
-        colliseumCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
-        factoryCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
-        forestCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
-        rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("RumbleCurrency"));
-
-        colliseumCurrencyDone.transform.localScale = new Vector3((float)Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100), 1f, 1f);
-        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
-        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100)), 1f, 1f);
-        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
-        forestCurrencyDone.transform.localScale = new Vector3((float)Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100), 1f, 1f);
-        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
+        rumbleUnlocked = false; // FIXME: use player prefs value
+        UpdateUIValues();
     }
 
     string buildRoundString(int numRounds)
@@ -169,14 +138,57 @@ public class HubComputer : MonoBehaviour
         return "" + timeInfo.Hours + "h" + timeInfo.Minutes + "min Time Played";
     }
 
+    void UpdateUIValues()
+    {
+        // arena best rounds (arenas core)
+        colliseumBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("ColliseumRounds"));
+        factoryBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("FactoryRounds"));
+        forestBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("ForestRounds"));
+        rumbleBestRound.GetComponent<TextMeshProUGUI>().text = buildRoundString(PlayerPrefs.GetInt("RumbleRounds"));
+
+        // arena total kills (arenas core)
+        colliseumKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("ColliseumKills"));
+        factoryKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("FactoryKills"));
+        forestKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("ForestKills"));
+        rumbleKills.GetComponent<TextMeshProUGUI>().text = buildKillsString(PlayerPrefs.GetInt("RumbleKills"));
+
+        // arena time played strings (arenas core)
+        colliseumTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("ColliseumTimePlayed"));
+        factoryTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("FactoryTimePlayed"));
+        forestTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("ForestTimePlayed"));
+        rumbleTime.GetComponent<TextMeshProUGUI>().text = buildTimeString(PlayerPrefs.GetInt("RumbleTimePlayed"));
+
+        // arena attempt strings (arenas core)
+        colliseumAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("ColliseumAttempts"));
+        factoryAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("FactoryAttempts"));
+        forestAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("ForestAttempts"));
+        rumbleAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("RumbleAttempts"));
+
+        // sidebar currency strings (all cores)
+        colliseumCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
+        factoryCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
+        forestCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
+        rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(PlayerPrefs.GetInt("RumbleCurrency"));
+
+        // rumble unlock progress bars (overview core)
+        colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("ColliseumCurrency"), 100)), 1f, 1f);
+        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ColliseumCurrency"));
+        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(PlayerPrefs.GetInt("FactoryCurrency"), 100)), 1f, 1f);
+        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("FactoryCurrency"));
+        forestCurrencyDone.transform.localScale = new Vector3((float)Mathf.Min(PlayerPrefs.GetInt("ForestCurrency"), 100), 1f, 1f);
+        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(PlayerPrefs.GetInt("ForestCurrency"));
+
+        int newRumbleProgressNumber = 0;
+        if (colliseumCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
+        if (factoryCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
+        if (forestCurrencyDone.transform.localScale.x == 1f) newRumbleProgressNumber++;
+        rumbleProgress.text = newRumbleProgressNumber.ToString() + "/3";
+
+        rumbleAvailable = (newRumbleProgressNumber == 3);
+    }
+
     void Update()
     {
-        if (canvas.enabled)
-        {
-            UpdateRumbleAvailability();
-            UpdateRumbleAvailability();
-        }
-
         if (IsWithinRange(player.transform.position))
         {
             if (canvas.enabled) HideHint();
@@ -197,6 +209,8 @@ public class HubComputer : MonoBehaviour
         canvas.enabled = value;
         if (canvas.enabled)
         {
+            UpdateRumbleAvailability();
+            UpdateUIValues();
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0f;
             player.SwitchInputToUI();

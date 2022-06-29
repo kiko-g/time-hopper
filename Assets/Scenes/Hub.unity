@@ -28573,6 +28573,7 @@ MonoBehaviour:
   arenasButton: {fileID: 1322655391}
   overviewButton: {fileID: 170646217}
   upgradesButton: {fileID: 301093703}
+  rumbleProgress: {fileID: 561971779}
   unlockRumbleButton: {fileID: 965985994}
   arenasCore: {fileID: 1785210544}
   overviewCore: {fileID: 220619328}
