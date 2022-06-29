@@ -132,7 +132,7 @@ public class EnemyBehaviour : MonoBehaviour
             if (enableNavMesh){
                 navMeshAgent.enabled = true;
                 navMeshAgent.SetDestination(playerTransform.position);
-                //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
+                Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
             }
                         
             transform.LookAt(playerTransform);
@@ -180,7 +180,7 @@ public class EnemyBehaviour : MonoBehaviour
             TakeDamage(1);
     }
 
-    private void Die()
+    public void Die()
     {
         moveSpeed = 0;
         animator.SetBool("is_dead", true);

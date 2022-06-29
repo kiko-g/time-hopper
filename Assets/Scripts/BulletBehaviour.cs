@@ -19,7 +19,7 @@ public class BulletBehaviour : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other){
-        if (other.gameObject.tag == "RangedEnemy"){
+        if (other.gameObject.tag == "RangedEnemy" || other.gameObject.tag == "Boss"){
             return;
         } else if (other.gameObject.tag == "Player"){
             player.TakeDamage(damage);
