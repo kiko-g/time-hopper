@@ -5,55 +5,51 @@ public class BackgroundMusicPlayer : MonoBehaviour
 {
 
     private string musicBase;
-    private int lowBound = 1;
-    private int highBound = 6;
 
     private int currentMusicClip;
 
+    [SerializeField]
+    private StarterAssets.ThirdPersonController player;
+
     private FMOD.Studio.PLAYBACK_STATE playbackState;
 
-    //private FMOD.Studio.EventInstance music;
+    private FMOD.Studio.EventInstance music;
+
+    private bool stopping = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentMusicClip = lowBound;
         switch(SceneManager.GetActiveScene().name)
         {
             case "Colliseum":
-                musicBase = "soundtrack_coliseu_music1_";
-                highBound = 2;
+                musicBase = "soundtrack_coliseu_music1";
                 break;
             case "Factory":
-                musicBase = "soundtrack_factory_music1_";
-                highBound = 6;
+                musicBase = "soundtrack_factory_music1";
                 break;
             case "Forest":
-                musicBase = "soundtrack_newworld_music1_";
-                highBound = 6;
+                musicBase = "soundtrack_neworld_music1";
                 break;
             case "Hub":
-                musicBase = "soundtrack_hub_music1_";
-                highBound = 6;
+                musicBase = "soundtrack_hub_music1";
                 break;
             default:
-                musicBase = "soundtrack_hub_music1_";
-                highBound = 6;
+                musicBase = "soundtrack_hub_music1";
                 break;
         }
 
-        //music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase + currentMusicClip);
-        //music.start();
-        //music.release();
-        //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Soundtrack/" + musicBase + currentMusicClip);
-        Debug.Log("Started Playing Music: " + "event:/Project/Soundtrack/" + musicBase + currentMusicClip);
-
+        music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
+        music.start();
+        music.release();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //music.getPlaybackState(out playbackState);
-        Debug.Log("Playback State: " + playbackState);
+        if (player.changingScene && !stopping){
+            stopping = true;
+            music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
     }
 }

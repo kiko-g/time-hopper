@@ -19327,6 +19327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed49fa41e32dff47b4f9dd850779a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 4416926083347132232}
 --- !u!4 &1153605745
 Transform:
   m_ObjectHideFlags: 0
@@ -38080,6 +38081,7 @@ MonoBehaviour:
   SG: {fileID: 457555807}
   RL: {fileID: 570924886}
   bloodOverlay: {fileID: 0}
+  changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
   TrainingHUD: {fileID: 270587064}
 --- !u!143 &4416926083347132233

@@ -315,6 +315,7 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 3.5
   reloading: 0
+  hasFullMagazine: 1
   impactEffects: []
   muzzleFlash: {fileID: 1722127589}
   currentAmmoUI: {fileID: 1862294539}
@@ -5582,6 +5583,7 @@ MonoBehaviour:
   fireRateTimer: 1
   reloadTime: 2
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 316305642}
@@ -6075,7 +6077,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: far clip plane
@@ -6095,15 +6097,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.3320003
+      value: -8.667999
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.0950003
+      value: 3.0950003
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -6.5
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7589,6 +7591,7 @@ MonoBehaviour:
   fireRateTimer: 0.4
   reloadTime: 1.5
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 486503530}
@@ -8851,10 +8854,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1732104397
-      Data2: 1149530907
-      Data3: 825192377
-      Data4: 1928903265
+      Data1: -1640347092
+      Data2: 1289599559
+      Data3: 299702719
+      Data4: -1897854102
     Path: event:/Project/SoundScape/newworld
   Event: 
   PlayEvent: 1
@@ -9021,9 +9024,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1354911053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b258cd1f59232e841af70cdd6f439e49, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ed49fa41e32dff47b4f9dd850779a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1996843642}
 --- !u!4 &1354911055
 Transform:
   m_ObjectHideFlags: 0
@@ -13390,6 +13394,7 @@ MonoBehaviour:
   SG: {fileID: 789604365}
   RL: {fileID: 14025126}
   bloodOverlay: {fileID: 836437004}
+  changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
   TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
@@ -13812,6 +13817,7 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 2
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1347632582}

@@ -512,10 +512,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -738666980
-      Data2: 1231102278
-      Data3: -1662550346
-      Data4: -1021366764
+      Data1: -1272453634
+      Data2: 1304972388
+      Data3: 1141585597
+      Data4: -320502042
     Path: event:/Project/SoundScape/factory
   Event: 
   PlayEvent: 1
@@ -25181,7 +25181,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: far clip plane
@@ -25197,15 +25197,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.3320003
+      value: 2.982
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.0950003
+      value: 4.5950003
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -6.5
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -26310,6 +26310,7 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 2
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1210133351}
@@ -26870,6 +26871,7 @@ MonoBehaviour:
   fireRateTimer: 1
   reloadTime: 2
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 185005982}
@@ -27566,6 +27568,7 @@ MonoBehaviour:
   fireRateTimer: 0.4
   reloadTime: 1.5
   reloading: 0
+  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 185005982}
@@ -28535,9 +28538,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1354911053}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1817d4e0ed6f834c8fee27c3cb203e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ed49fa41e32dff47b4f9dd850779a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1996843642}
 --- !u!4 &1354911055
 Transform:
   m_ObjectHideFlags: 0
@@ -35522,6 +35526,7 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 3.5
   reloading: 0
+  hasFullMagazine: 1
   impactEffects: []
   muzzleFlash: {fileID: 1192616575}
   currentAmmoUI: {fileID: 1862294539}
@@ -57381,6 +57386,7 @@ MonoBehaviour:
   SG: {fileID: 1024794549}
   RL: {fileID: 1630267429}
   bloodOverlay: {fileID: 998050321}
+  changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
   TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
