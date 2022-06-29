@@ -56,6 +56,7 @@ public class HubComputer : MonoBehaviour
         }
 
         if (pauseCanvas.enabled) HideAll();
+        // if (Cursor.lockState != CursorLockMode.None) Cursor.lockState = CursorLockMode.None;
     }
 
     public void Toggle(bool value)
