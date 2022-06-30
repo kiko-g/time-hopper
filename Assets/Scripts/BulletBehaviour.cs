@@ -35,6 +35,8 @@ public class BulletBehaviour : MonoBehaviour
             return;
         } else if (other.gameObject.tag == "Player"){
             player.TakeDamage(damage, "Robo");
+            int id = Random.Range(1, 4);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, player.transform.position);
             Destroy(this.gameObject);
         } else {
             Destroy(this.gameObject);

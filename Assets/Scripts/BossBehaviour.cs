@@ -196,6 +196,8 @@ public class BossBehaviour : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, playerTransform.position) <= 8)
                 {   
+                    int id = Random.Range(1, 4);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, playerController.transform.position);
                     playerController.TakeDamage(Mathf.Round(90 - Vector3.Distance(transform.position, playerTransform.position)*7), "Zombie");
                 }
             }
@@ -278,6 +280,8 @@ public class BossBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
+                    int id = Random.Range(1, 4);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, playerController.transform.position);
                     playerController.TakeDamage(damage*2, "Zombie");
                 }
                 registeredHit = true;

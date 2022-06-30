@@ -432,6 +432,12 @@ namespace StarterAssets
             Point();
             Click();
 
+            if (gunArsenal[selectedGun].reloading){
+                SprintSpeed = 2.0f;
+            } else {
+                SprintSpeed = 5.335f;
+            }
+
 
             /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("ReloadWalking") && _animator.GetCurrentAnimatorClipInfo){
                 _animator.SetBool("Reloading", false);
@@ -1082,7 +1088,7 @@ namespace StarterAssets
                 if (falling)
                 {
                     falling = false;
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
+                    //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
                 }
                 /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolJump")){
                     if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.6f){
@@ -1099,6 +1105,8 @@ namespace StarterAssets
                     //Debug.Log("You fell " + distanceFallen + " units");
                     if (distanceFallen > 4)
                     {
+                        int id = Random.Range(1, 4);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, transform.position);
                         TakeDamage(1 * Mathf.RoundToInt(distanceFallen), "");
                         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
                     }
@@ -1441,6 +1449,8 @@ namespace StarterAssets
             {
                 TakeDamage(Health - 1, "");
                 TakeDamage(Health, "");
+                int id = Random.Range(1, 4);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, transform.position);
             }
             if (other.gameObject.tag == "RumblePlane" && !recentlyTeleported)
             {
@@ -1530,9 +1540,6 @@ namespace StarterAssets
                 Die();
                 return;
             }
-
-            int id = Random.Range(1, 4);
-            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, transform.position);
 
             healingOverTime.PlayerTookDamage();
 

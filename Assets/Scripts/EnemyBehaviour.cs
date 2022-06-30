@@ -142,8 +142,6 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Health: " + health);
-        Debug.Log("Damage: " + damage);
         if (transform == null)
             return;
         if (transform.position.y <= 3 && !enableNavMesh && IsOnNavMesh()){
@@ -191,9 +189,13 @@ public class EnemyBehaviour : MonoBehaviour
                     if (transform.GetChild(0).name == "Gladiador"){
                         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Punch Shot/punch_gladiator", transform.position);
                         playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Gladiador");
+                        int id = Random.Range(1, 4);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, playerTransform.position);
                     } else {
                         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Punch Shot/punch_zombie", transform.position);
                         playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Zombie");
+                        int id = Random.Range(1, 4);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, playerTransform.position);
                     }
                 }
                 registeredHit = true;
