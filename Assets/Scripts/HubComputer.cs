@@ -80,8 +80,8 @@ public class HubComputer : MonoBehaviour
     public Button abilityUpgradeButton;
     public GameObject moneyUpgrade;
     public GameObject healthUpgrade;
-    public TextMeshProUGUI moneyLevelText;
-    public TextMeshProUGUI healthLevelText;
+    public TextMeshProUGUI moneyCurrentLevelText;
+    public TextMeshProUGUI healthCurrentLevelText;
     public TextMeshProUGUI moneyValueText;
     public TextMeshProUGUI healthValueText;
     public TextMeshProUGUI abilitiesColiseumCostText;
@@ -105,91 +105,49 @@ public class HubComputer : MonoBehaviour
 
     void Start()
     {
+        // Get elements
         canvas = GetComponent<Canvas>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseHUD").GetComponent<Canvas>();
 
+        // Listeners
         arenasButton.onClick.AddListener(OnClickArenas);
         overviewButton.onClick.AddListener(OnClickOverview);
         upgradesButton.onClick.AddListener(OnClickUpgrades);
         unlockRumbleButton.onClick.AddListener(OnClickUnlockRumble);
         abilityUpgradeButton.onClick.AddListener(OnClickUpgradeAbility);
         weaponUpgradeButton.onClick.AddListener(OnClickUpgradeWeapon);
-
         abilityDropdown.onValueChanged.AddListener(delegate
         {
             OnAbilityDropdownValueChanged(abilityDropdown);
         });
-
         weaponDropdown.onValueChanged.AddListener(delegate
         {
             OnWeaponDropdownValueChanged(weaponDropdown);
         });
 
-        // Initial Values
-        hint.SetActive(false);
-        canvas.enabled = false;
+        // FIXME: TESTING
+        // factoryCostMultiplier = 1.0f;
+        // forestCostMultiplier = 1.25f;
+        // colliseumCostMultiplier = 1.50f;
+        // rumbleCostMultiplier = 0.25f;
+        factoryCostMultiplier = 0f;
+        forestCostMultiplier = 0f;
+        colliseumCostMultiplier = 0f;
+        rumbleCostMultiplier = 0f;
 
-        // tabs
-        overviewCore.SetActive(true); // Overview is the default tab
-        arenasCore.SetActive(false);
-        upgradesCore.SetActive(false);
-        overviewButtonActive.SetActive(true); // Overview is the default tab
-        arenasButtonActive.SetActive(false);
-        upgradesButtonActive.SetActive(false);
+        PlayerPrefs.SetInt("MoneyLevel", 1);
+        PlayerPrefs.SetInt("HealthLevel", 1);
+        PlayerPrefs.SetInt("Weapon0Level", 1);
+        PlayerPrefs.SetInt("Weapon1Level", 1);
+        PlayerPrefs.SetInt("Weapon2Level", 1);
+        PlayerPrefs.SetInt("Weapon3Level", 1);
+        PlayerPrefs.SetInt("FactoryCurrency", 0);
+        PlayerPrefs.SetInt("ForestCurrency", 0);
+        PlayerPrefs.SetInt("ColliseumCurrency", 0);
+        PlayerPrefs.SetInt("RumbleCurrency", 0);
 
-        // rumble status
-        if (PlayerPrefs.GetInt("RumbleUnlocked") == 1)
-        {
-            rumbleUnlocked = true;
-            RumblePortal.SetActive(true);
-        }
-        else
-        {
-            rumbleUnlocked = false;
-            RumblePortal.SetActive(false);
-        }
-
-        // abilities upgrades
-        factoryCostMultiplier = 1.0f;
-        forestCostMultiplier = 1.25f;
-        colliseumCostMultiplier = 1.50f;
-        rumbleCostMultiplier = 0.25f;
-
-        moneyLevel = PlayerPrefs.GetInt("MoneyLevel") == 0 ? 1 : PlayerPrefs.GetInt("MoneyLevel");
-        healthLevel = PlayerPrefs.GetInt("HealthLevel") == 0 ? 1 : PlayerPrefs.GetInt("HealthLevel");
-
-        abilitiesUpgradingText.text = "Upgrading " + abilityDropdown.options[0].text;
-        healthUpgrade.SetActive(true);
-        moneyUpgrade.SetActive(false);
-
-        moneyValueText.text = (100 + 25 * (moneyLevel - 1)).ToString();
-        healthValueText.text = (100 + 10 * (healthLevel - 1)).ToString();
-
-        abilitiesColiseumCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * colliseumCostMultiplier));
-        abilitiesFactoryCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * factoryCostMultiplier));
-        abilitiesForestCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * forestCostMultiplier));
-        abilitiesRumbleCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * rumbleCostMultiplier));
-        abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade Health to Lvl " + (healthLevel + 1);
-
-        // weapons upgrades
-        foreach (GameObject weapon in weapons) weapon.SetActive(false);
-        weapons[0].SetActive(true);
-        weaponLevels = new int[4] {
-            PlayerPrefs.GetInt("Weapon0Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon0Level"),
-            PlayerPrefs.GetInt("Weapon1Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon1Level"),
-            PlayerPrefs.GetInt("Weapon2Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon2Level"),
-            PlayerPrefs.GetInt("Weapon3Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon3Level")
-        };
-        weaponsUpgradingText.text = "Upgrading " + weaponDropdown.options[0].text;
-        weaponsCurrentLevelText.text = weaponDropdown.options[0].text + " current level: " + weaponLevels[0];
-        weaponsColiseumCostText.text = buildCurrencyString(Mathf.FloorToInt(weaponLevels[0] * colliseumCostMultiplier));
-        weaponsFactoryCostText.text = buildCurrencyString(Mathf.FloorToInt(weaponLevels[0] * factoryCostMultiplier));
-        weaponsForestCostText.text = buildCurrencyString(Mathf.FloorToInt(weaponLevels[0] * forestCostMultiplier));
-        weaponsRumbleCostText.text = buildCurrencyString(Mathf.FloorToInt(weaponLevels[0] * rumbleCostMultiplier));
-        weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade Weapon to Lvl " + (weaponLevels[0] + 1);
-
-        // Refreshable UI Values
+        InitialUIValues();
         UpdateUIValues();
     }
 
@@ -230,6 +188,60 @@ public class HubComputer : MonoBehaviour
         }
     }
 
+    void InitialUIValues()
+    {
+        hint.SetActive(false);
+        canvas.enabled = false;
+
+        // tabs
+        overviewCore.SetActive(true); // Overview is the default tab
+        arenasCore.SetActive(false);
+        upgradesCore.SetActive(false);
+        overviewButtonActive.SetActive(true); // Overview is the default tab
+        arenasButtonActive.SetActive(false);
+        upgradesButtonActive.SetActive(false);
+
+        // rumble status
+        if (PlayerPrefs.GetInt("RumbleUnlocked") == 1)
+        {
+            rumbleUnlocked = true;
+            RumblePortal.SetActive(true);
+        }
+        else
+        {
+            rumbleUnlocked = false;
+            RumblePortal.SetActive(false);
+        }
+
+        // abilities upgrades
+        healthLevel = PlayerPrefs.GetInt("HealthLevel") == 0 ? 1 : PlayerPrefs.GetInt("HealthLevel");
+        healthUpgrade.SetActive(true);
+        healthCurrentLevelText.text = buildLevelString("Health", healthLevel);
+        healthValueText.text = buildAbilityValueString("Health", moneyLevel);
+
+        moneyLevel = PlayerPrefs.GetInt("MoneyLevel") == 0 ? 1 : PlayerPrefs.GetInt("MoneyLevel");
+        moneyUpgrade.SetActive(false);
+        moneyCurrentLevelText.text = buildLevelString("Money", moneyLevel);
+        moneyValueText.text = buildAbilityValueString("Money", moneyLevel);
+
+        UpdateCostsText("Ability", healthLevel);
+        abilitiesUpgradingText.text = buildUpgradeString(abilityDropdown.options[0].text);
+        abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Health", healthLevel);
+
+        // weapons upgrades
+        foreach (GameObject weapon in weapons) weapon.SetActive(false);
+        weapons[0].SetActive(true);
+
+        weaponLevels = new int[4];
+        foreach (int level in weaponLevels)
+            weaponLevels[level] = PlayerPrefs.GetInt("Weapon" + level + "Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon" + level + "Level");
+
+        weaponsUpgradingText.text = buildUpgradeString(weaponDropdown.options[0].text);
+        weaponsCurrentLevelText.text = buildLevelString(weaponDropdown.options[0].text, weaponLevels[0]);
+        UpdateCostsText("Weapon", weaponLevels[0]);
+        weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildWeaponUpgradeButtonString(weaponDropdown.options[0].text, weaponLevels[0]);
+    }
+
     void UpdateUIValues()
     {
         // arena best rounds (arenas core)
@@ -266,66 +278,10 @@ public class HubComputer : MonoBehaviour
         forestCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(forestCurrencyNumber);
         rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(rumbleCurrencyNumber);
 
-        // upgrades buttons (upgrades core)
-        // health upgrade
-        if (abilityDropdown.value == 0)
-        {
-            bool cantPurchaseHealthUpgrade =
-                (float)colliseumCurrencyNumber < (float)(healthLevel * colliseumCostMultiplier) ||
-                (float)factoryCurrencyNumber < (float)(healthLevel * factoryCostMultiplier) ||
-                (float)forestCurrencyNumber < (float)(healthLevel * forestCostMultiplier) ||
-                (float)rumbleCurrencyNumber < (float)(healthLevel * rumbleCostMultiplier);
-
-            if (cantPurchaseHealthUpgrade)
-            {
-                abilityUpgradeButton.interactable = false;
-                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
-            }
-            else
-            {
-                abilityUpgradeButton.interactable = true;
-                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-            }
-        }
-
-        // money upgrade
-        if (abilityDropdown.value == 1)
-        {
-            bool cantPurchaseMoneyUpgrade =
-                (float)colliseumCurrencyNumber < (float)(moneyLevel * colliseumCostMultiplier) ||
-                (float)factoryCurrencyNumber < (float)(moneyLevel * factoryCostMultiplier) ||
-                (float)forestCurrencyNumber < (float)(moneyLevel * forestCostMultiplier) ||
-                (float)rumbleCurrencyNumber < (float)(moneyLevel * rumbleCostMultiplier);
-
-            if (cantPurchaseMoneyUpgrade)
-            {
-                abilityUpgradeButton.interactable = false;
-                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
-            }
-            else
-            {
-                abilityUpgradeButton.interactable = true;
-                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-            }
-        }
-
-        // weapon upgrades
-        bool cantPurchaseWeaponUpgrade =
-                (float)colliseumCurrencyNumber < (float)(weaponLevels[weaponDropdown.value] * colliseumCostMultiplier) ||
-                (float)factoryCurrencyNumber < (float)(weaponLevels[weaponDropdown.value] * factoryCostMultiplier) ||
-                (float)forestCurrencyNumber < (float)(weaponLevels[weaponDropdown.value] * forestCostMultiplier) ||
-                (float)rumbleCurrencyNumber < (float)(weaponLevels[weaponDropdown.value] * rumbleCostMultiplier);
-
-        if (cantPurchaseWeaponUpgrade)
-        {
-            weaponUpgradeButton.interactable = false;
-            weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
-        }
-        else
-        {
-            weaponUpgradeButton.interactable = true;
-            weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-        }
+        // can purchase upgrade (upgrades core)
+        UpdateUpgradeAvailable("Weapon", weaponLevels[0]);
+        if (abilityDropdown.value == 0) UpdateUpgradeAvailable("Ability", healthLevel);
+        else if (abilityDropdown.value == 1) UpdateUpgradeAvailable("Ability", moneyLevel);
 
         // rumble unlock progress bars (overview core)
         colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(colliseumCurrencyNumber, 100)), 1f, 1f);
@@ -398,19 +354,15 @@ public class HubComputer : MonoBehaviour
         {
             case 0:
                 healthUpgrade.SetActive(true);
-                abilitiesColiseumCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * colliseumCostMultiplier));
-                abilitiesFactoryCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * factoryCostMultiplier));
-                abilitiesForestCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * forestCostMultiplier));
-                abilitiesRumbleCostText.text = buildCurrencyString(Mathf.FloorToInt(healthLevel * rumbleCostMultiplier));
-                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade Health to Lvl " + (healthLevel + 1);
+                UpdateCostsText("Ability", healthLevel);
+                healthCurrentLevelText.text = buildLevelString("Health", healthLevel);
+                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Health", healthLevel);
                 break;
             case 1:
                 moneyUpgrade.SetActive(true);
-                abilitiesColiseumCostText.text = buildCurrencyString(Mathf.FloorToInt(moneyLevel * colliseumCostMultiplier));
-                abilitiesFactoryCostText.text = buildCurrencyString(Mathf.FloorToInt(moneyLevel * factoryCostMultiplier));
-                abilitiesForestCostText.text = buildCurrencyString(Mathf.FloorToInt(moneyLevel * forestCostMultiplier));
-                abilitiesRumbleCostText.text = buildCurrencyString(Mathf.FloorToInt(moneyLevel * rumbleCostMultiplier));
-                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade Money to Lvl " + (moneyLevel + 1);
+                UpdateCostsText("Ability", moneyLevel);
+                moneyCurrentLevelText.text = buildLevelString("Money", moneyLevel);
+                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Money", moneyLevel);
                 break;
             default:
                 break;
@@ -423,39 +375,47 @@ public class HubComputer : MonoBehaviour
         int level = weaponLevels[index];
         string name = weaponDropdown.options[index].text;
 
-        weaponsUpgradingText.text = "Upgrading " + name;
+        weaponsUpgradingText.text = buildUpgradeString(name);
         foreach (GameObject weapon in weapons) weapon.SetActive(false);
 
         weapons[index].SetActive(true);
-        weaponsColiseumCostText.text = buildCurrencyString(Mathf.FloorToInt(level * colliseumCostMultiplier));
-        weaponsFactoryCostText.text = buildCurrencyString(Mathf.FloorToInt(level * factoryCostMultiplier));
-        weaponsForestCostText.text = buildCurrencyString(Mathf.FloorToInt(level * forestCostMultiplier));
-        weaponsRumbleCostText.text = buildCurrencyString(Mathf.FloorToInt(level * rumbleCostMultiplier));
-        weaponsCurrentLevelText.text = name + " current Level " + level;
-        weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Upgrade Weapon to Lvl " + (level + 1);
+        UpdateCostsText("Weapon", level);
+        weaponsCurrentLevelText.text = buildLevelString(name, level);
+        weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildWeaponUpgradeButtonString(name, level);
     }
 
     void OnClickUpgradeAbility()
     {
+        int[] costs;
         switch (abilityDropdown.value)
         {
             case 0:
-                moneyLevel++;
-                PlayerPrefs.SetInt("MoneyLevel", moneyLevel);
-                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - Mathf.FloorToInt(moneyLevel * colliseumCostMultiplier));
-                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - Mathf.FloorToInt(moneyLevel * factoryCostMultiplier));
-                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - Mathf.FloorToInt(moneyLevel * forestCostMultiplier));
-                PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - Mathf.FloorToInt(moneyLevel * rumbleCostMultiplier));
-                moneyValueText.text = (100 + 25 * (moneyLevel - 1)).ToString();
+                healthLevel++;
+                costs = getCosts(healthLevel);
+                PlayerPrefs.SetInt("HealthLevel", healthLevel);
+                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[0]);
+                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[1]);
+                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[2]);
+                PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - costs[3]);
+                healthValueText.text = buildAbilityValueString("Health", healthLevel);
+                UpdateUpgradeAvailable("Ability", healthLevel);
+                UpdateCostsText("Health", healthLevel);
+                healthCurrentLevelText.text = buildLevelString("Health", healthLevel);
+                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Health", healthLevel);
                 break;
             case 1:
-                healthLevel++;
-                PlayerPrefs.SetInt("HealthLevel", healthLevel);
-                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - Mathf.FloorToInt(healthLevel * colliseumCostMultiplier));
-                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - Mathf.FloorToInt(healthLevel * factoryCostMultiplier));
-                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - Mathf.FloorToInt(healthLevel * forestCostMultiplier));
-                PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - Mathf.FloorToInt(healthLevel * rumbleCostMultiplier));
-                healthValueText.text = (100 + 10 * (healthLevel - 1)).ToString();
+                moneyLevel++;
+                costs = getCosts(moneyLevel);
+                PlayerPrefs.SetInt("MoneyLevel", moneyLevel);
+                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[0]);
+                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[1]);
+                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[2]);
+                PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - costs[3]);
+                moneyValueText.text = buildAbilityValueString("Money", moneyLevel);
+                UpdateUpgradeAvailable("Ability", moneyLevel);
+                UpdateCostsText("Money", moneyLevel);
+                moneyCurrentLevelText.text = buildLevelString("Money", moneyLevel);
+                abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Money", moneyLevel);
                 break;
             default:
                 break;
@@ -465,12 +425,20 @@ public class HubComputer : MonoBehaviour
     void OnClickUpgradeWeapon()
     {
         weaponLevels[abilityDropdown.value]++;
-        PlayerPrefs.SetInt("Weapon" + abilityDropdown.value + "Level", weaponLevels[abilityDropdown.value]);
-        PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - Mathf.FloorToInt(weaponLevels[abilityDropdown.value] * colliseumCostMultiplier));
-        PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - Mathf.FloorToInt(weaponLevels[abilityDropdown.value] * factoryCostMultiplier));
-        PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - Mathf.FloorToInt(weaponLevels[abilityDropdown.value] * forestCostMultiplier));
-        PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - Mathf.FloorToInt(weaponLevels[abilityDropdown.value] * rumbleCostMultiplier));
-        weaponsCurrentLevelText.text = weaponDropdown.options[abilityDropdown.value].text + " current level: " + weaponLevels[abilityDropdown.value];
+        int level = weaponLevels[abilityDropdown.value];
+        string name = weaponDropdown.options[abilityDropdown.value].text;
+
+        int[] costs = getCosts(level);
+        PlayerPrefs.SetInt("Weapon" + abilityDropdown.value + "Level", level);
+        PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[0]);
+        PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[1]);
+        PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[2]);
+        PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - costs[3]);
+        weaponsCurrentLevelText.text = buildLevelString(name, level);
+        UpdateUpgradeAvailable("Weapon", level);
+        UpdateCostsText("Weapon", level);
+        weaponsCurrentLevelText.text = buildLevelString(name, level);
+        abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Money", moneyLevel);
     }
 
     void OnClickUnlockRumble()
@@ -526,38 +494,21 @@ public class HubComputer : MonoBehaviour
     // Auxiliary functions
     string buildRoundString(int numRounds)
     {
-        if (numRounds == 1)
-        {
-            return numRounds.ToString() + " round";
-        }
-        else
-        {
-            return numRounds.ToString() + " rounds";
-        }
+        if (numRounds == 1) return numRounds.ToString() + " round";
+        else return numRounds.ToString() + " rounds";
     }
 
     string buildKillsString(int numKills)
     {
-        if (numKills == 1)
-        {
-            return numKills.ToString() + " enemy";
-        }
-        else
-        {
-            return numKills.ToString() + " enemies";
-        }
+        if (numKills == 1) return numKills.ToString() + " enemy";
+        else return numKills.ToString() + " enemies";
+
     }
 
     string buildAttemptsString(int numAttempts)
     {
-        if (numAttempts == 1)
-        {
-            return numAttempts.ToString() + " attempt";
-        }
-        else
-        {
-            return numAttempts.ToString() + " attempts";
-        }
+        if (numAttempts == 1) return numAttempts.ToString() + " attempt";
+        else return numAttempts.ToString() + " attempts";
     }
 
     string buildCurrencyString(int currency)
@@ -575,5 +526,124 @@ public class HubComputer : MonoBehaviour
     {
         TimeSpan timeInfo = TimeSpan.FromSeconds(time);
         return "" + timeInfo.Hours + "h" + timeInfo.Minutes + "min Time Played";
+    }
+
+    /* Upgrades */
+    int[] getCosts(int level)
+    {
+        return new int[] {
+            Mathf.FloorToInt(level * colliseumCostMultiplier),
+            Mathf.FloorToInt(level * factoryCostMultiplier),
+            Mathf.FloorToInt(level * forestCostMultiplier),
+            Mathf.FloorToInt(level * rumbleCostMultiplier)
+        };
+    }
+
+    void UpdateUpgradeAvailable(string type, int level)
+    {
+        int[] costs = getCosts(level);
+        bool cantPurchaseUpgrade =
+            PlayerPrefs.GetInt("FactoryCurrency") < costs[0] ||
+            PlayerPrefs.GetInt("ForestCurrency") < costs[1] ||
+            PlayerPrefs.GetInt("ColliseumCurrency") < costs[2] ||
+            PlayerPrefs.GetInt("RumbleCurrency") < costs[3];
+
+        switch (type)
+        {
+            case "Ability":
+                if (cantPurchaseUpgrade)
+                {
+                    abilityUpgradeButton.interactable = false;
+                    abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+                }
+                else
+                {
+                    abilityUpgradeButton.interactable = true;
+                    abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                }
+                break;
+            case "Weapon":
+                if (cantPurchaseUpgrade)
+                {
+                    weaponUpgradeButton.interactable = false;
+                    weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+                }
+                else
+                {
+                    weaponUpgradeButton.interactable = true;
+                    weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    void UpdateCostsText(string type, int level)
+    {
+        int[] costs = getCosts(level);
+
+        switch (type)
+        {
+            case "Ability":
+            case "Abilities":
+                abilitiesColiseumCostText.text = buildCurrencyString(costs[0]);
+                abilitiesFactoryCostText.text = buildCurrencyString(costs[1]);
+                abilitiesForestCostText.text = buildCurrencyString(costs[2]);
+                abilitiesRumbleCostText.text = buildCurrencyString(costs[3]);
+                break;
+            case "Weapon":
+            case "Weapons":
+                weaponsColiseumCostText.text = buildCurrencyString(costs[0]);
+                weaponsFactoryCostText.text = buildCurrencyString(costs[1]);
+                weaponsForestCostText.text = buildCurrencyString(costs[2]);
+                weaponsRumbleCostText.text = buildCurrencyString(costs[3]);
+                break;
+            default:
+                break;
+        }
+    }
+
+    string buildUpgradeString(string optionText)
+    {
+        return "Upgrading " + optionText;
+    }
+
+    string buildLevelString(string ability, int level)
+    {
+        return ability + " current level: " + level;
+    }
+
+    string buildAbilityValueString(string ability, int level)
+    {
+        int step = 0;
+        switch (ability)
+        {
+            case "Health":
+                step = 10;
+                break;
+
+            case "Money":
+                step = 25;
+                break;
+
+            default:
+                break;
+        }
+
+        Debug.Log(step * Math.Max(0, level - 1));
+        return (100 + (step * Math.Max(0, level - 1))).ToString();
+    }
+
+    string buildAbilityUpgradeButtonString(string ability, int level)
+    {
+        return "Upgrade " + ability + " to Lvl " + (level + 1);
+    }
+
+    string buildWeaponUpgradeButtonString(string weapon, int level)
+    {
+        string acronym = weapon.Split('(')[1].Split(')')[0];
+        return "Upgrade " + acronym + " to Lvl " + (level + 1);
     }
 }
