@@ -136,16 +136,17 @@ public class HubComputer : MonoBehaviour
         // colliseumCostMultiplier = 0f;
         // rumbleCostMultiplier = 0f;
 
-        // PlayerPrefs.SetInt("MoneyLevel", 1);
-        // PlayerPrefs.SetInt("HealthLevel", 1);
-        // PlayerPrefs.SetInt("Weapon0Level", 1);
-        // PlayerPrefs.SetInt("Weapon1Level", 1);
-        // PlayerPrefs.SetInt("Weapon2Level", 1);
-        // PlayerPrefs.SetInt("Weapon3Level", 1);
-        // PlayerPrefs.SetInt("FactoryCurrency", 0);
-        // PlayerPrefs.SetInt("ForestCurrency", 0);
-        // PlayerPrefs.SetInt("ColliseumCurrency", 0);
-        // PlayerPrefs.SetInt("RumbleCurrency", 0);
+        PlayerPrefs.SetInt("MoneyLevel", 1);
+        PlayerPrefs.SetInt("HealthLevel", 1);
+        PlayerPrefs.SetInt("Weapon0Level", 1);
+        PlayerPrefs.SetInt("Weapon1Level", 1);
+        PlayerPrefs.SetInt("Weapon2Level", 1);
+        PlayerPrefs.SetInt("Weapon3Level", 1);
+        PlayerPrefs.SetInt("FactoryCurrency", 100);
+        PlayerPrefs.SetInt("ForestCurrency", 100);
+        PlayerPrefs.SetInt("ColliseumCurrency", 100);
+        PlayerPrefs.SetInt("RumbleCurrency", 100);
+        PlayerPrefs.SetInt("RumbleUnlocked", 0);
 
         InitialUIValues();
         UpdateUIValues();
@@ -298,7 +299,7 @@ public class HubComputer : MonoBehaviour
         rumbleProgress.text = newRumbleProgressNumber.ToString() + "/3";
 
         if (rumbleUnlocked) return;
-        if (factoryCurrencyNumber >= 100 && forestCurrencyNumber >= 100 && colliseumCurrencyNumber >= 100)
+        if (colliseumCurrencyNumber >= 100 && factoryCurrencyNumber >= 100 && forestCurrencyNumber >= 100)
         {
             rumbleAvailable = true;
             unlockRumbleButton.gameObject.SetActive(true);
@@ -391,32 +392,34 @@ public class HubComputer : MonoBehaviour
         switch (abilityDropdown.value)
         {
             case 0:
-                healthLevel++;
                 costs = getCosts(healthLevel);
+                healthLevel++;
                 PlayerPrefs.SetInt("HealthLevel", healthLevel);
-                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[0]);
-                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[1]);
-                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[2]);
+                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[0]);
+                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[1]);
+                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[2]);
                 PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - costs[3]);
                 healthValueText.text = buildAbilityValueString("Health", healthLevel);
-                UpdateUpgradeAvailable("Ability", healthLevel);
-                UpdateCostsText("Health", healthLevel);
                 healthCurrentLevelText.text = buildLevelString("Health", healthLevel);
                 abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Health", healthLevel);
+                UpdateUpgradeAvailable("Ability", healthLevel);
+                UpdateCostsText("Ability", healthLevel);
+                UpdateUserMoney();
                 break;
             case 1:
                 moneyLevel++;
                 costs = getCosts(moneyLevel);
                 PlayerPrefs.SetInt("MoneyLevel", moneyLevel);
-                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[0]);
-                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[1]);
-                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[2]);
+                PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[0]);
+                PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[1]);
+                PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[2]);
                 PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - costs[3]);
                 moneyValueText.text = buildAbilityValueString("Money", moneyLevel);
                 moneyCurrentLevelText.text = buildLevelString("Money", moneyLevel);
                 abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Money", moneyLevel);
                 UpdateUpgradeAvailable("Ability", moneyLevel);
-                UpdateCostsText("Money", moneyLevel);
+                UpdateCostsText("Ability", moneyLevel);
+                UpdateUserMoney();
                 break;
             default:
                 break;
@@ -425,20 +428,22 @@ public class HubComputer : MonoBehaviour
 
     void OnClickUpgradeWeapon()
     {
-        weaponLevels[weaponDropdown.value]++;
         int level = weaponLevels[weaponDropdown.value];
+        int[] costs = getCosts(level);
+        weaponLevels[weaponDropdown.value]++;
+        level = weaponLevels[weaponDropdown.value];
         string name = weaponDropdown.options[weaponDropdown.value].text;
 
-        int[] costs = getCosts(level);
         PlayerPrefs.SetInt("Weapon" + weaponDropdown.value + "Level", level);
-        PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[0]);
-        PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[1]);
-        PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[2]);
+        PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - costs[0]);
+        PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - costs[1]);
+        PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - costs[2]);
         PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - costs[3]);
         weaponsCurrentLevelText.text = buildLevelString(name, level);
         weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildWeaponUpgradeButtonString(name, level);
         UpdateUpgradeAvailable("Weapon", level);
         UpdateCostsText("Weapon", level);
+        UpdateUserMoney();
     }
 
     void OnClickUnlockRumble()
@@ -446,9 +451,9 @@ public class HubComputer : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         rumbleUnlocked = true;
         PlayerPrefs.SetInt("RumbleUnlocked", 1);
+        PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - 100);
         PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - 100);
         PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") - 100);
-        PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") - 100);
         RumblePortal.SetActive(true);
         unlockRumbleButton.gameObject.SetActive(false);
 
@@ -535,7 +540,7 @@ public class HubComputer : MonoBehaviour
             Mathf.FloorToInt(level * colliseumCostMultiplier),
             Mathf.FloorToInt(level * factoryCostMultiplier),
             Mathf.FloorToInt(level * forestCostMultiplier),
-            Mathf.FloorToInt(level * rumbleCostMultiplier)
+            Mathf.FloorToInt(level * level * rumbleCostMultiplier)
         };
     }
 
@@ -588,6 +593,8 @@ public class HubComputer : MonoBehaviour
         {
             case "Ability":
             case "Abilities":
+            case "Health":
+            case "Money":
                 abilitiesColiseumCostText.text = buildCurrencyString(costs[0]);
                 abilitiesFactoryCostText.text = buildCurrencyString(costs[1]);
                 abilitiesForestCostText.text = buildCurrencyString(costs[2]);
@@ -603,6 +610,26 @@ public class HubComputer : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    void UpdateUserMoney()
+    {
+        int colliseumCurrencyNumber = PlayerPrefs.GetInt("ColliseumCurrency");
+        int factoryCurrencyNumber = PlayerPrefs.GetInt("FactoryCurrency");
+        int forestCurrencyNumber = PlayerPrefs.GetInt("ForestCurrency");
+        int rumbleCurrencyNumber = PlayerPrefs.GetInt("RumbleCurrency");
+        colliseumCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(colliseumCurrencyNumber);
+        factoryCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(factoryCurrencyNumber);
+        forestCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(forestCurrencyNumber);
+        rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(rumbleCurrencyNumber);
+
+        // rumble unlock progress bars (overview core)
+        colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(colliseumCurrencyNumber, 100)), 1f, 1f);
+        colliseumCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(colliseumCurrencyNumber);
+        factoryCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(factoryCurrencyNumber, 100)), 1f, 1f);
+        factoryCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(factoryCurrencyNumber);
+        forestCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(forestCurrencyNumber, 100)), 1f, 1f);
+        forestCurrencySliderText.GetComponent<TextMeshProUGUI>().text = buildSliderCurrencyString(forestCurrencyNumber);
     }
 
     string buildUpgradeString(string optionText)
