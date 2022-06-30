@@ -23,7 +23,7 @@ public class RumbleSpawner : MonoBehaviour
     private GameObject facEnemiesHolder;
 
     [SerializeField]
-    private GameObject enterTooltipUI;
+    public GameObject enterTooltipUI;
 
     [SerializeField]
     private Text roundUI;

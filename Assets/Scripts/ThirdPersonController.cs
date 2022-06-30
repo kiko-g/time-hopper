@@ -1512,7 +1512,11 @@ namespace StarterAssets
             if (!is_dead)
             {
                 is_dead = true;
-                waveSpawner.enterTooltipUI.SetActive(false);
+                if (waveSpawner != null) waveSpawner.enterTooltipUI.SetActive(false);
+                else {
+                    rumbleSpawner.enterTooltipUI.SetActive(false);
+                    PlayerPrefs.SetInt("ComingBackFromRumble", 1);
+                }
                 _input.enabled = false;
                 float deathTime = Time.time;
                 deathScreen.SetActive(true);
