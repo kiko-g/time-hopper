@@ -8,6 +8,7 @@ public class ArenaPause : MonoBehaviour
     public Button resumeButton;
     public Button settingsButton;
     public Button instructionsButton;
+    public Button giveUpGoToHubButton;
     public Button backSettingsButton;
     public Button backInstructionsButton;
 
@@ -37,6 +38,8 @@ public class ArenaPause : MonoBehaviour
         resumeButton.onClick.AddListener(OnClickResume);
         settingsButton.onClick.AddListener(OnClickSettings);
         instructionsButton.onClick.AddListener(OnClickInstructions);
+        giveUpGoToHubButton.onClick.AddListener(OnClickGiveUpInstructions);
+
         backSettingsButton.onClick.AddListener(OnClickBackSettings);
         backInstructionsButton.onClick.AddListener(OnClickBackInstructions);
 
@@ -75,7 +78,8 @@ public class ArenaPause : MonoBehaviour
     void Update()
     {
         UpdateSliders();
-        if (player._input.pause){
+        if (player._input.pause)
+        {
             Toggle(!canvas.enabled);
             player._input.pause = false;
         }
@@ -136,6 +140,18 @@ public class ArenaPause : MonoBehaviour
         core.SetActive(false);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(true);
+    }
+
+    void OnClickGiveUpInstructions()
+    {
+        player.GiveUp();
+        canvas.enabled = false;
+        Time.timeScale = 1f;
+        player.SwitchInputToPlayer();
+        Cursor.lockState = CursorLockMode.Locked;
+        core.SetActive(true); // Main is the default core
+        settingsCore.SetActive(false);
+        instructionsCore.SetActive(false);
     }
 
     void OnClickBackSettings()
