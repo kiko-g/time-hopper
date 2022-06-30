@@ -28,8 +28,8 @@ namespace StarterAssets
         public float SprintSpeed = 5.335f;
 
         [Tooltip("Character's Health")]
-        public float Health = 100.0f;
-        public float MaxHealth = 100.0f;
+        public float Health;
+        public float MaxHealth;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -215,7 +215,7 @@ namespace StarterAssets
         private bool heartBeat = false, heartBeatUp = true;
         private float heartBeatRatio = 1.0f;
         private int hitsNumber = 0;
-        private int weaponCurrency = 0;
+        private int weaponCurrency;
         private float fallingY = -1234.56789f;
         private float teleportedTime = 0f;
         private bool recentlyTeleported = false;
@@ -287,6 +287,12 @@ namespace StarterAssets
 
         private void Start()
         {
+            // starting values
+            Health = GetStartingHealth();
+            MaxHealth = GetStartingMaxHealth();
+            weaponCurrency = GetStartingMoney();
+            // updateCurrencyUI();
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             _hasAnimator = TryGetComponent(out _animator);
@@ -304,18 +310,22 @@ namespace StarterAssets
             // get the DeathScreen object from the canvas
             deathScreen = canvas.transform.Find("DeathScreen").gameObject;
             GameObject wavespawn = GameObject.Find("WaveSpawner");
-            if(wavespawn != null){
+            if (wavespawn != null)
+            {
                 waveSpawner = wavespawn.GetComponent<WaveSpawner>();
             }
-            else{
+            else
+            {
                 waveSpawner = null;
                 GameObject rumblespawn = GameObject.Find("RumbleSpawner");
-                if(rumblespawn != null){
+                if (rumblespawn != null)
+                {
                     rumbleSpawner = rumblespawn.GetComponent<RumbleSpawner>();
                 }
             }
             GameObject trainSpawn = GameObject.Find("TrainingSpawner");
-            if(trainSpawn != null){
+            if (trainSpawn != null)
+            {
                 trainingSpawner = trainSpawn.GetComponent<TrainingTargetSpawner>();
             }
             WeaponsHUD = canvas.transform.Find("ReloadHUD");
@@ -333,15 +343,16 @@ namespace StarterAssets
             AR.setGunSound("shot_gun1");
             SG.setGunSound("shot_gun3");
             RL.setGunSound("explosion_gun4");
-            if(rumbleSpawner != null){
+            if (rumbleSpawner != null)
+            {
                 gunArsenal.Add(AR);
-                selectedGun = gunArsenal.Count-1;
+                selectedGun = gunArsenal.Count - 1;
                 addGunHUD("AR");
                 gunArsenal.Add(SG);
-                selectedGun = gunArsenal.Count-1;
+                selectedGun = gunArsenal.Count - 1;
                 addGunHUD("SG");
                 gunArsenal.Add(RL);
-                selectedGun = gunArsenal.Count-1;
+                selectedGun = gunArsenal.Count - 1;
                 addGunHUD("RL");
                 selectedGun = 0;
             }
@@ -349,16 +360,18 @@ namespace StarterAssets
             // find all objects with the tag RumblePlane
             rumblePlanes = GameObject.FindGameObjectsWithTag("RumblePlane");
             // select one of the rumble planes to spawn the player at
-            if(rumblePlanes != null && rumblePlanes.Length != 0){
+            if (rumblePlanes != null && rumblePlanes.Length != 0)
+            {
                 int random = Random.Range(0, rumblePlanes.Length);
-            // spawn the player at the selected rumble plane
+                // spawn the player at the selected rumble plane
                 transform.position = rumblePlanes[random].gameObject.GetComponent<RumblePlane>().getSpawnPosition();
                 rumbleSpawner.setCurrentScene(rumblePlanes[random].name);
             }
 
             heartBeatSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Character Related/heartbeat");
             jumpBase = jumpHubBase;
-            switch(SceneManager.GetActiveScene().name){
+            switch (SceneManager.GetActiveScene().name)
+            {
                 case "Colliseum":
                     jumpBase = jumpColliseumBase;
                     break;
@@ -376,6 +389,9 @@ namespace StarterAssets
 
         private void Update()
         {
+            // Debug.Log("HEALTH: " + Health);
+            // Debug.Log("MAX HEALTH: " + MaxHealth);
+            // Debug.Log("MONEY: " + weaponCurrency);
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -384,13 +400,17 @@ namespace StarterAssets
             Aim();
             Fire();
             Melee();
-            if(trainingSpawner != null){
-                if(!trainingSpawner.active){
+            if (trainingSpawner != null)
+            {
+                if (!trainingSpawner.active)
+                {
                     training = false;
                 }
 
-                if(!training && TrainingHUD.activeSelf){
-                    if(_input.interact){
+                if (!training && TrainingHUD.activeSelf)
+                {
+                    if (_input.interact)
+                    {
                         trainingSpawner.startTraining();
                         _input.interact = false;
                         training = true;
@@ -412,17 +432,21 @@ namespace StarterAssets
                 SprintSpeed = 5.335f;
             }*/
 
-            if(recentlyTeleported && Time.time - teleportedTime > 0.5f){
-                for(int i = 0; i<rumblePlanes.Length; i++){
+            if (recentlyTeleported && Time.time - teleportedTime > 0.5f)
+            {
+                for (int i = 0; i < rumblePlanes.Length; i++)
+                {
                     rumblePlanes[i].gameObject.GetComponent<BoxCollider>().isTrigger = true;
                 }
                 recentlyTeleported = false;
             }
-            
 
-            if (!canFire){
+
+            if (!canFire)
+            {
                 fireTimer += Time.deltaTime;
-                if (fireTimer >= 0.3f){
+                if (fireTimer >= 0.3f)
+                {
 
                     canFire = true;
                     fireTimer = 0;
@@ -494,13 +518,15 @@ namespace StarterAssets
             _animIDShoot = Animator.StringToHash("Shoot");
         }*/
 
-        private void addGunHUD(string weapon){
-            string objectToActivate = weapon + (selectedGun+1).ToString();
+        private void addGunHUD(string weapon)
+        {
+            string objectToActivate = weapon + (selectedGun + 1).ToString();
             WeaponsHUD.Find(objectToActivate).gameObject.SetActive(true);
-            WeaponsHUD.Find("Pos"+(selectedGun+1).ToString()+"Text").gameObject.SetActive(true);
+            WeaponsHUD.Find("Pos" + (selectedGun + 1).ToString() + "Text").gameObject.SetActive(true);
         }
 
-        private void WeaponShop(){
+        private void WeaponShop()
+        {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(screenCenter);
             GameObject UItext = WeaponShopUI.transform.GetChild(0).gameObject;
@@ -512,7 +538,8 @@ namespace StarterAssets
 
                     if (!gunArsenal.Contains(AR))
                     {
-                        if(weaponCurrency >= AR.weaponPrice){
+                        if (weaponCurrency >= AR.weaponPrice)
+                        {
                             UItext.GetComponent<Text>().text = "Press [E] to buy Tango-45 AR (Cost: " + AR.weaponPrice + ")";
                             WeaponShopUI.SetActive(true);
                             ARMesh.material.color = Color.green;
@@ -525,40 +552,49 @@ namespace StarterAssets
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("AR");
                                 //if the current scene is not "Hub", update the currency ui
-                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                if (SceneManager.GetActiveScene().name != "Hub")
+                                {
                                     updateCurrencyUI();
                                 }
                                 _animator.SetBool("Pistol", false);
                             }
                         }
-                        else{
+                        else
+                        {
                             UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + AR.weaponPrice + ")";
                             WeaponShopUI.SetActive(true);
                             ARMesh.material.color = Color.red;
                         }
                     }
-                    else{
+                    else
+                    {
                         UItext.GetComponent<Text>().text = "Already acquired Tango-45 AR";
                         WeaponShopUI.SetActive(true);
                         ARMesh.material.color = Color.red;
                     }
                 }
-                else if (hit.collider.gameObject.name == "ARAmmo"){
+                else if (hit.collider.gameObject.name == "ARAmmo")
+                {
 
-                    if(weaponCurrency >= AR.ammoPrice & gunArsenal.Contains(AR)){
+                    if (weaponCurrency >= AR.ammoPrice & gunArsenal.Contains(AR))
+                    {
                         UItext.GetComponent<Text>().text = "Press [E] to buy Tango-45 AR Ammo (Cost: " + AR.ammoPrice + ")";
                         WeaponShopUI.SetActive(true);
-                        if(_input.interact){
-                            if(AR.BuyAmmo(1)){
+                        if (_input.interact)
+                        {
+                            if (AR.BuyAmmo(1))
+                            {
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
-                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                if (SceneManager.GetActiveScene().name != "Hub")
+                                {
                                     updateCurrencyUI();
                                 }
                             }
                         }
                     }
-                    else{
+                    else
+                    {
                         UItext.GetComponent<Text>().text = "Tango-45 AR not acquired";
                         WeaponShopUI.SetActive(true);
                     }
@@ -568,7 +604,8 @@ namespace StarterAssets
                     SGMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
                     if (!gunArsenal.Contains(SG))
                     {
-                        if(weaponCurrency >= SG.weaponPrice){
+                        if (weaponCurrency >= SG.weaponPrice)
+                        {
                             UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG (Cost: " + SG.weaponPrice + ")";
                             WeaponShopUI.SetActive(true);
                             SGMesh.material.color = Color.green;
@@ -580,39 +617,48 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("SG");
-                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                if (SceneManager.GetActiveScene().name != "Hub")
+                                {
                                     updateCurrencyUI();
                                 }
                                 _animator.SetBool("Pistol", false);
                             }
                         }
-                        else{
+                        else
+                        {
                             UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + SG.weaponPrice + ")";
                             WeaponShopUI.SetActive(true);
                             SGMesh.material.color = Color.red;
                         }
                     }
-                    else{
+                    else
+                    {
                         UItext.GetComponent<Text>().text = "Already acquired Baligant XU772 SG";
                         WeaponShopUI.SetActive(true);
                         SGMesh.material.color = Color.red;
                     }
                 }
-                else if (hit.collider.gameObject.name == "SGAmmo"){
-                    if(weaponCurrency >= SG.ammoPrice & gunArsenal.Contains(SG)){
+                else if (hit.collider.gameObject.name == "SGAmmo")
+                {
+                    if (weaponCurrency >= SG.ammoPrice & gunArsenal.Contains(SG))
+                    {
                         UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG Ammo (Cost: " + SG.ammoPrice + ")";
                         WeaponShopUI.SetActive(true);
-                        if(_input.interact){
+                        if (_input.interact)
+                        {
                             _input.interact = false;
-                            if(SG.BuyAmmo(1)){
+                            if (SG.BuyAmmo(1))
+                            {
                                 weaponCurrency -= SG.ammoPrice;
-                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                if (SceneManager.GetActiveScene().name != "Hub")
+                                {
                                     updateCurrencyUI();
                                 }
                             }
                         }
                     }
-                    else{
+                    else
+                    {
                         UItext.GetComponent<Text>().text = "Baligant XU772 SG not acquired";
                         WeaponShopUI.SetActive(true);
                     }
@@ -622,7 +668,8 @@ namespace StarterAssets
                     RLMesh = hit.collider.gameObject.GetComponent<MeshRenderer>();
                     if (!gunArsenal.Contains(RL))
                     {
-                        if(weaponCurrency >= RL.weaponPrice){
+                        if (weaponCurrency >= RL.weaponPrice)
+                        {
                             UItext.GetComponent<Text>().text = "Press [E] to buy Bazooka M270 RL (Cost: " + RL.weaponPrice + ")";
                             WeaponShopUI.SetActive(true);
                             RLMesh.material.color = Color.green;
@@ -634,62 +681,79 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("RL");
-                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                if (SceneManager.GetActiveScene().name != "Hub")
+                                {
                                     updateCurrencyUI();
                                 }
                                 _animator.SetBool("Pistol", false);
                             }
                         }
-                        else{
+                        else
+                        {
                             UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + RL.weaponPrice + ")";
                             WeaponShopUI.SetActive(true);
                             RLMesh.material.color = Color.red;
                         }
                     }
-                    else{
+                    else
+                    {
                         UItext.GetComponent<Text>().text = "Bazooka M270 RL already acquired";
                         WeaponShopUI.SetActive(true);
                         RLMesh.material.color = Color.red;
                     }
                 }
-                else if (hit.collider.gameObject.name == "RLAmmo"){
-                    if(weaponCurrency >= RL.ammoPrice & gunArsenal.Contains(RL)){
+                else if (hit.collider.gameObject.name == "RLAmmo")
+                {
+                    if (weaponCurrency >= RL.ammoPrice & gunArsenal.Contains(RL))
+                    {
                         UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG Ammo (Cost: " + SG.ammoPrice + ")";
                         WeaponShopUI.SetActive(true);
-                        if(_input.interact){
+                        if (_input.interact)
+                        {
                             _input.interact = false;
-                            if(RL.BuyAmmo(1)){
+                            if (RL.BuyAmmo(1))
+                            {
                                 weaponCurrency -= RL.ammoPrice;
-                                if(SceneManager.GetActiveScene().name != "Hub"){
+                                if (SceneManager.GetActiveScene().name != "Hub")
+                                {
                                     updateCurrencyUI();
                                 }
                             }
                         }
                     }
-                     else{
+                    else
+                    {
                         UItext.GetComponent<Text>().text = "Baligant XU772 SG not acquired";
                         WeaponShopUI.SetActive(true);
                     }
                 }
-                else{
-                    if(ARMesh != null){
+                else
+                {
+                    if (ARMesh != null)
+                    {
                         ARMesh.material.color = AR.GetComponent<MeshRenderer>().material.color;
                     }
-                    if(SGMesh != null){
+                    if (SGMesh != null)
+                    {
                         SGMesh.material.color = SG.GetComponent<MeshRenderer>().material.color;
                     }
-                    if(RLMesh != null){
+                    if (RLMesh != null)
+                    {
                         RLMesh.material.color = RL.GetComponent<MeshRenderer>().material.color;
                     }
                     WeaponShopUI.SetActive(false);
                 }
             }
-            foreach(Transform child in WeaponsHUD){
-                if(child.gameObject.name.Contains("Icon")){
-                    if(child.gameObject.name == "Icon" + gunArsenal[selectedGun].gameObject.name){
+            foreach (Transform child in WeaponsHUD)
+            {
+                if (child.gameObject.name.Contains("Icon"))
+                {
+                    if (child.gameObject.name == "Icon" + gunArsenal[selectedGun].gameObject.name)
+                    {
                         child.gameObject.SetActive(true);
                     }
-                    else{
+                    else
+                    {
                         child.gameObject.SetActive(false);
                     }
                 }
@@ -738,17 +802,20 @@ namespace StarterAssets
         private void Move()
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed =  SprintSpeed;
+            float targetSpeed = SprintSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero){
+            if (_input.move == Vector2.zero)
+            {
                 targetSpeed = 0.0f;
                 // Parar o som
                 walking = false;
-            } else {
+            }
+            else
+            {
                 lastMoveDir = _input.move;
             }
 
@@ -792,7 +859,8 @@ namespace StarterAssets
                     RotationSmoothTime);
 
                 // rotate to face input direction relative to camera position
-                if (rotateWhenMoving){
+                if (rotateWhenMoving)
+                {
                     transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
                 }
             }
@@ -812,7 +880,8 @@ namespace StarterAssets
                     //_animator.SetBool(_animIDRun, true);
                     _animator.SetBool("Running", true);
                 }
-                else {
+                else
+                {
                     //Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Run"));
                     //_animator.SetBool(_animIDRun, false);
                     _animator.SetBool("Running", false);
@@ -826,16 +895,20 @@ namespace StarterAssets
 
         private void Interact()
         {
-            if (_input.interact){
+            if (_input.interact)
+            {
                 checkTrigger();
-            } else {
+            }
+            else
+            {
                 _input.interact = false;
             }
         }
 
         private void Melee()
         {
-            if (_input.melee && !melee){
+            if (_input.melee && !melee)
+            {
                 melee = true;
                 blade.GetComponent<BladeBehaviour>().setActive();
                 //gunArsenal[selectedGun].Reload();
@@ -844,7 +917,9 @@ namespace StarterAssets
                 blade.transform.position += bladeOffset;
                 //blade.transform.position = new Vector3(blade.transform.position.x + 0.02f, blade.transform.position.y - 0.057f, blade.transform.position.z + 0.0110f);
                 //blade.transform.position += blade.transform.TransformDirection(blade.transform.forward);
-            } else {
+            }
+            else
+            {
                 melee = false;
                 _input.melee = false;
                 //_animator.SetBool("Melee", false);
@@ -853,16 +928,20 @@ namespace StarterAssets
 
         private void Reload()
         {
-            if (_animator.GetBool("Reloading")){
+            if (_animator.GetBool("Reloading"))
+            {
                 return;
             }
             canReload = gunArsenal[selectedGun].reloading || (gunArsenal[selectedGun].currentAmmo == gunArsenal[selectedGun].numBulletsPerMagazine) || (gunArsenal[selectedGun].availableAmmo == 0 && !gunArsenal[selectedGun].is_pistol);
-            if (_input.reload && !reload && !canReload){
+            if (_input.reload && !reload && !canReload)
+            {
                 reload = true;
                 gunArsenal[selectedGun].Reload();
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/Guns/reload_gun1", transform.position);
                 _animator.SetBool("Reloading", true);
-            } else {
+            }
+            else
+            {
                 reload = false;
                 _input.reload = false;
             }
@@ -870,20 +949,26 @@ namespace StarterAssets
 
         private void StartRound()
         {
-            if (_input.startRound && !startRound){
+            if (_input.startRound && !startRound)
+            {
                 startRound = true;
                 //gunArsenal[selectedGun].FillAmmo();
-                if(waveSpawner != null) waveSpawner.setStartRoundFlag(true);
-                else{
-                    if(rumbleSpawner.setStartRoundFlag(true)){
+                if (waveSpawner != null) waveSpawner.setStartRoundFlag(true);
+                else
+                {
+                    if (rumbleSpawner.setStartRoundFlag(true))
+                    {
                         //fill ammo of every Gun in the gunArsenal
-                        foreach(GunBehaviour gun in gunArsenal){
+                        foreach (GunBehaviour gun in gunArsenal)
+                        {
                             gun.FillAmmo();
                         }
                     }
                 }
                 _input.startRound = false;
-            } else {
+            }
+            else
+            {
                 startRound = false;
                 _input.startRound = false;
             }
@@ -891,7 +976,8 @@ namespace StarterAssets
 
         private void Aim()
         {
-            if (_input.aim) {
+            if (_input.aim)
+            {
                 SprintSpeed = 2.0f;
                 sensitivity = 0.5f;
                 aimCamera.gameObject.SetActive(true);
@@ -903,7 +989,8 @@ namespace StarterAssets
                 // Rotate the player to face where he is aiming
                 Ray ray = Camera.main.ScreenPointToRay(screenCenter);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
+                if (Physics.Raycast(ray, out hit, 999f, aimColliderMask))
+                {
                     mouseGlobalPosition = hit.point;
                 }
 
@@ -913,7 +1000,9 @@ namespace StarterAssets
 
                 _animator.SetBool("Aiming", true);
 
-            } else {
+            }
+            else
+            {
                 SprintSpeed = 5.335f;
                 sensitivity = 1f;
                 aimCamera.gameObject.SetActive(false);
@@ -924,24 +1013,29 @@ namespace StarterAssets
             }
         }
 
-        public void AddWeaponCurrency(int ammount){
-            weaponCurrency+=ammount;
-            updateCurrencyUI();
+        public void AddWeaponCurrency(int ammount)
+        {
+            weaponCurrency += ammount;
         }
 
         private void Fire()
         {
             if (_animator.GetBool("Reloading")) return;
-            if (_input.fire) {
+            if (_input.fire)
+            {
                 rotateWhenMoving = false;
 
                 Vector3 mouseGlobalPosition = Vector3.zero;
 
                 Vector2 shootingSpreadVec = new Vector2(0, 0);
-                if (!_input.aim){
-                    if (!Grounded){
-                        shootingSpreadVec = new Vector2(Random.Range(-gunArsenal[selectedGun].shootingSpread*2, gunArsenal[selectedGun].shootingSpread*2), Random.Range(-gunArsenal[selectedGun].shootingSpread*2, gunArsenal[selectedGun].shootingSpread*2));
-                    } else {
+                if (!_input.aim)
+                {
+                    if (!Grounded)
+                    {
+                        shootingSpreadVec = new Vector2(Random.Range(-gunArsenal[selectedGun].shootingSpread * 2, gunArsenal[selectedGun].shootingSpread * 2), Random.Range(-gunArsenal[selectedGun].shootingSpread * 2, gunArsenal[selectedGun].shootingSpread * 2));
+                    }
+                    else
+                    {
                         shootingSpreadVec = new Vector2(Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread), Random.Range(-gunArsenal[selectedGun].shootingSpread, gunArsenal[selectedGun].shootingSpread));
                     }
                 }
@@ -949,7 +1043,8 @@ namespace StarterAssets
                 // Rotate the player to face where he is aiming
                 Ray ray = Camera.main.ScreenPointToRay(screenCenter);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 999f, aimColliderMask)){
+                if (Physics.Raycast(ray, out hit, 999f, aimColliderMask))
+                {
                     mouseGlobalPosition = hit.point;
                 }
 
@@ -959,13 +1054,15 @@ namespace StarterAssets
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
                 //_animator.SetBool(_animIDShoot, true);
                 _animator.SetBool("Shooting", true);
-                if(canFire){
+                if (canFire)
+                {
                     gunArsenal[selectedGun].Shoot(shootingSpreadVec);
                     canFire = false;
                 }
             }
-            else{
-                if(!_animator.GetBool("Aiming")) rotateWhenMoving = true;
+            else
+            {
+                if (!_animator.GetBool("Aiming")) rotateWhenMoving = true;
                 //_animator.SetBool(_animIDShoot, false);
                 _animator.SetBool("Shooting", false);
             }
@@ -973,10 +1070,11 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
-            
+
             if (Grounded)
             {
-                if (falling){
+                if (falling)
+                {
                     falling = false;
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
                 }
@@ -987,13 +1085,15 @@ namespace StarterAssets
                         _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                     }
                 }*/
-                if(fallingY != -1234.56789f){
+                if (fallingY != -1234.56789f)
+                {
                     // Fall
                     float distanceFallen = fallingY - transform.position.y;
                     fallingY = -1234.56789f;
                     //Debug.Log("You fell " + distanceFallen + " units");
-                    if(distanceFallen > 4){
-                        TakeDamage(1*Mathf.RoundToInt(distanceFallen), "");
+                    if (distanceFallen > 4)
+                    {
+                        TakeDamage(1 * Mathf.RoundToInt(distanceFallen), "");
                         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
                     }
                 }
@@ -1006,10 +1106,11 @@ namespace StarterAssets
                     //_animator.SetBool(_animIDJump, false);
                     //_animator.SetTrigger("Jumping");
                     //_animator.ResetTrigger("Jump");
-                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping")){
+                    if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping"))
+                    {
                         _animator.SetBool("Jumping", false);
                     }
-                   //Debug.Log("Grounded");
+                    //Debug.Log("Grounded");
                     _animator.SetBool("Falling", false);
                     //_animator.SetBool(_animIDFreeFall, false);
                 }
@@ -1032,7 +1133,7 @@ namespace StarterAssets
                     if (_hasAnimator)
                     {
                         //Debug.Log("Should Jump");
-                        if(_animator.GetBool("Aiming")) _input.jump = false;
+                        if (_animator.GetBool("Aiming")) _input.jump = false;
                         //_animator.SetBool(_animIDJump, true);
                         _animator.SetBool("Jumping", true);
                         /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolRun")){
@@ -1050,7 +1151,7 @@ namespace StarterAssets
 
                     if (!jumping)
                         //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Jump/Jump");
-                    jumping = true;
+                        jumping = true;
 
                     // update animator if using character
                 }
@@ -1069,7 +1170,8 @@ namespace StarterAssets
                     fallingY = transform.position.y;
                 }*/
 
-                if(!_animator.GetBool("Falling")){
+                if (!_animator.GetBool("Falling"))
+                {
                     fallingY = transform.position.y;
                 }
 
@@ -1106,54 +1208,71 @@ namespace StarterAssets
             }
         }
 
-        private void SwitchWeapon(){
-            if(_input.weapon1){
+        private void SwitchWeapon()
+        {
+            if (_input.weapon1)
+            {
                 _animator.SetBool("Pistol", true);
                 selectedGun = 0;
             }
-            else if(_input.weapon2){
-                if(gunArsenal.Count >= 2){
+            else if (_input.weapon2)
+            {
+                if (gunArsenal.Count >= 2)
+                {
                     _animator.SetBool("Pistol", false);
                     selectedGun = 1;
                 }
             }
-            else if(_input.weapon3){
-                if(gunArsenal.Count >= 3){
+            else if (_input.weapon3)
+            {
+                if (gunArsenal.Count >= 3)
+                {
                     _animator.SetBool("Pistol", false);
                     selectedGun = 2;
                 }
             }
-            else if(_input.weapon4){
-                if(gunArsenal.Count >= 4){
+            else if (_input.weapon4)
+            {
+                if (gunArsenal.Count >= 4)
+                {
                     _animator.SetBool("Pistol", false);
                     selectedGun = 3;
                 }
             }
-            if(_input.weaponScroll != 0){
+            if (_input.weaponScroll != 0)
+            {
                 selectedGun = (selectedGun + gunArsenal.Count + _input.weaponScroll) % gunArsenal.Count;
-                if(selectedGun == 0){
+                if (selectedGun == 0)
+                {
                     _animator.SetBool("Pistol", true);
                 }
-                else{
+                else
+                {
                     _animator.SetBool("Pistol", false);
                 }
             }
             for (int i = 0; i < gunArsenal.Count; i++)
             {
-                if(i == selectedGun){
+                if (i == selectedGun)
+                {
                     gunArsenal[selectedGun].gameObject.SetActive(true);
                     gunArsenal[selectedGun].updateReloadUI();
                 }
-                else{
+                else
+                {
                     gunArsenal[i].gameObject.SetActive(false);
                 }
             }
-            foreach(Transform child in WeaponsHUD){
-                if(child.gameObject.name.Contains("Icon")){
-                    if(child.gameObject.name == "Icon" + gunArsenal[selectedGun].gameObject.name){
+            foreach (Transform child in WeaponsHUD)
+            {
+                if (child.gameObject.name.Contains("Icon"))
+                {
+                    if (child.gameObject.name == "Icon" + gunArsenal[selectedGun].gameObject.name)
+                    {
                         child.gameObject.SetActive(true);
                     }
-                    else{
+                    else
+                    {
                         child.gameObject.SetActive(false);
                     }
                 }
@@ -1164,7 +1283,7 @@ namespace StarterAssets
         private void Point()
         {
             // FIXME:
-            if(_playerInput.currentActionMap.name != "UI") return;
+            if (_playerInput.currentActionMap.name != "UI") return;
 
             // Debug.Log(_input.navigate);
         }
@@ -1173,7 +1292,7 @@ namespace StarterAssets
         private void Click()
         {
             // FIXME:
-            if(_playerInput.currentActionMap.name != "UI") return;
+            if (_playerInput.currentActionMap.name != "UI") return;
 
             // Debug.Log(_input.click);
             _input.click = false;
@@ -1208,8 +1327,10 @@ namespace StarterAssets
         private void checkTrigger()
         {
             _input.interact = false;
-            if (arenaTrigger!= null){
-                if((nextRound-1) % 5 == 0 && !startRound && !changingScene){
+            if (arenaTrigger != null)
+            {
+                if ((nextRound - 1) % 5 == 0 && !startRound && !changingScene)
+                {
                     //set the extraction portal active
                     Debug.Log("You're okay to extract");
                     //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
@@ -1217,7 +1338,8 @@ namespace StarterAssets
                     arenaTrigger.performAction();
                 }
             }
-            if (trigger != null && !changingScene){
+            if (trigger != null && !changingScene)
+            {
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/portal", transform.position);
                 Debug.Log("Sound Here");
                 Debug.Log("Entering Arena");
@@ -1231,53 +1353,71 @@ namespace StarterAssets
         void OnTriggerEnter(Collider other)
         {
             trigger = other.GetComponent<Trigger>();
-            if(trigger != null){
-                if(arenaPrompt != null){
+            if (trigger != null)
+            {
+                if (arenaPrompt != null)
+                {
                     arenaPrompt.gameObject.SetActive(true);
-                    if(trigger.ArenaName == "Rumble"){
+                    if (trigger.ArenaName == "Rumble")
+                    {
                         foreach (Transform child in arenaPrompt)
                         {
-                            if(child.gameObject.name == "Rumble"){
+                            if (child.gameObject.name == "Rumble")
+                            {
                                 arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter Rumble Arena";
                                 child.gameObject.SetActive(true);
                             }
-                            else if (child.gameObject.name != "Tooltip"){
+                            else if (child.gameObject.name != "Tooltip")
+                            {
                                 child.gameObject.SetActive(false);
                             }
                         }
                     }
-                    else{
+                    else
+                    {
                         arenaPrompt.GetChild(1).gameObject.SetActive(true);
                         arenaPrompt.GetChild(2).gameObject.SetActive(true);
-                        if(trigger.ArenaName == "Colliseum"){
+                        if (trigger.ArenaName == "Colliseum")
+                        {
                             arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter the Colloseum";
-                            foreach(Transform child in arenaPrompt){
-                                if(child.gameObject.name == "Colliseum"){
+                            foreach (Transform child in arenaPrompt)
+                            {
+                                if (child.gameObject.name == "Colliseum")
+                                {
                                     child.gameObject.SetActive(true);
                                 }
-                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency"){
+                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency")
+                                {
                                     child.gameObject.SetActive(false);
                                 }
                             }
                         }
-                        else if(trigger.ArenaName == "Forest"){
+                        else if (trigger.ArenaName == "Forest")
+                        {
                             arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter the Snowforest";
-                            foreach(Transform child in arenaPrompt){
-                                if(child.gameObject.name == "Forest"){
+                            foreach (Transform child in arenaPrompt)
+                            {
+                                if (child.gameObject.name == "Forest")
+                                {
                                     child.gameObject.SetActive(true);
                                 }
-                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency"){
+                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency")
+                                {
                                     child.gameObject.SetActive(false);
                                 }
                             }
                         }
-                        else if(trigger.ArenaName == "Factory"){
+                        else if (trigger.ArenaName == "Factory")
+                        {
                             arenaPrompt.GetChild(0).GetComponent<Text>().text = "Press [E] to enter the Factory";
-                            foreach(Transform child in arenaPrompt){
-                                if(child.gameObject.name == "Factory"){
+                            foreach (Transform child in arenaPrompt)
+                            {
+                                if (child.gameObject.name == "Factory")
+                                {
                                     child.gameObject.SetActive(true);
                                 }
-                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency"){
+                                else if (child.gameObject.name != "Tooltip" && child.gameObject.name != "DroppedCurrency")
+                                {
                                     child.gameObject.SetActive(false);
                                 }
                             }
@@ -1286,19 +1426,22 @@ namespace StarterAssets
                 }
             }
             arenaTrigger = other.GetComponent<ArenaTrigger>();
-            if(!foundArenaTrigger){
+            if (!foundArenaTrigger)
+            {
                 foundArenaTrigger = true;
                 onDeathTrigger = arenaTrigger;
             }
             if (other.gameObject.tag == "Lava")
             {
-                TakeDamage(Health-1, "");
+                TakeDamage(Health - 1, "");
                 TakeDamage(Health, "");
             }
-            if(other.gameObject.tag == "RumblePlane" && !recentlyTeleported){
+            if (other.gameObject.tag == "RumblePlane" && !recentlyTeleported)
+            {
                 // find the index of the other object in the rumble planes array
                 int randomRumblePlane = Random.Range(0, rumblePlanes.Length);
-                while(rumblePlanes[randomRumblePlane].name == other.gameObject.name){
+                while (rumblePlanes[randomRumblePlane].name == other.gameObject.name)
+                {
                     randomRumblePlane = Random.Range(0, rumblePlanes.Length);
                 }
                 // teleport the player to the randomRumblePlane
@@ -1310,36 +1453,47 @@ namespace StarterAssets
                 teleportedTime = Time.time;
                 recentlyTeleported = true;
             }
-            if(other.gameObject.tag == "TrainingStarter"){
+            if (other.gameObject.tag == "TrainingStarter")
+            {
                 //Debug.Log("Entrei no trigger");
-                if(!training){
+                if (!training)
+                {
                     TrainingHUD.SetActive(true);
                     WeaponShopUI.SetActive(false);
                 }
             }
         }
 
-        void OnTriggerStay(Collider other){
-            if(other.gameObject.tag == "TrainingStarter"){
-                if(!training){
-                    if(!TrainingHUD.activeSelf){
+        void OnTriggerStay(Collider other)
+        {
+            if (other.gameObject.tag == "TrainingStarter")
+            {
+                if (!training)
+                {
+                    if (!TrainingHUD.activeSelf)
+                    {
                         TrainingHUD.SetActive(true);
                     }
                 }
             }
-            else{
+            else
+            {
                 Trigger auxTrigger = other.GetComponent<Trigger>();
-                if(auxTrigger != null){
+                if (auxTrigger != null)
+                {
                     trigger = auxTrigger;
                 }
             }
         }
 
-        void OnTriggerExit(Collider other){
+        void OnTriggerExit(Collider other)
+        {
             if (other.name == "Blade") return;
             trigger = other.GetComponent<Trigger>();
-            if(trigger != null){
-                if(arenaPrompt != null){
+            if (trigger != null)
+            {
+                if (arenaPrompt != null)
+                {
                     arenaPrompt.GetChild(1).gameObject.SetActive(false);
                     arenaPrompt.GetChild(2).gameObject.SetActive(false);
                     arenaPrompt.gameObject.SetActive(false);
@@ -1347,14 +1501,17 @@ namespace StarterAssets
             }
             trigger = null;
             arenaTrigger = null;
-            if(other.gameObject.tag == "TrainingStarter"){
-                if(TrainingHUD.activeSelf){
+            if (other.gameObject.tag == "TrainingStarter")
+            {
+                if (TrainingHUD.activeSelf)
+                {
                     TrainingHUD.SetActive(false);
                 }
             }
         }
 
-        void OnParticleCollision(){
+        void OnParticleCollision()
+        {
             TakeDamage(1, "");
         }
 
@@ -1423,7 +1580,8 @@ namespace StarterAssets
         {
             //Debug.Log("Healing");
             Health += amount;
-            if (Health >= MaxHealth){
+            if (Health >= MaxHealth)
+            {
                 Health = MaxHealth;
             }
             UpdateHealthUI();
@@ -1431,13 +1589,14 @@ namespace StarterAssets
 
         private void UpdateHealthUI()
         {
-            healthBar.value = (int) Health;
+            healthBar.value = (int)Health;
         }
 
         private void Die()
         {
             musicPlayer.StopMusic();
-            if(!is_dead){
+            if (!is_dead)
+            {
                 is_dead = true;
                 _input.enabled = false;
                 //deathScreen.SetActive(true);
@@ -1445,7 +1604,8 @@ namespace StarterAssets
                 //currencyCounter = 0;
                 float deathTime = Time.time;
                 deathScreen.SetActive(true);
-                if(onDeathTrigger == null){
+                if (onDeathTrigger == null)
+                {
                     onDeathTrigger = GameObject.Find("DeathTrigger").GetComponent<ArenaTrigger>();
                 }
                 onDeathTrigger.performAction(true);
@@ -1457,45 +1617,56 @@ namespace StarterAssets
             currencyAmountUI.text = weaponCurrency.ToString();
         }
 
-        private void updateFacCurrency(){
+        private void updateFacCurrency()
+        {
             facCurrencyAmountUI.text = facCurrency.ToString();
         }
 
-        private void updateForCurrency(){
+        private void updateForCurrency()
+        {
             forCurrencyAmountUI.text = forCurrency.ToString();
         }
 
-        private void updateRumCurrency(){
+        private void updateRumCurrency()
+        {
             rumCurrencyAmountUI.text = rumCurrency.ToString();
         }
 
-        private void updateColCurrency(){
+        private void updateColCurrency()
+        {
             colCurrencyAmountUI.text = colCurrency.ToString();
         }
 
-        void OnControllerColliderHit(ControllerColliderHit hit){
-            if(hit.gameObject.tag == "Currency"){
+        void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            if (hit.gameObject.tag == "Currency")
+            {
                 CurrencyBehaviour currency = hit.transform.GetComponent<CurrencyBehaviour>();
                 currency.DeSpawn();
-                if(hit.gameObject.name.Contains("Colliseum")){
+                if (hit.gameObject.name.Contains("Colliseum"))
+                {
                     colCurrency++;
                     updateColCurrency();
                 }
-                else if(hit.gameObject.name.Contains("Factory")){
+                else if (hit.gameObject.name.Contains("Factory"))
+                {
                     facCurrency++;
                     updateFacCurrency();
                 }
-                else if(hit.gameObject.name.Contains("Forest")){
+                else if (hit.gameObject.name.Contains("Forest"))
+                {
                     forCurrency++;
                     updateForCurrency();
                 }
-                else if(hit.gameObject.name.Contains("Rumble")){
+                else if (hit.gameObject.name.Contains("Rumble"))
+                {
                     rumCurrency++;
                     updateRumCurrency();
                 }
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/pick_coin", transform.position);
             }
-            if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy"){
+            if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy")
+            {
                 GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);
             }
         }
@@ -1508,6 +1679,29 @@ namespace StarterAssets
         public void SwitchInputToPlayer()
         {
             _playerInput.SwitchCurrentActionMap("Player");
+        }
+
+        float GetStartingHealth()
+        {
+            return GetStartingMaxHealth();
+        }
+
+        float GetStartingMaxHealth()
+        {
+            int step = 10;
+            int level = PlayerPrefs.GetInt("HealthLevel") == 0 ? 1 : PlayerPrefs.GetInt("HealthLevel");
+
+            Debug.Log("heath: " + (100.0f + (float)(step * (level - 1))));
+            return (100.0f + (float)(step * (level - 1)));
+        }
+
+        int GetStartingMoney()
+        {
+            int step = 25;
+            int level = PlayerPrefs.GetInt("MoneyLevel") == 0 ? 1 : PlayerPrefs.GetInt("MoneyLevel");
+
+            Debug.Log("money: " + (100 + (int)(step * (level - 1))));
+            return (100 + (int)(step * (level - 1)));
         }
     }
 }
