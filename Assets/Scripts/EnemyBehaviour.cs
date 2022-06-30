@@ -126,7 +126,7 @@ public class EnemyBehaviour : MonoBehaviour
             return;
         }
         
-        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Attack"))
+        if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Attack") || animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("atack"))
         {
             if (enableNavMesh){
                 navMeshAgent.enabled = false;
@@ -143,7 +143,7 @@ public class EnemyBehaviour : MonoBehaviour
             }
             else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f && !registeredHit)
             {
-                if (Vector3.Distance(transform.position, playerTransform.position) < 3)
+                if (Vector3.Distance(transform.position, playerTransform.position) < 5)
                 {
                     if (transform.GetChild(0).name == "Gladiador"){
                         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch/punch_gladiator", transform.position);
