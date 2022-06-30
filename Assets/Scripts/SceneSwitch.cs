@@ -14,8 +14,6 @@ public class SceneSwitch : MonoBehaviour
     [SerializeField]
     private Slider _progressBar;
 
-    //private AsyncOperation sceneToLoad = null;
-
     public string ArenaName;
 
     void Awake(){
@@ -93,7 +91,6 @@ public class SceneSwitch : MonoBehaviour
 
     public void ShowLoadingScreen()
     {
-        //loadingUI.SetActive(true);
     }
 
     public async void LoadArenaScene(bool death = false)
@@ -114,7 +111,6 @@ public class SceneSwitch : MonoBehaviour
         if(ArenaName != "Hub"){
             do {
                 await Task.Delay(100);
-                //_progressBar.value = scene.progress;
                 _progressBar.value += 0.05f;
             } while (scene.progress < 0.9f || _progressBar.value < 0.9f);
 
@@ -151,15 +147,10 @@ public class SceneSwitch : MonoBehaviour
 
     IEnumerator LoadingScreen()
     {
-        /*while (!sceneToLoad.isDone){
-            loadingBarFill.fillAmount = sceneToLoad.progress;
-            yield return null;
-        }*/
         yield return null;
     }
     
     public void setArenaName(string name){
-        //Debug.Log("TROQUEI DE CENA PARA A " + name);
         ArenaName = name;
     }
 }

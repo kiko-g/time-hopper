@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RumblePlane : MonoBehaviour
@@ -11,13 +9,11 @@ public class RumblePlane : MonoBehaviour
     private int startZ;
     private Vector3 teleportPosition = Vector3.zero;
 
-    //public Vector3 spawnPosition;  
     void Awake(){
         zrotation = Random.Range(-180, 181);
         // apply rotation to the transform of the game object
         transform.Rotate(0, 0, zrotation);
         int xfactor = 1;
-        //int counter = 1;
         if(zrotation >= 0){
             this.gameObject.transform.GetChild(0).gameObject.transform.Translate(new Vector3(0.0f,1.35f,0.0f));
         }
@@ -28,7 +24,6 @@ public class RumblePlane : MonoBehaviour
             for(float y = 0; y <= yLimit; y+=0.05f){
                 if(!Physics.CheckSphere(new Vector3(transform.position.x + x, y, transform.position.z+1.0f), 0.75f)){
                     teleportPosition = new Vector3(transform.position.x + x, 3.0f + y, transform.position.z + 1.0f);
-                    //Debug.Log(teleportPosition);
                     return;
                 }
             }

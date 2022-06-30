@@ -82,7 +82,6 @@ public class RangedEnemyBehaviour : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
         damage = baseDamage;
-        //layerMask = new LayerMask();
         playerOffset = new Vector3(0f, 1.5f, 0f);
         body = GetComponent<Rigidbody>();
         playerTransform = GameObject.Find("PlayerArmature").transform;
@@ -98,7 +97,6 @@ public class RangedEnemyBehaviour : MonoBehaviour
             int sentenceIndex = Random.Range(0, sentences.Length);
             string sentence = sentences[sentenceIndex];
             float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
-            //Debug.Log("Timeout: " + timeout);
             yield return new WaitForSeconds(timeout);
             FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentence, transform.position);
         }
@@ -113,7 +111,6 @@ public class RangedEnemyBehaviour : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death")){
             moveSpeed = 0;
             
-            //navMeshAgent.isStopped = true;
             navMeshAgent.enabled = false;
             float animTime = animator.GetCurrentAnimatorStateInfo(0).length;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f){
@@ -130,11 +127,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
             if (alreadyShot){
                 shootingTimerActive = false;
                 shootingTimer = 0f;
-                //Debug.Log("Stopped Shooting Timer!");
             } else {
                 shootingTimer += Time.deltaTime;
                 if (shootingTimer >= shootingTimerThreshold){
-                    //Debug.Log("Shooting!");
                     Shoot();
                     alreadyShot = true;
                     shootingTimer =  0f;
@@ -142,37 +137,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
                 }
             }
         }
-        
-        /*if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Shooting"))
-        {
-            //Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1);
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 <= 0.7f && animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 > 0.4f && !alreadyShot)
-            {
-                Shoot();
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1 >= 0.85f)
-            {
-                alreadyShot = false;
-            }*/
-            
-            /*if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-            {
-                alreadyAttacked = false;
-                registeredHit = false;
-            }
-            else if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f && !registeredHit)
-            {
-                if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
-                {
-                    Debug.Log("hit");
-                    //playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(10);
-                }
-                registeredHit = true;
-            }*/
-        //}
+    
 
         if (Vector3.Distance(transform.position, playerTransform.position) <= range && hasLineOfSightToPlayer()){
-            // navMeshAgent.isStopped = true;
             navMeshAgent.enabled = false;
             transform.LookAt(playerTransform);
 
@@ -184,53 +151,13 @@ public class RangedEnemyBehaviour : MonoBehaviour
             animator.SetBool("is_walking", false);
             animator.SetBool("is_shooting", true);
         } else {
-            // navMeshAgent.isStopped = false;
             navMeshAgent.enabled = true;
             navMeshAgent.SetDestination(playerTransform.position);
-
-
-            /*if (!navMeshAgent.enabled){
-                transform.LookAt(playerTransform);
-
-                upDir = transform.forward.y;
-
-                Vector3 eulerAngles = transform.rotation.eulerAngles;
-                eulerAngles = new Vector3(0, eulerAngles.y, 0);
-                transform.rotation = Quaternion.Euler(eulerAngles);
-
-                transform.position += transform.forward * moveSpeed * Time.deltaTime;
-            }*/
-
 
             animator.SetBool("is_shooting", false);
             animator.SetBool("is_walking", true);
         }
 
-        /*if (Vector3.Distance(transform.position, playerTransform.position) > range + 10f){
-            transform.LookAt(playerTransform);
-
-            upDir = transform.forward.y;
-
-            Vector3 eulerAngles = transform.rotation.eulerAngles;
-            eulerAngles = new Vector3(0, eulerAngles.y, 0);
-            transform.rotation = Quaternion.Euler(eulerAngles);
-
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-
-            animator.SetBool("is_shooting", false);
-            animator.SetBool("is_walking", true);
-            
-        } else {
-            transform.LookAt(playerTransform);
-
-            upDir = transform.forward.y;
-
-            Vector3 eulerAngles = transform.rotation.eulerAngles;
-            eulerAngles = new Vector3(0, eulerAngles.y, 0);
-            transform.rotation = Quaternion.Euler(eulerAngles);
-            animator.SetBool("is_walking", false);
-            animator.SetBool("is_shooting", true);
-        }*/
         damageText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.6f, transform.position.z);
 
         // damage text rotation equal to transform rotation with 180 degree offset
@@ -245,14 +172,12 @@ public class RangedEnemyBehaviour : MonoBehaviour
         dest.y = upDir;
         GameObject bullet = Instantiate(bulletPrefab, transform.position + bulletOffset, new Quaternion(0, 0, 0, 0));
         bullet.GetComponent<BulletBehaviour>().setDamage(damage);
-        //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
         bullet.GetComponent<Rigidbody>().AddForce(dest * 250f);
         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Punch Shot/shot_robot", transform.position);
     }
 
     public void StartShootingTimer()
     {
-        //Debug.Log("Started Shooting Timer!");
         alreadyShot = false;
         shootingTimerActive = true;
         shootingTimer = 0f;
@@ -315,7 +240,6 @@ public class RangedEnemyBehaviour : MonoBehaviour
             if(dropRng <= dropPercentage){
                 Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.0f, transform.position.z);
                 GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
-                Debug.Log("Dropped currency");
                 currency.transform.SetParent(currencyHolder.transform);
             }
             if(SceneManager.GetActiveScene().name == "Rumble"){
@@ -323,7 +247,6 @@ public class RangedEnemyBehaviour : MonoBehaviour
                 if(dropRng <= 10){
                     Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
                     GameObject currency = Instantiate(rumblePrefab, spawnPos, new Quaternion(0, 0, 0, 0));
-                    Debug.Log("Dropped legendary currency");
                     currency.transform.SetParent(currencyHolder.transform);
                 }
             }
@@ -335,14 +258,11 @@ public class RangedEnemyBehaviour : MonoBehaviour
         RaycastHit hit;
         Debug.DrawLine(transform.position + bulletOffset, playerTransform.position + playerOffset, Color.yellow, 1f);
         if (Physics.Linecast(transform.position + bulletOffset, playerTransform.position + playerOffset, out hit, layerMask)){
-            //Debug.Log("Raycast hit!");
-            //Debug.Log(hit.transform.gameObject.tag);
             if (hit.transform.gameObject.tag == "Player"){
                 return true;
             }
             return false;
         } else {
-            //Debug.Log("Raycast failed!");
             return false;
         }
     }

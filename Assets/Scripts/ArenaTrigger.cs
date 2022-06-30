@@ -14,19 +14,15 @@ public class ArenaTrigger : MonoBehaviour
     {
         if(player.colCurrency != 0){
             PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") + player.colCurrency);
-            Debug.Log("Successfully extracted extra " + player.colCurrency + " ColliseumCurrency");
         }
         if(player.forCurrency != 0){
             PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") + player.forCurrency);
-            Debug.Log("Successfully extracted extra " + player.forCurrency + " ForestCurrency");
         }
         if(player.facCurrency != 0){
             PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") + player.facCurrency);
-            Debug.Log("Successfully extracted extra " + player.facCurrency + " FactoryCurrency");
         }
         if(player.rumCurrency != 0){
             PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") + player.rumCurrency);
-            Debug.Log("Successfully extracted extra " + player.rumCurrency + " RumbleCurrency");
         }
         if(waveSpawner == null){
             RumbleSpawner rumbleSpawner = GameObject.Find("RumbleSpawner").GetComponent<RumbleSpawner>();

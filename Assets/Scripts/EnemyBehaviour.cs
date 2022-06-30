@@ -92,9 +92,6 @@ public class EnemyBehaviour : MonoBehaviour
             damage = baseDamage + damageIncreasePerRound * (waveSpawner.roundNr);
         }
         
-        //navMeshAgent = GetComponent<NavMeshAgent>();
-        //health = baseHealth;
-        //damage = baseDamage;
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
@@ -106,7 +103,6 @@ public class EnemyBehaviour : MonoBehaviour
 
         StartCoroutine(speakingCoroutine);
 
-        //Debug.Log("Start Coroutine");
         
     }
 
@@ -120,7 +116,6 @@ public class EnemyBehaviour : MonoBehaviour
     public void setDropPercentage(int dropP)
     {
         dropPercentage = dropP;
-        Debug.Log(dropPercentage);
     }
 
     IEnumerator sentencesCoroutine(){
@@ -133,7 +128,6 @@ public class EnemyBehaviour : MonoBehaviour
                 sentence = sentencesAlt[sentenceIndex];
             }
             float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
-            //Debug.Log("Timeout: " + timeout);
             yield return new WaitForSeconds(timeout);
             FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentence, transform.position);
         }
@@ -202,7 +196,6 @@ public class EnemyBehaviour : MonoBehaviour
 
             }
         } else {
-            //transform.LookAt(playerTransform);
             if (enableNavMesh){
                 navMeshAgent.enabled = true;
             }
@@ -218,7 +211,6 @@ public class EnemyBehaviour : MonoBehaviour
             if (enableNavMesh){
                 navMeshAgent.enabled = true;
                 navMeshAgent.SetDestination(playerTransform.position);
-                //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
             }
                         
             transform.LookAt(playerTransform);
@@ -291,7 +283,6 @@ public class EnemyBehaviour : MonoBehaviour
         animator.SetBool("is_dead", true);
         // deactivate the colliders
         GetComponent<CapsuleCollider>().enabled = false;
-        //GetComponent<SphereCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
         player.AddWeaponCurrency(5);
@@ -309,7 +300,6 @@ public class EnemyBehaviour : MonoBehaviour
             if(dropRng <= dropPercentage){
                 Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.0f, transform.position.z);
                 GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
-                Debug.Log("Dropped currency");
                 currency.transform.SetParent(currencyHolder.transform);
             }
             // check if the current scene is named Rumble
@@ -318,7 +308,6 @@ public class EnemyBehaviour : MonoBehaviour
                 if(dropRng <= 10){
                     Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
                     GameObject currency = Instantiate(rumblePrefab, spawnPos, new Quaternion(0, 0, 0, 0));
-                    Debug.Log("Dropped legendary currency");
                     currency.transform.SetParent(currencyHolder.transform);
                 }
             }
@@ -363,15 +352,11 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     public void setStats(int roundNum, int t){
-        //health = baseHealth + healthIncreasePerRound * (roundNum - 1);
-        //damage = baseDamage + damageIncreasePerRound * (roundNum - 1);
         
         // 0 = zombie, 1 = gladiator
         type = t;
         if (t == 0){
             footstepsBase = footstepsZombieBase;
         }
-        Debug.Log("Health: " + health);
-        Debug.Log("Damage: " + damage);
     }
 }

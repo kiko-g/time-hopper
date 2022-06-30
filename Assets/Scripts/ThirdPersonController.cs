@@ -277,10 +277,7 @@ namespace StarterAssets
 
             screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
             healingOverTime = GetComponent<HealingOverTime>();
-            //walkSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/General Sounds/Character Related/Footsteps/Grass");
             lastMoveDir = new Vector2(0f, 0f);
-            //string[] names = {"Default", "Enemy"};
-            //aimColliderMask = LayerMask.GetMask(names);
 
             // get a reference to our main camera
             if (_mainCamera == null)
@@ -312,7 +309,6 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
-            //AssignAnimationIDs();
             _animator.SetBool("Pistol", true);
             // find the canvas
             GameObject canvas = GameObject.Find("Canvas");
@@ -342,10 +338,6 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-            //PS.ApplyUpgrades() // should apply upgrades before adding to the arsenal
-            //AR.ApplyUpgrades()
-            //SG.ApplyUpgrades()
-            //RL.ApplyUpgrades()
 
             gunArsenal.Add(PS);
             PS.setGunSound("shot_gun2");
@@ -437,12 +429,6 @@ namespace StarterAssets
                 SprintSpeed = 2.0f;
             }
 
-
-            /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("ReloadWalking") && _animator.GetCurrentAnimatorClipInfo){
-                _animator.SetBool("Reloading", false);
-                SprintSpeed = 5.335f;
-            }*/
-
             if (recentlyTeleported && Time.time - teleportedTime > 0.5f)
             {
                 for (int i = 0; i < rumblePlanes.Length; i++)
@@ -519,15 +505,6 @@ namespace StarterAssets
         {
             CameraRotation();
         }
-
-        /*private void AssignAnimationIDs()
-        {
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
-            _animIDRun = Animator.StringToHash("Run");
-            _animIDShoot = Animator.StringToHash("Shoot");
-        }*/
 
         private void addGunHUD(string weapon)
         {
@@ -773,19 +750,6 @@ namespace StarterAssets
 
         private void GroundedCheck()
         {
-            /*
-            // set sphere position, with offset
-            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
-                transform.position.z);
-            Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
-                QueryTriggerInteraction.Ignore);
-
-            // update animator if using character
-            if (_hasAnimator)
-            {
-                //_animator.SetBool(_animIDGrounded, Grounded);
-            }*/
-            //Debug.Log(_controller.isGrounded);
             Grounded = _controller.isGrounded;
         }
 
@@ -887,20 +851,13 @@ namespace StarterAssets
             {
                 if (_animationBlend >= 1)
                 {
-                    //Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Run"));
-                    //_animator.SetBool(_animIDRun, true);
                     _animator.SetBool("Running", true);
                 }
                 else
                 {
-                    //Debug.Log(_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Run"));
-                    //_animator.SetBool(_animIDRun, false);
                     _animator.SetBool("Running", false);
 
                 }
-
-                //_animator.SetFloat(_animIDSpeed, _animationBlend);
-                //_animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
         }
 
@@ -922,18 +879,13 @@ namespace StarterAssets
             {
                 melee = true;
                 blade.GetComponent<BladeBehaviour>().setActive();
-                //gunArsenal[selectedGun].Reload();
                 _animator.SetBool("Melee", true);
-                //blade.transform.localPosition += new Vector3(0.0f, -0.15f, 0.0f);
                 blade.transform.position += bladeOffset;
-                //blade.transform.position = new Vector3(blade.transform.position.x + 0.02f, blade.transform.position.y - 0.057f, blade.transform.position.z + 0.0110f);
-                //blade.transform.position += blade.transform.TransformDirection(blade.transform.forward);
             }
             else
             {
                 melee = false;
                 _input.melee = false;
-                //_animator.SetBool("Melee", false);
             }
         }
 
@@ -963,7 +915,6 @@ namespace StarterAssets
             if (_input.startRound && !startRound)
             {
                 startRound = true;
-                //gunArsenal[selectedGun].FillAmmo();
                 if (waveSpawner != null) waveSpawner.setStartRoundFlag(true);
                 else
                 {
@@ -987,13 +938,11 @@ namespace StarterAssets
 
         private void Aim()
         {
-            //Debug.Log(_input.aim);
             if (_input.aim)
             {
                 SprintSpeed = 2.0f;
                 sensitivity = 0.5f;
                 aimCamera.gameObject.SetActive(true);
-                //_animator.SetBool(_animIDRun, false);
                 rotateWhenMoving = false;
 
                 Vector3 mouseGlobalPosition = Vector3.zero;
@@ -1019,8 +968,6 @@ namespace StarterAssets
                 sensitivity = 1f;
                 aimCamera.gameObject.SetActive(false);
                 _animator.SetBool("Aiming", false);
-                //_animator.SetBool(_animIDShoot, false);
-                //_animator.SetBool(_animIDRun, true);
                 rotateWhenMoving = true;
             }
         }
@@ -1064,7 +1011,6 @@ namespace StarterAssets
                 Vector3 aimDir = (mouseGlobalPosition - transform.position).normalized;
 
                 transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 20f);
-                //_animator.SetBool(_animIDShoot, true);
                 _animator.SetBool("Shooting", true);
                 if (canFire)
                 {
@@ -1075,7 +1021,6 @@ namespace StarterAssets
             else
             {
                 if (!_animator.GetBool("Aiming")) rotateWhenMoving = true;
-                //_animator.SetBool(_animIDShoot, false);
                 _animator.SetBool("Shooting", false);
             }
         }
@@ -1088,21 +1033,13 @@ namespace StarterAssets
                 if (falling)
                 {
                     falling = false;
-                    //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
                 }
-                /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolJump")){
-                    if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.6f){
-                        _verticalVelocity = Gravity;
-                    } else {
-                        _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                    }
-                }*/
+
                 if (fallingY != -1234.56789f)
                 {
                     // Fall
                     float distanceFallen = fallingY - transform.position.y;
                     fallingY = -1234.56789f;
-                    //Debug.Log("You fell " + distanceFallen + " units");
                     if (distanceFallen > 4)
                     {
                         int id = Random.Range(1, 4);
@@ -1117,16 +1054,11 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    //_animator.SetBool(_animIDJump, false);
-                    //_animator.SetTrigger("Jumping");
-                    //_animator.ResetTrigger("Jump");
                     if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping"))
                     {
                         _animator.SetBool("Jumping", false);
                     }
-                    //Debug.Log("Grounded");
                     _animator.SetBool("Falling", false);
-                    //_animator.SetBool(_animIDFreeFall, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -1142,29 +1074,14 @@ namespace StarterAssets
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "1", transform.position);
-                    Debug.Log("Jump Sound");
 
                     if (_hasAnimator)
                     {
-                        //Debug.Log("Should Jump");
                         if (_animator.GetBool("Aiming")) _input.jump = false;
-                        //_animator.SetBool(_animIDJump, true);
                         _animator.SetBool("Jumping", true);
-                        /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolRun")){
-                            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                        } else if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Running")){
-                            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                        }*/
-                        //Debug.Log("After Trigger");
-                        /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping")){
-                            _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-                            Debug.Log("Vertical");
-                        }*/
-                        //if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Armature|Jump")) _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                     }
 
                     if (!jumping)
-                        //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/General Sounds/Character Related/Jump/Jump");
                         jumping = true;
 
                     // update animator if using character
@@ -1180,9 +1097,6 @@ namespace StarterAssets
             else
             {
                 falling = true;
-                /*if(!_animator.GetBool(_animIDFreeFall)){
-                    fallingY = transform.position.y;
-                }*/
 
                 if (!_animator.GetBool("Falling"))
                 {
@@ -1203,13 +1117,10 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        //_animator.SetBool(_animIDFreeFall, true);
                         _animator.SetBool("Falling", true);
                         _animator.SetBool("Jumping", false);
                     }
                 }
-
-                //_animator.SetBool("Jumping", false);
 
                 // if we are not grounded, do not jump
                 _input.jump = false;
@@ -1296,19 +1207,15 @@ namespace StarterAssets
         /* UI Actions */
         private void Point()
         {
-            // FIXME:
             if (_playerInput.currentActionMap.name != "UI") return;
 
-            // Debug.Log(_input.navigate);
         }
 
         /* UI Actions */
         private void Click()
         {
-            // FIXME:
             if (_playerInput.currentActionMap.name != "UI") return;
 
-            // Debug.Log(_input.click);
             _input.click = false;
         }
 
@@ -1346,8 +1253,6 @@ namespace StarterAssets
                 if ((nextRound - 1) % 5 == 0 && !startRound && !changingScene)
                 {
                     //set the extraction portal active
-                    Debug.Log("You're okay to extract");
-                    //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                     changingScene = true;
                     arenaTrigger.performAction();
                 }
@@ -1355,9 +1260,6 @@ namespace StarterAssets
             if (trigger != null && !changingScene)
             {
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/portal", transform.position);
-                Debug.Log("Sound Here");
-                Debug.Log("Entering Arena");
-                //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                 changingScene = true;
                 arenaPrompt.gameObject.SetActive(false);
                 trigger.performAction();
@@ -1471,7 +1373,6 @@ namespace StarterAssets
             }
             if (other.gameObject.tag == "TrainingStarter")
             {
-                //Debug.Log("Entrei no trigger");
                 if (!training)
                 {
                     TrainingHUD.SetActive(true);
@@ -1591,7 +1492,6 @@ namespace StarterAssets
 
         public void Heal(float amount)
         {
-            //Debug.Log("Healing");
             Health += amount;
             if (Health >= MaxHealth)
             {

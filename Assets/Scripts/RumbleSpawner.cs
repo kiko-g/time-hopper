@@ -53,8 +53,6 @@ public class RumbleSpawner : MonoBehaviour
     public int numKills = 0;
     public float timePlayed = 0f;
     private float roundTime = 0f, spawnEnemyTime = 0f;
-    //Vector2 xLimits = new Vector2(-30, 30);
-    //Vector2 zLimits = new Vector2(-30, 30);
 
     private bool startRoundFlag = false;
     private bool spawn_in_progress = false;
@@ -66,9 +64,6 @@ public class RumbleSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*colEnemiesAliveText = colEnemiesAliveUI.GetComponent<Text>();
-        facEnemiesAliveText = facEnemiesAliveUI.GetComponent<Text>();
-        forEnemiesAliveText = forEnemiesAliveUI.GetComponent<Text>();*/
         enemiesLeftText = enemiesLeftUI.GetComponent<Text>();
         //get all rumble planes
         GameObject[] rumblePlanes = GameObject.FindGameObjectsWithTag("RumblePlane");
@@ -161,7 +156,6 @@ public class RumbleSpawner : MonoBehaviour
     public bool setStartRoundFlag(bool flag){
         if(startRoundFlag == false && flag == true){
             startRoundFlag = flag;
-            //Debug.Log("startRoundFlag set to true");
             return true;
         }
         else{
@@ -177,7 +171,6 @@ public class RumbleSpawner : MonoBehaviour
         }
         enterTooltipUI.SetActive(false);
         startTime = Time.time;
-        //Debug.Log("Start round!");
         startRoundFlag = false;
         roundNr++;
         ShowRoundStartUI();

@@ -58,9 +58,6 @@ public class BackgroundMusicPlayer : MonoBehaviour
                 case "Hub":
                     musicBase = "soundtrack_hub_music1";
                     break;
-                /*default:
-                    musicBase = "soundtrack_hub_music1";
-                    break;*/
             }
 
             music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
@@ -93,13 +90,10 @@ public class BackgroundMusicPlayer : MonoBehaviour
     void stopCurrentMusic(){
         if (currentMusic == 0){
             music.setVolume(0.0f);
-            Debug.Log("Stopping Colliseum Music!");
         } else if (currentMusic  == 1){
             music1.setVolume(0.0f);
-            Debug.Log("Stopping Factory Music!");
         } else {
             music2.setVolume(0.0f);
-            Debug.Log("Stopping Forest Music!");
         }
     }
 
@@ -137,11 +131,6 @@ public class BackgroundMusicPlayer : MonoBehaviour
     }
 
     public void startNewMusic(string plane){
-        /*music.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-        getNewMusic(plane);
-        music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack_rumble/" + musicBase);
-        music.start();
-        music.release();*/
         startCurrentMusic(plane);
     }
 

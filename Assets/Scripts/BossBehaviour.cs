@@ -92,7 +92,6 @@ public class BossBehaviour : MonoBehaviour
     {
         musicPlayer  = GameObject.Find("BackgroundMusicPlayer").GetComponent<BackgroundMusicPlayer>();
         body = GetComponent<Rigidbody>();
-        //navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
         damage = baseDamage;
         playerTransform = GameObject.Find("PlayerArmature").transform;
@@ -222,15 +221,11 @@ public class BossBehaviour : MonoBehaviour
                     Transform pos = GameObject.FindGameObjectWithTag("BossHead").transform;
 
                     GameObject bullet = Instantiate(bulletPrefab, pos.position, new Quaternion(0, 0, 0, 0));
-                    //bullet.transform.rotation = pos.rotation;
                     bullet.transform.Translate(offset);
-                    //bullet.transform.LookAt(playerTransform);
-                    //bullet.transform.Translate(bullet.transform.forward);
                     bullet.GetComponent<BulletBehaviour>().setDamage((int)Mathf.Round(damage));
                     bullet.GetComponent<BulletBehaviour>().startSound();
                     bullet.GetComponent<Rigidbody>().mass = 0.2f;
 
-                    //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
                     bullet.GetComponent<Rigidbody>().AddForce(dest * 200f);
                 }
             }
@@ -313,7 +308,6 @@ public class BossBehaviour : MonoBehaviour
                 if (enableNavMesh){
                     navMeshAgent.enabled = true;
                     navMeshAgent.SetDestination(playerTransform.position);
-                    //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
                 }
 
                 transform.LookAt(playerTransform);
@@ -382,7 +376,6 @@ public class BossBehaviour : MonoBehaviour
         if (rng <= -1)
         {
             rng = Random.Range(1, 101);
-            //rng = 1;
         }
         StarterAssets.ThirdPersonController player = playerController;
         if(rng <= 10 + player.waveSpawner.roundNr * 10){
@@ -476,7 +469,6 @@ public class BossBehaviour : MonoBehaviour
                 currency.GetComponent<CurrencyBehaviour>().setDespawnTimer(Random.Range(28f,32f));
                 currency.transform.SetParent(currencyHolder.transform);
             }
-            Debug.Log("Dropped " + randomCurrencyNr + " currency");
         }
     }
 

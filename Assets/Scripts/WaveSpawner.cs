@@ -107,7 +107,6 @@ public class WaveSpawner : MonoBehaviour
         timePlayed += Time.deltaTime;
 
         // print roundNr, round_active and enemiesToDefeat
-        //Debug.Log("Round: " + roundNr + " active: " + round_active + " enemiesToDefeat: " + enemiesToDefeat);
         if (bossIntroPlaying){
             bossIntroTime += Time.deltaTime;
             if (bossIntroTime >= bossIntroTimeout){
@@ -118,17 +117,12 @@ public class WaveSpawner : MonoBehaviour
         if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){
-                //Debug.Log("AQUI");
                 startRoundTextUI.text = "Extraction Portal Opened";
                 Color c = startRoundTextUI.color;
                 c.a = 1f;
                 startRoundTextUI.color = c;
                 startRoundTextUI.gameObject.GetComponent<Animator>().Play("Visible", -1, 0f);
-                /*ShowRoundStartUI();
-                startRoundTextUI.text = "Extraction Portal Opened";*/
                 extractionPortal.SetActive(true);
-                // change startRoundTextUI.text opacity to 1
-                //ShowRoundStartUI();
             }
         }
         else{
@@ -152,8 +146,6 @@ public class WaveSpawner : MonoBehaviour
 
         //increment elasped time with time delta
         elapsedTime += Time.deltaTime;
-
-        //Debug.Log(elapsedTime);
 
         // if elapsed time bigger than 3 and not round active, set round active to true, reset elapsed time and call startround function
         if (startRoundFlag && !round_active && enemiesHolder.transform.childCount == 0)
@@ -187,7 +179,6 @@ public class WaveSpawner : MonoBehaviour
                     if (enemiesToDefeat > 0)
                     {
                         ShowWaveStartUI(numWaves);
-                        //Debug.Log("Spawning wave with size " + (waveSize - enemiesHolder.transform.childCount));
                         if (waveSize - enemiesHolder.transform.childCount <= enemiesToDefeat)
                             SpawnHorde(waveSize - enemiesHolder.transform.childCount);
                         else
@@ -213,7 +204,6 @@ public class WaveSpawner : MonoBehaviour
         numKills++;
         if (enemiesToDefeat == 0)
         {
-            //Debug.Log("You killed all enemies");
             round_active = false;
             elapsedTime = 0f;
             enterTooltipUI.SetActive(true);
@@ -239,16 +229,13 @@ public class WaveSpawner : MonoBehaviour
     public void StartRound()
     {
         enterTooltipUI.SetActive(false);
-        //Debug.Log("Start round!"); 
         startRoundFlag = false;
         roundNr++;
 
         ShowRoundStartUI();
         roundUI.text = "Round: " + roundNr;
-        //Debug.Log("Round Number: " + roundNr);
         if (roundNr % 5 != 0)
         {
-            //Debug.Log("Spawning horde");
             waveSize = waveSize + 1;
             SpawnHorde(waveSize);
             numWaves = 1;
@@ -299,9 +286,6 @@ public class WaveSpawner : MonoBehaviour
                     available.RemoveAt(random);
 
                     GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
-                    //GameObject enemy = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), new Quaternion(0, 0, 0, 0));
-                    Debug.Log(enemy.transform.GetChild(0).name);
-                    Debug.Log(enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>());
                     enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr, 1);
                     enemy.transform.SetParent(enemiesHolder.transform);
                     num_spawned++;
@@ -369,7 +353,6 @@ public class WaveSpawner : MonoBehaviour
 
     void ShowWaveStartUI(int wave_num)
     {
-        //Debug.Log("Wave " + wave_num.ToString());
     }
 
     void ShowRoundStartUI()

@@ -131,18 +131,6 @@ public class HubComputer : MonoBehaviour
         colliseumCostMultiplier = 1.50f;
         rumbleCostMultiplier = 2.0f;
 
-        // FIXME: Testing
-        // PlayerPrefs.SetInt("HealthLevel", 1);
-        // PlayerPrefs.SetInt("MoneyLevel", 70);
-        // PlayerPrefs.SetInt("Weapon0Level", 1);
-        // PlayerPrefs.SetInt("Weapon1Level", 1);
-        // PlayerPrefs.SetInt("Weapon2Level", 1);
-        // PlayerPrefs.SetInt("Weapon3Level", 1);
-        // PlayerPrefs.SetInt("ColliseumCurrency", 200);
-        // PlayerPrefs.SetInt("FactoryCurrency", 200);
-        // PlayerPrefs.SetInt("ForestCurrency", 200);
-        // PlayerPrefs.SetInt("RumbleCurrency", 200);
-
         InitialUIValues();
         UpdateUIValues();
     }
@@ -164,7 +152,6 @@ public class HubComputer : MonoBehaviour
         }
 
         if (pauseCanvas.enabled) HideAll();
-        // if (Cursor.lockState != CursorLockMode.None) Cursor.lockState = CursorLockMode.None;
     }
 
     public void Toggle(bool value)

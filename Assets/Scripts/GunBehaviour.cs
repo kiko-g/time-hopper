@@ -42,9 +42,6 @@ public class GunBehaviour : MonoBehaviour
     
     private Transform cam;
 
-    //[FMODUnity.EventRef]
-    //public string ShootingEvent = "";
-
     private Vector2 screenCenter;
 
     public ParticleSystem[] impactEffects;
@@ -82,7 +79,6 @@ public class GunBehaviour : MonoBehaviour
     void Start()
     {
         recoil = GetComponent<WeaponRecoil>();
-        //availableAmmoString = "0";
         if(is_pistol){
             availableAmmoString = "∞";
             FillAmmo();
@@ -289,7 +285,6 @@ public class GunBehaviour : MonoBehaviour
     }
 
     public void FillAmmo(){
-        //Debug.Log("Filling Ammo...");
         currentAmmo = numBulletsPerMagazine;
         if(!is_pistol){
             availableAmmo = numBulletsPerMagazine * defaultNumberOfExtraMagazines;
