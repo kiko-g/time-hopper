@@ -24,7 +24,8 @@ public class HubPause : MonoBehaviour
     public Canvas canvas;
     private StarterAssets.ThirdPersonController player;
 
-    private FMOD.Studio.Bus masterBus;
+    private FMOD.Studio.Bus sfxBus;
+    private FMOD.Studio.Bus musicBus;
 
     void Start()
     {
@@ -44,26 +45,30 @@ public class HubPause : MonoBehaviour
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);
 
-        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+        musicBus = FMODUnity.RuntimeManager.GetBus("bus:/Music");
+        sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
 
         if (PlayerPrefs.HasKey("sfxVolume"))
         {
             sliderSFX.value = PlayerPrefs.GetFloat("sfxVolume");
-            masterBus.setVolume(sliderSFX.value);
+            sfxBus.setVolume(sliderSFX.value);
         }
         else
         {
             sliderSFX.value = 0.7f;
-            masterBus.setVolume(sliderSFX.value);
+            PlayerPrefs.SetFloat("sfxVolume", sliderSFX.value);
+            sfxBus.setVolume(sliderSFX.value);
         }
-        if (PlayerPrefs.HasKey("musicVolume")){
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
             sliderMusic.value = PlayerPrefs.GetFloat("musicVolume");
-            masterBus.setVolume(sliderSFX.value);
+            musicBus.setVolume(sliderSFX.value);
         }
         else
         {
             sliderMusic.value = 0.7f;
-            masterBus.setVolume(sliderSFX.value);
+            PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
+            musicBus.setVolume(sliderSFX.value);
         }
 
     }
@@ -80,11 +85,11 @@ public class HubPause : MonoBehaviour
     void UpdateSliders()
     {
 
-        masterBus.setVolume(sliderSFX.value);
+        sfxBus.setVolume(sliderSFX.value);
         PlayerPrefs.SetFloat("sfxVolume", sliderSFX.value);
 
-        //masterBus.setVolume(sliderMusic.value);
-        //PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
+        musicBus.setVolume(sliderMusic.value);
+        PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
 
         textSFX.text = "Sound Effects Volume (" + Mathf.RoundToInt(sliderSFX.value * 100) + "%)";
         textMusic.text = "Music Volume (" + Mathf.RoundToInt(sliderMusic.value * 100) + "%)";

@@ -11,7 +11,7 @@ public class AfterMelee : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
+        player = GameObject.Find("PlayerArmature").GetComponent<StarterAssets.ThirdPersonController>();
         blade = GameObject.Find("Blade").GetComponent<BladeBehaviour>();
     }
 

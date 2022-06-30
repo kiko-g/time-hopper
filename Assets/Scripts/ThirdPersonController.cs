@@ -404,17 +404,11 @@ namespace StarterAssets
             }
             _hasAnimator = TryGetComponent(out _animator);
 
-            Debug.Log("Before JumpAndGravity!");
             JumpAndGravity();
-            Debug.Log("Before GroundedCheck!");
             GroundedCheck();
-            Debug.Log("Before Move!");
             Move();
-            Debug.Log("Before Aim!");
             Aim();
-            Debug.Log("Before Fire!");
             Fire();
-            Debug.Log("Before Melee!");
             Melee();
             if (trainingSpawner != null)
             {
@@ -434,15 +428,10 @@ namespace StarterAssets
                     }
                 }
             }
-            Debug.Log("Before Weaponshop!");
             WeaponShop();
-            Debug.Log("Before Interact!");
             Interact();
-            Debug.Log("Before SwitchWeapon!");
             SwitchWeapon();
-            Debug.Log("Before StartRound!");
             StartRound();
-            Debug.Log("Before Reload!");
             Reload();
             Point();
             Click();
