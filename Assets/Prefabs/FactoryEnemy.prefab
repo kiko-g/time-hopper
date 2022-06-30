@@ -292,7 +292,7 @@ MonoBehaviour:
   moveSpeed: 1
   range: 10
   baseHealth: 100
-  baseDamage: 10
+  baseDamage: 15
   healthIncreasePerRound: 5
   damageIncreasePerRound: 2
   dropPercentage: 25
@@ -304,6 +304,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 191
+  sentenceLowerBoundTimeout: 5
+  sentenceHigherBoundTimeout: 20
 --- !u!114 &6081970431939711541
 MonoBehaviour:
   m_ObjectHideFlags: 0

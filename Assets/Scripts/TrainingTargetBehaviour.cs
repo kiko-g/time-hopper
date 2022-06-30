@@ -28,6 +28,9 @@ public class TrainingTargetBehaviour : MonoBehaviour
 
     Vector3 pivotPoint;
 
+    private float lastDamageTime = 0f;
+    private bool addDamage = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +43,9 @@ public class TrainingTargetBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Time.time - lastDamageTime > 0.5f){
+            addDamage = false;
+        }
         if(moveUp){
             if(transform.position.y >= maxY){
                 transform.position = new Vector3(transform.position.x, maxY, transform.position.z);
@@ -85,7 +90,13 @@ public class TrainingTargetBehaviour : MonoBehaviour
     {
         health -= damage;
 
-        damageText.text = damage.ToString();
+        if(damageText.text != "" && addDamage){
+                damageText.text = (int.Parse(damageText.text) + damage).ToString();
+            } else {
+                damageText.text = damage.ToString();
+        }
+        addDamage = true;
+        lastDamageTime = Time.time;
         damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
 
         if (health <= 0){

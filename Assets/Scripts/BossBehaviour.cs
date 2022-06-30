@@ -16,7 +16,7 @@ public class BossBehaviour : MonoBehaviour
 
     [Header("Enemy Stats")]
     public float baseHealth = 100f;
-    public float baseDamage = 5f;
+    public float baseDamage;
     public float healthIncreasePerRound = 5f;
     public float damageIncreasePerRound = 2f;
     private float health;
@@ -24,12 +24,20 @@ public class BossBehaviour : MonoBehaviour
     public int dropPercentage;
 
     bool dropped = false, alreadyAttacked = false, registeredHit = false;
-    
+
     [SerializeField]
+    private GameObject colCurrencyPrefab;
+
+    [SerializeField]
+    private GameObject facCurrencyPrefab;
+
+    [SerializeField]
+    private GameObject forCurrencyPrefab;
+
     private GameObject currencyPrefab;
 
     private GameObject currencyHolder;
-    
+
     private GameObject enemies;
 
     private NavMeshAgent navMeshAgent;
@@ -73,6 +81,9 @@ public class BossBehaviour : MonoBehaviour
 
     private string[] sentences = new string[] {"voicerecording_boss_sentence1_1", "voicerecording_boss_sentence1_2", "voicerecording_boss_sentence2_1", "voicerecording_boss_sentence2_2", "voicerecording_boss_sentence2_3", "voicerecording_boss_sentence3_1", "voicerecording_boss_sentence3_2"};
 
+    private bool addDamage;
+    private float lastDamageTime  =  0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,18 +104,21 @@ public class BossBehaviour : MonoBehaviour
         {
             case "Colliseum":
                 footstepsBase = colliseum_base;
+                currencyPrefab = colCurrencyPrefab;
                 break;
             case "Factory":
                 footstepsBase = factory_base;
+                currencyPrefab = facCurrencyPrefab;
                 break;
             case "Forest":
                 footstepsBase = forest_base;
+                currencyPrefab = forCurrencyPrefab;
                 break;
             default:
                 footstepsBase = colliseum_base;
                 break;
         }
-        
+
     }
 
     void initNavMeshAgent()
@@ -123,10 +137,10 @@ public class BossBehaviour : MonoBehaviour
         int id = Random.Range(0, sentences.Length);
         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentences[id], transform.position);
     }
-    
+
     // Update is called once per frame
     void Update()
-    {   
+    {
         if (transform == null)
             return;
 
@@ -157,6 +171,10 @@ public class BossBehaviour : MonoBehaviour
             animator.SetBool("in_pain", false);
         }
 
+        if(Time.time - lastDamageTime > 0.5f){
+            addDamage = false;
+        }
+
         if (!arrivalSlam && transform.position.y < 3.5f)
         {
             SlamAttack();
@@ -171,7 +189,7 @@ public class BossBehaviour : MonoBehaviour
                 slammedGround = true;
 
                 if (Vector3.Distance(transform.position, playerTransform.position) <= 8)
-                {   
+                {
                     playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(90 - Vector3.Distance(transform.position, playerTransform.position)*5, "Zombie");
                 }
             }
@@ -204,7 +222,7 @@ public class BossBehaviour : MonoBehaviour
                 //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
                 bullet.GetComponent<Rigidbody>().AddForce(dest * 200f);
             }
-            
+
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.65f)
             {
                 elapsedTime = 0f;
@@ -238,7 +256,7 @@ public class BossBehaviour : MonoBehaviour
             {
                 registeredHit = false;
             }
-            
+
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 alreadyAttacked = false;
@@ -248,7 +266,7 @@ public class BossBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Zombie");
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage*2, "Zombie");
                 }
                 registeredHit = true;
                 animator.SetBool("is_attacking", false);
@@ -267,7 +285,7 @@ public class BossBehaviour : MonoBehaviour
             if (elapsedTime > 2.0f)
             {
                 if (enableNavMesh)
-                    navMeshAgent.enabled = false; 
+                    navMeshAgent.enabled = false;
                 Scream();
             }
             else if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){
@@ -276,7 +294,7 @@ public class BossBehaviour : MonoBehaviour
                     navMeshAgent.SetDestination(playerTransform.position);
                     //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
                 }
-                            
+
                 transform.LookAt(playerTransform);
 
                 Vector3 eulerAngles = transform.rotation.eulerAngles;
@@ -289,17 +307,17 @@ public class BossBehaviour : MonoBehaviour
                 animator.SetBool("is_running", true);
                 animator.SetBool("is_attacking", false);
                 rng = -1;
-                
+
                 elapsedTime += Time.deltaTime;
             } else {
                 if (enableNavMesh)
-                    navMeshAgent.enabled = false; 
+                    navMeshAgent.enabled = false;
                 animator.SetBool("is_running", false);
 
                 Attack();
             }
         }
-        else 
+        else
         {
             animator.SetBool("is_running", false);
         }
@@ -318,7 +336,7 @@ public class BossBehaviour : MonoBehaviour
         {
             bullet.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles);
         }
-    
+
         slamParticles.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
     }
 
@@ -347,7 +365,7 @@ public class BossBehaviour : MonoBehaviour
         }
 
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
-        
+
         if(rng <= 10 + player.waveSpawner.roundNr * 10){
             animator.SetBool("slamming", true);
             SlamAttack();
@@ -382,12 +400,18 @@ public class BossBehaviour : MonoBehaviour
     }
 
     public void TakeDamage(float damage)
-    {   
+    {
         if(!animator.GetBool("is_dead")){
             health -= damage;
 
             // change text o textmeshprougui with damage on hit
-            damageText.text = damage.ToString();
+            if(damageText.text != "" && addDamage){
+                damageText.text = (int.Parse(damageText.text) + damage).ToString();
+            } else {
+                damageText.text = damage.ToString();
+            }
+            addDamage = true;
+            lastDamageTime = Time.time;
             damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
 
             bossHealth.value = health / 30.0f;
@@ -412,7 +436,7 @@ public class BossBehaviour : MonoBehaviour
         GetComponent<SphereCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
-        player.AddWeaponCurrency(10);
+        player.AddWeaponCurrency(500);
         player.waveSpawner.decreaseEnemiesToDefeat();
         player.waveSpawner.clearAllEnemies();
         player.waveSpawner.resetRound();
@@ -425,13 +449,14 @@ public class BossBehaviour : MonoBehaviour
     private void DropCurrency(){
         if(!dropped){
             dropped = true;
-            int dropRng = Random.Range(1, 101);
-            if(dropRng <= dropPercentage){
-                Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 2.0f, transform.position.z);
+            int randomCurrencyNr = Random.Range(10,31);
+            for(int i = 0; i < randomCurrencyNr; i++){
+                Vector3 spawnPos = new Vector3(transform.position.x + Random.Range(0.0f, 0.5f), transform.position.y + Random.Range(1.5f, 2.5f), transform.position.z + Random.Range(0.0f, 0.5f));
                 GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
-                Debug.Log("Dropped currency");
+                currency.GetComponent<CurrencyBehaviour>().setDespawnTimer(Random.Range(28f,32f));
                 currency.transform.SetParent(currencyHolder.transform);
             }
+            Debug.Log("Dropped " + randomCurrencyNr + " currency");
         }
     }
 

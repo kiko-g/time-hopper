@@ -484,8 +484,10 @@ MonoBehaviour:
   baseDamage: 25
   healthIncreasePerRound: 5
   damageIncreasePerRound: 2
-  dropPercentage: 0
-  currencyPrefab: {fileID: 975483126235229509, guid: b868aec09068e994cb67ee1503034c2e, type: 3}
+  dropPercentage: 100
+  colCurrencyPrefab: {fileID: 975483126235229509, guid: b868aec09068e994cb67ee1503034c2e, type: 3}
+  facCurrencyPrefab: {fileID: 3318164848249605866, guid: 969f01a4a8942434d8d556ff7d72b7cf, type: 3}
+  forCurrencyPrefab: {fileID: 1661584327474507373, guid: 4fd53502efc0a9841a280f8f8a7b918c, type: 3}
   AvoidanceType: 4
   damageText: {fileID: 7574199013937430373}
   slamParticles: {fileID: 6361996311657892594}

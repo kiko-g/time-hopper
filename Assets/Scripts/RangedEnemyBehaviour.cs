@@ -69,6 +69,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     public float sentenceLowerBoundTimeout = 5f;
     public float sentenceHigherBoundTimeout = 20f;
+    
+    private float lastDamageTime = 0f;
+    private bool addDamage = false;
 
     private IEnumerator speakingCoroutine;
 
@@ -118,6 +121,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
             }
             Destroy(transform.parent.gameObject, animTime - 0.5f);
             return;
+        }
+        if(Time.time - lastDamageTime > 0.5f){
+            addDamage = false;
         }
 
         if (shootingTimerActive){
@@ -257,7 +263,13 @@ public class RangedEnemyBehaviour : MonoBehaviour
         if(!animator.GetBool("is_dead")){
             health -= damage;
 
-            damageText.text = damage.ToString();
+            if(damageText.text != "" && addDamage){
+                damageText.text = (int.Parse(damageText.text) + damage).ToString();
+            } else {
+                damageText.text = damage.ToString();
+            }
+            addDamage = true;
+            lastDamageTime = Time.time;
             damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
 
             int id = Random.Range(1, 4);

@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseHealth: 100
-  baseDamage: 5
+  baseDamage: 25
   healthIncreasePerRound: 5
   damageIncreasePerRound: 2
   dropPercentage: 25
