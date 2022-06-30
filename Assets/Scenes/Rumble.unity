@@ -1742,8 +1742,8 @@ MonoBehaviour:
   damage: 120
   propulsionForce: 20
   range: 1e+16
-  weaponPrice: 0
-  ammoPrice: 0
+  weaponPrice: 500
+  ammoPrice: 50
   shootingSpread: 0
   numBulletsPerMagazine: 1
   defaultNumberOfExtraMagazines: 10
@@ -10971,11 +10971,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5f91b28ff35104fa5e134877e8f3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 40
   propulsionForce: 0
   range: 10
-  weaponPrice: 0
-  ammoPrice: 0
+  weaponPrice: 100
+  ammoPrice: 5
   shootingSpread: 15
   numBulletsPerMagazine: 5
   defaultNumberOfExtraMagazines: 3
@@ -65920,11 +65920,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5f91b28ff35104fa5e134877e8f3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
+  damage: 25
   propulsionForce: 0
   range: 100
-  weaponPrice: 0
-  ammoPrice: 0
+  weaponPrice: 300
+  ammoPrice: 5
   shootingSpread: 15
   numBulletsPerMagazine: 20
   defaultNumberOfExtraMagazines: 3
