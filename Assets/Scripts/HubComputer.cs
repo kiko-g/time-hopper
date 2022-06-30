@@ -68,17 +68,37 @@ public class HubComputer : MonoBehaviour
     public GameObject forestAttempts;
     public GameObject rumbleAttempts;
 
+    // upgrade multipliers (upgrades tab)
+    private float colliseumCostMultiplier;
+    private float factoryCostMultiplier;
+    private float forestCostMultiplier;
+    private float rumbleCostMultiplier;
+
     // abilities (upgrades tab)
     public TMPro.TMP_Dropdown abilityDropdown;
     public TextMeshProUGUI abilitiesUpgradingText;
-    private int moneyLevel;
-    private int healthLevel;
+    public Button abilityUpgradeButton;
     public GameObject moneyUpgrade;
     public GameObject healthUpgrade;
+    public TextMeshProUGUI moneyLevelText;
+    public TextMeshProUGUI healthLevelText;
+    public TextMeshProUGUI abilitiesColiseumCostText;
+    public TextMeshProUGUI abilitiesFactoryCostText;
+    public TextMeshProUGUI abilitiesForestCostText;
+    public TextMeshProUGUI abilitiesRumbleCostText;
+    private int moneyLevel;
+    private int healthLevel;
 
     // weapons (upgrades tab)
     public TMPro.TMP_Dropdown weaponDropdown;
     public TextMeshProUGUI weaponsUpgradingText;
+    public TextMeshProUGUI weaponsCurrentLevelText;
+    public Button weaponUpgradeButton;
+    public TextMeshProUGUI weaponsColiseumCostText;
+    public TextMeshProUGUI weaponsFactoryCostText;
+    public TextMeshProUGUI weaponsForestCostText;
+    public TextMeshProUGUI weaponsRumbleCostText;
+    private int[] weaponLevels;
 
     void Start()
     {
@@ -105,6 +125,7 @@ public class HubComputer : MonoBehaviour
         hint.SetActive(false);
         canvas.enabled = false;
 
+        // tabs
         overviewCore.SetActive(true); // Overview is the default tab
         arenasCore.SetActive(false);
         upgradesCore.SetActive(false);
@@ -112,6 +133,7 @@ public class HubComputer : MonoBehaviour
         arenasButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(false);
 
+        // rumble status
         if (PlayerPrefs.GetInt("RumbleUnlocked") == 1)
         {
             rumbleUnlocked = true;
@@ -123,8 +145,19 @@ public class HubComputer : MonoBehaviour
             RumblePortal.SetActive(false);
         }
 
+        // levels status
+        moneyLevel = PlayerPrefs.GetInt("MoneyLevel") == 0 ? 1 : PlayerPrefs.GetInt("MoneyLevel");
+        healthLevel = PlayerPrefs.GetInt("HealthLevel") == 0 ? 1 : PlayerPrefs.GetInt("HealthLevel");
+
+        // upgrades
+        factoryCostMultiplier = 1.0f;
+        forestCostMultiplier = 1.25f;
+        colliseumCostMultiplier = 1.50f;
+        rumbleCostMultiplier = 0.2f;
         abilitiesUpgradingText.text = "Upgrading " + abilityDropdown.options[0].text;
         weaponsUpgradingText.text = "Upgrading " + weaponDropdown.options[0].text;
+        healthUpgrade.SetActive(true);
+        moneyUpgrade.SetActive(false);
 
         // Refreshable UI Values
         UpdateUIValues();
@@ -271,12 +304,24 @@ public class HubComputer : MonoBehaviour
     void OnAbilityDropdownValueChanged(TMPro.TMP_Dropdown changed)
     {
         abilitiesUpgradingText.text = "Upgrading " + abilityDropdown.options[changed.value].text;
+        healthUpgrade.SetActive(false);
+        moneyUpgrade.SetActive(false);
+
+        switch (changed.value)
+        {
+            case 0:
+                healthUpgrade.SetActive(true);
+                break;
+            case 1:
+                moneyUpgrade.SetActive(true);
+                break;
+            default:
+                break;
+        }
     }
 
     void OnWeaponDropdownValueChanged(TMPro.TMP_Dropdown changed)
     {
-        Debug.Log(changed.value);
-        Debug.Log(weaponDropdown.options.Count);
         weaponsUpgradingText.text = "Upgrading " + weaponDropdown.options[changed.value].text;
     }
 
