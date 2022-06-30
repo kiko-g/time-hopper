@@ -110,6 +110,7 @@ public class ArenaPause : MonoBehaviour
 
     void OnClickResume()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         canvas.enabled = false;
         Time.timeScale = 1f;
         player.SwitchInputToPlayer();
@@ -118,6 +119,7 @@ public class ArenaPause : MonoBehaviour
 
     void OnClickSettings()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(false);
         settingsCore.SetActive(true);
         instructionsCore.SetActive(false);
@@ -125,6 +127,7 @@ public class ArenaPause : MonoBehaviour
 
     void OnClickInstructions()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(false);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(true);
@@ -132,6 +135,7 @@ public class ArenaPause : MonoBehaviour
 
     void OnClickBackSettings()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(true);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);
@@ -139,6 +143,7 @@ public class ArenaPause : MonoBehaviour
 
     void OnClickBackInstructions()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(true);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);

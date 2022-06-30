@@ -960,7 +960,7 @@ namespace StarterAssets
                     fallingY = -1234.56789f;
                     //Debug.Log("You fell " + distanceFallen + " units");
                     if(distanceFallen > 4){
-                        TakeDamage(1*Mathf.RoundToInt(distanceFallen));
+                        TakeDamage(1*Mathf.RoundToInt(distanceFallen), "");
                     }
                 }
                 // reset the fall timeout timer
@@ -1255,8 +1255,8 @@ namespace StarterAssets
             }
             if (other.gameObject.tag == "Lava")
             {
-                TakeDamage(Health-1);
-                TakeDamage(Health);
+                TakeDamage(Health-1, "");
+                TakeDamage(Health, "");
             }
             if(other.gameObject.tag == "RumblePlane" && !recentlyTeleported){
                 // find the index of the other object in the rumble planes array
@@ -1318,10 +1318,10 @@ namespace StarterAssets
         }
 
         void OnParticleCollision(){
-            TakeDamage(1);
+            TakeDamage(1, "");
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, string enemy)
         {
             Health -= damage;
 
@@ -1331,7 +1331,13 @@ namespace StarterAssets
                 return;
             }
 
-            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_punch_gladiator");
+            if (enemy == "Gladiador"){
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_punch_gladiator");
+            } else if (enemy == "Robo"){
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_shot_robot");
+            } else if (enemy == "Zombie"){
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_punch_zombie");
+            }
 
             healingOverTime.PlayerTookDamage();
 

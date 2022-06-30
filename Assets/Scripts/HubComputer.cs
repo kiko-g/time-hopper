@@ -243,6 +243,7 @@ public class HubComputer : MonoBehaviour
 
     void OnClickUnlockRumble()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         rumbleUnlocked = true;
         PlayerPrefs.SetInt("RumbleUnlocked", 1);
         PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") - 100);
@@ -256,6 +257,7 @@ public class HubComputer : MonoBehaviour
 
     void OnClickOverview()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         overviewButtonActive.SetActive(true);
         arenasButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(false);
@@ -267,6 +269,7 @@ public class HubComputer : MonoBehaviour
 
     void OnClickArenas()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         overviewButtonActive.SetActive(false);
         arenasButtonActive.SetActive(true);
         upgradesButtonActive.SetActive(false);
@@ -278,6 +281,7 @@ public class HubComputer : MonoBehaviour
 
     void OnClickUpgrades()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         arenasButtonActive.SetActive(false);
         overviewButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(true);

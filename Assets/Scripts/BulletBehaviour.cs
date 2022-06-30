@@ -19,10 +19,10 @@ public class BulletBehaviour : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other){
-        if (other.gameObject.tag == "RangedEnemy" || other.gameObject.tag == "Boss" || other.gameObject.tag == "Enemy"){
+        if (other.gameObject.tag == "RangedEnemy" || other.gameObject.tag == "Boss" || other.gameObject.tag == "Enemy" || other.gameObject.tag == "BossHead"){
             return;
         } else if (other.gameObject.tag == "Player"){
-            player.TakeDamage(damage);
+            player.TakeDamage(damage, "Robo");
             Destroy(this.gameObject);
         } else {
             Destroy(this.gameObject);

@@ -155,7 +155,7 @@ public class BossBehaviour : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, playerTransform.position) <= 8)
                 {   
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(50 - Vector3.Distance(transform.position, playerTransform.position)*5);
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(50 - Vector3.Distance(transform.position, playerTransform.position)*5, "Zombie");
                 }
             }
         }
@@ -231,7 +231,7 @@ public class BossBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage);
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Zombie");
                 }
                 registeredHit = true;
                 animator.SetBool("is_attacking", false);
@@ -391,6 +391,7 @@ public class BossBehaviour : MonoBehaviour
 
     private void Die()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Boss Animation/boss_animation_death", transform.position);
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
         // deactivate the colliders

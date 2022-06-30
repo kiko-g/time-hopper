@@ -128,6 +128,9 @@ public class EnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Attack"))
         {
+            if (enableNavMesh){
+                navMeshAgent.enabled = false;
+            }
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.1f )
             {
                 registeredHit = false;
@@ -142,9 +145,20 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 3)
                 {
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage);
+                    if (transform.GetChild(0).name == "Gladiador"){
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch/punch_gladiator", transform.position);
+                        playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Gladiador");
+                    } else {
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch/punch_zombie", transform.position);
+                        playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Zombie");
+                    }
                 }
                 registeredHit = true;
+
+            }
+        } else {
+            if (enableNavMesh){
+                navMeshAgent.enabled = true;
             }
         }
 
