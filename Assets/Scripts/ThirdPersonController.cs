@@ -133,6 +133,8 @@ namespace StarterAssets
 
         private bool is_dead = false;
 
+        private bool canReload = false;
+
         private bool _hasAnimator;
 
         public bool reload = false;
@@ -830,10 +832,8 @@ namespace StarterAssets
             if (_animator.GetBool("Reloading")){
                 return;
             }
-            if (_input.reload && !reload){
-                if (gunArsenal[selectedGun].reloading || (gunArsenal[selectedGun].currentAmmo == gunArsenal[selectedGun].numBulletsPerMagazine) || (gunArsenal[selectedGun].availableAmmo == 0 && !gunArsenal[selectedGun].is_pistol)){
-                    return;
-                }
+            canReload = gunArsenal[selectedGun].reloading || (gunArsenal[selectedGun].currentAmmo == gunArsenal[selectedGun].numBulletsPerMagazine) || (gunArsenal[selectedGun].availableAmmo == 0 && !gunArsenal[selectedGun].is_pistol);
+            if (_input.reload && !reload && !canReload){
                 reload = true;
                 gunArsenal[selectedGun].Reload();
                 FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/Guns/reload_gun1", transform.position);
