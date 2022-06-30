@@ -1698,7 +1698,6 @@ namespace StarterAssets
             int step = 10;
             int level = PlayerPrefs.GetInt("HealthLevel") == 0 ? 1 : PlayerPrefs.GetInt("HealthLevel");
 
-            Debug.Log("heath: " + (100.0f + (float)(step * (level - 1))));
             return (100.0f + (float)(step * (level - 1)));
         }
 
@@ -1707,7 +1706,6 @@ namespace StarterAssets
             int step = 25;
             int level = PlayerPrefs.GetInt("MoneyLevel") == 0 ? 1 : PlayerPrefs.GetInt("MoneyLevel");
 
-            Debug.Log("money: " + (100 + (int)(step * (level - 1))));
             return (100 + (int)(step * (level - 1)));
         }
 
