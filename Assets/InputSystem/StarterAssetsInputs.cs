@@ -27,6 +27,8 @@ namespace StarterAssets
         public int weaponScroll;
         public bool melee;
 
+        public bool pause;
+
         [Header("Movement Settings")]
         public bool analogMovement;
 
@@ -94,6 +96,11 @@ namespace StarterAssets
         public void OnWeapon4(InputValue value)
         {
             Weapon4Input(value.isPressed);
+        }
+
+        public void OnPause(InputValue value)
+        {
+            PauseInput(value.isPressed);
         }
 
         public void OnWeaponScroll(InputValue value)
@@ -186,6 +193,11 @@ namespace StarterAssets
         public void Weapon4Input(bool weapon4State)
         {
             weapon4 = weapon4State;
+        }
+
+        public void PauseInput(bool pauseState)
+        {
+            pause = pauseState;
         }
 
         public void ScrollInput(Vector2 scrollVec)

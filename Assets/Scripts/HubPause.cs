@@ -71,9 +71,9 @@ public class HubPause : MonoBehaviour
     void Update()
     {
         UpdateSliders();
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
+        if (player._input.pause){
             Toggle(!canvas.enabled);
+            player._input.pause = false;
         }
     }
 
