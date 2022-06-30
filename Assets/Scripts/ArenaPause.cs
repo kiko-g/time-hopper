@@ -30,7 +30,15 @@ public class ArenaPause : MonoBehaviour
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
+        GameObject p = GameObject.Find("PlayerArmature");
+
+        Debug.Log("P");
+        Debug.Log(p);
+
+        player = p.GetComponent<StarterAssets.ThirdPersonController>();
+
+        Debug.Log("Player");
+        Debug.Log(player);
 
         resumeButton.onClick.AddListener(OnClickResume);
         settingsButton.onClick.AddListener(OnClickSettings);

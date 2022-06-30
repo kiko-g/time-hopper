@@ -107,7 +107,7 @@ public class HubComputer : MonoBehaviour
     {
         // Get elements
         canvas = GetComponent<Canvas>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
+        player = GameObject.Find("PlayerArmature").GetComponent<StarterAssets.ThirdPersonController>();
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseHUD").GetComponent<Canvas>();
 
         // Listeners

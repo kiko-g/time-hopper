@@ -90,7 +90,7 @@ public class GunBehaviour : MonoBehaviour
         updateReloadUI();
         screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
         cam = Camera.main.transform;
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
+        player = GameObject.Find("PlayerArmature").GetComponent<StarterAssets.ThirdPersonController>();
     }
 
     void Update(){

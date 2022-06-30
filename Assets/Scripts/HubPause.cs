@@ -31,7 +31,7 @@ public class HubPause : MonoBehaviour
         canvas = GetComponent<Canvas>();
         canvas.enabled = false;
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
+        player = GameObject.Find("PlayerArmature").GetComponent<StarterAssets.ThirdPersonController>();
 
         exitButton.onClick.AddListener(OnClickExit);
         resumeButton.onClick.AddListener(OnClickResume);

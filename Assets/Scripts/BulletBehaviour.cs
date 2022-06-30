@@ -14,7 +14,7 @@ public class BulletBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
+        player = GameObject.Find("PlayerArmature").GetComponent<StarterAssets.ThirdPersonController>();
     }
 
     void Update()
