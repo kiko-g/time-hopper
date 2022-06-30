@@ -49,9 +49,9 @@ public class BackgroundMusicPlayer : MonoBehaviour
                 case "Hub":
                     musicBase = "soundtrack_hub_music1";
                     break;
-                default:
+                /*default:
                     musicBase = "soundtrack_hub_music1";
-                    break;
+                    break;*/
             }
 
             music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
