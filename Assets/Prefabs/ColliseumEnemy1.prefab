@@ -3712,7 +3712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseHealth: 100
-  baseDamage: 5
+  baseDamage: 25
   healthIncreasePerRound: 5
   damageIncreasePerRound: 2
   dropPercentage: 25
@@ -3720,6 +3720,8 @@ MonoBehaviour:
   rumblePrefab: {fileID: 1661584327474507373, guid: 477cb5b627d98b14abe837c20ff00171, type: 3}
   AvoidanceType: 4
   damageText: {fileID: 678008008990873827}
+  sentenceLowerBoundTimeout: 5
+  sentenceHigherBoundTimeout: 20
 --- !u!95 &2460408402146330504
 Animator:
   serializedVersion: 3

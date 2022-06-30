@@ -42,6 +42,13 @@ public class CurrencyBehaviour : MonoBehaviour
         }
     }
 
+    public void setDespawnTimer(float time){
+        despawnTimer = time;
+        flashTimer = despawnTimer - despawnTimer*0.4f;
+        blinkTimeFrame = (despawnTimer-flashTimer)/50.0f;
+        startBlinkFrame = blinkTimeFrame * 5;
+    }
+
     public void DeSpawn(){
         Destroy(gameObject);
     }

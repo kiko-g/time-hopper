@@ -100,12 +100,12 @@ public class WaveSpawner : MonoBehaviour
         timePlayed += Time.deltaTime;
 
         // print roundNr, round_active and enemiesToDefeat
-        Debug.Log("Round: " + roundNr + " active: " + round_active + " enemiesToDefeat: " + enemiesToDefeat);
+        //Debug.Log("Round: " + roundNr + " active: " + round_active + " enemiesToDefeat: " + enemiesToDefeat);
 
         if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){
-                Debug.Log("AQUI");
+                //Debug.Log("AQUI");
                 startRoundTextUI.text = "Extraction Portal Opened";
                 Color c = startRoundTextUI.color;
                 c.a = 1f;

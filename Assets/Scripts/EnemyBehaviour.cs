@@ -55,6 +55,9 @@ public class EnemyBehaviour : MonoBehaviour
     public float sentenceLowerBoundTimeout = 5f;
     public float sentenceHigherBoundTimeout = 20f;
 
+    private float lastDamageTime = 0f;
+    private bool addDamage = false;
+
     private IEnumerator speakingCoroutine;
 
     private int type = 1;
@@ -133,7 +136,9 @@ public class EnemyBehaviour : MonoBehaviour
             Destroy(transform.parent.gameObject, animTime - 0.5f);
             return;
         }
-        
+        if(Time.time - lastDamageTime > 0.5f){
+            addDamage = false;
+        }
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Attack") || animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("atack"))
         {
             transform.LookAt(playerTransform);
@@ -217,7 +222,13 @@ public class EnemyBehaviour : MonoBehaviour
             health -= damage;
 
             // change text o textmeshprougui with damage on hit
-            damageText.text = damage.ToString();
+            if(damageText.text != "" && addDamage){
+                damageText.text = (int.Parse(damageText.text) + damage).ToString();
+            } else {
+                damageText.text = damage.ToString();
+            }
+            addDamage = true;
+            lastDamageTime = Time.time;
             damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
 
             if (health <= 0){
