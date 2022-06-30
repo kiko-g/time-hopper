@@ -828,12 +828,13 @@ namespace StarterAssets
         private void Reload()
         {
             if (_input.reload && !reload){
-                if (gunArsenal[selectedGun].reloading || gunArsenal[selectedGun].hasFullMagazine || gunArsenal[selectedGun].availableAmmo == 0){
+                Debug.Log( gunArsenal[selectedGun].availableAmmo);
+                if (gunArsenal[selectedGun].reloading || gunArsenal[selectedGun].hasFullMagazine || (gunArsenal[selectedGun].availableAmmo == 0 && !gunArsenal[selectedGun].is_pistol)){
                     return;
                 }
                 reload = true;
                 gunArsenal[selectedGun].Reload();
-                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/Guns/reload_gun1");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/Guns/reload_gun1", transform.position);
                 _animator.SetBool("Reloading", true);
             } else {
                 reload = false;
@@ -1181,7 +1182,8 @@ namespace StarterAssets
                 }
             }
             if (trigger != null && !changingScene){
-
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/portal", transform.position);
+                Debug.Log("Sound Here");
                 Debug.Log("Entering Arena");
                 //FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Portal/Enter");
                 changingScene = true;
