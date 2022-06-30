@@ -241,7 +241,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
         bullet.GetComponent<BulletBehaviour>().setDamage(damage);
         //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
         bullet.GetComponent<Rigidbody>().AddForce(dest * 250f);
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch/shot_robot", transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Punch Shot/shot_robot", transform.position);
     }
 
     public void StartShootingTimer()
@@ -260,6 +260,9 @@ public class RangedEnemyBehaviour : MonoBehaviour
             damageText.text = damage.ToString();
             damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
 
+            int id = Random.Range(1, 4);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Scream/ah_robot_" + id, transform.position);
+
             if (health <= 0){
                 Die();
             }
@@ -273,6 +276,10 @@ public class RangedEnemyBehaviour : MonoBehaviour
 
     void OnParticleCollision(){
             TakeDamage(1);
+    }
+
+    void Step(){
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Footstep/Robot/footstep_factory_robot_" + Random.Range(1, 9), transform.position);
     }
 
     private void Die()

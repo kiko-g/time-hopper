@@ -143,6 +143,8 @@ namespace StarterAssets
 
         private bool startRound = false;
 
+        private bool falling = false;
+
         private int nextRound = 1;
 
         private bool rotateWhenMoving = true;
@@ -221,6 +223,12 @@ namespace StarterAssets
 
         public Vector3 bladeOffset = new Vector3(0.0114f, -0.045f, 0.0053f);
 
+        private string jumpColliseumBase = "jump_coliseu_";
+        private string jumpHubBase = "jump_hub_";
+        private string jumpFactoryBase = "jump_factory_";
+        private string jumpForestBase = "jump_newworld_";
+        private string jumpBase;
+
         private GameObject[] rumblePlanes;
 
         GameObject deathScreen;
@@ -231,13 +239,16 @@ namespace StarterAssets
         MeshRenderer RLMesh = null;
 
         [SerializeField]
+        private BackgroundMusicPlayer musicPlayer;
+
+        [SerializeField]
         private GameObject TrainingHUD;
 
         private Transform WeaponsHUD;
 
         // Sound Variables
 
-        private FMOD.Studio.EventInstance walkSound;
+        private FMOD.Studio.EventInstance heartBeatSound;
         private bool walking = false;
 
         private bool jumping = false;
@@ -318,9 +329,10 @@ namespace StarterAssets
             //RL.ApplyUpgrades()
 
             gunArsenal.Add(PS);
-            PS.setGunSound("shot_gun_2");
-            AR.setGunSound("shot_gun_1");
-            SG.setGunSound("shot_gun_3");
+            PS.setGunSound("shot_gun2");
+            AR.setGunSound("shot_gun1");
+            SG.setGunSound("shot_gun3");
+            RL.setGunSound("explosion_gun4");
             if(rumbleSpawner != null){
                 gunArsenal.Add(AR);
                 selectedGun = gunArsenal.Count-1;
@@ -342,6 +354,23 @@ namespace StarterAssets
             // spawn the player at the selected rumble plane
                 transform.position = rumblePlanes[random].gameObject.GetComponent<RumblePlane>().getSpawnPosition();
                 rumbleSpawner.setCurrentScene(rumblePlanes[random].name);
+            }
+
+            heartBeatSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Character Related/heartbeat");
+            jumpBase = jumpHubBase;
+            switch(SceneManager.GetActiveScene().name){
+                case "Colliseum":
+                    jumpBase = jumpColliseumBase;
+                    break;
+                case "Hub":
+                    jumpBase = jumpHubBase;
+                    break;
+                case "Factory":
+                    jumpBase = jumpFactoryBase;
+                    break;
+                case "Forest":
+                    jumpBase = jumpForestBase;
+                    break;
             }
         }
 
@@ -383,7 +412,6 @@ namespace StarterAssets
                 SprintSpeed = 5.335f;
             }*/
 
-
             if(recentlyTeleported && Time.time - teleportedTime > 0.5f){
                 for(int i = 0; i<rumblePlanes.Length; i++){
                     rumblePlanes[i].gameObject.GetComponent<BoxCollider>().isTrigger = true;
@@ -419,6 +447,8 @@ namespace StarterAssets
                 if (Health > 20)
                 {
                     heartBeat = false;
+                    heartBeatSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                    heartBeatSound.release();
                     playerGotHit = true;
                     return;
                 }
@@ -435,6 +465,13 @@ namespace StarterAssets
                 else
                 {
                     heartBeatRatio -= 0.01f;
+                }
+
+                heartBeatSound.getPlaybackState(out pbState);
+                if (pbState == FMOD.Studio.PLAYBACK_STATE.STOPPED)
+                {
+                    heartBeatSound.start();
+                    heartBeatSound.release();
                 }
 
                 Color temp = bloodOverlay.GetComponent<Image>().color;
@@ -708,24 +745,11 @@ namespace StarterAssets
             // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero){
-                walkSound.getPlaybackState(out pbState);
                 targetSpeed = 0.0f;
                 // Parar o som
                 walking = false;
-                if (pbState == FMOD.Studio.PLAYBACK_STATE.PLAYING){
-                    //Debug.Log("Sound stopping");
-                    //walkSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                }
             } else {
                 lastMoveDir = _input.move;
-                if (!walking){
-                    //Debug.Log("Sound starting");
-                    walking = true;
-                    // Comecar som
-                    //FMODUnity.RuntimeManager.AttachInstanceToGameObject(walkSound, transform);
-                    walkSound.start();
-                    walkSound.release();
-                }
             }
 
 
@@ -949,21 +973,28 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
+            
             if (Grounded)
             {
-                if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolJump")){
+                if (falling){
+                    falling = false;
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
+                }
+                /*if (_animator.GetCurrentAnimatorStateInfo(0).IsName("PistolJump")){
                     if (_animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.6f){
                         _verticalVelocity = Gravity;
                     } else {
                         _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
                     }
-                }
+                }*/
                 if(fallingY != -1234.56789f){
+                    // Fall
                     float distanceFallen = fallingY - transform.position.y;
                     fallingY = -1234.56789f;
                     //Debug.Log("You fell " + distanceFallen + " units");
                     if(distanceFallen > 4){
                         TakeDamage(1*Mathf.RoundToInt(distanceFallen), "");
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "2", transform.position);
                     }
                 }
                 // reset the fall timeout timer
@@ -995,6 +1026,8 @@ namespace StarterAssets
 
                     // the square root of H * -2 * G = how much velocity needed to reach desired height
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Jump/" + jumpBase + "1", transform.position);
+                    Debug.Log("Jump Sound");
 
                     if (_hasAnimator)
                     {
@@ -1031,6 +1064,7 @@ namespace StarterAssets
             }
             else
             {
+                falling = true;
                 /*if(!_animator.GetBool(_animIDFreeFall)){
                     fallingY = transform.position.y;
                 }*/
@@ -1334,13 +1368,8 @@ namespace StarterAssets
                 return;
             }
 
-            if (enemy == "Gladiador"){
-                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_punch_gladiator");
-            } else if (enemy == "Robo"){
-                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_shot_robot");
-            } else if (enemy == "Zombie"){
-                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Player After Receving Punch/ah_punch_zombie");
-            }
+            int id = Random.Range(1, 4);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Hit/ah_charater_" + id, transform.position);
 
             healingOverTime.PlayerTookDamage();
 
@@ -1385,6 +1414,8 @@ namespace StarterAssets
 
                 bloodOverlay.SetActive(true);
                 heartBeat = true;
+                heartBeatSound.start();
+                heartBeatSound.release();
             }
         }
 
@@ -1405,6 +1436,7 @@ namespace StarterAssets
 
         private void Die()
         {
+            musicPlayer.StopMusic();
             if(!is_dead){
                 is_dead = true;
                 _input.enabled = false;
@@ -1461,8 +1493,7 @@ namespace StarterAssets
                     rumCurrency++;
                     updateRumCurrency();
                 }
-                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/pick_coin");
-                //Debug.Log("Som!");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/pick_coin", transform.position);
             }
             if (hit.gameObject.tag == "Enemy" || hit.transform.tag == "RangedEnemy"){
                 GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);

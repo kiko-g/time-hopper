@@ -44,6 +44,8 @@ public class ArenaPause : MonoBehaviour
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);
 
+        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+
         if (PlayerPrefs.HasKey("sfxVolume"))
         {
             sliderSFX.value = PlayerPrefs.GetFloat("sfxVolume");
@@ -64,7 +66,6 @@ public class ArenaPause : MonoBehaviour
             masterBus.setVolume(sliderSFX.value);
         }
 
-        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
     }
 
     void Update()
@@ -110,7 +111,7 @@ public class ArenaPause : MonoBehaviour
 
     void OnClickResume()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/close");
         canvas.enabled = false;
         Time.timeScale = 1f;
         player.SwitchInputToPlayer();
@@ -143,7 +144,7 @@ public class ArenaPause : MonoBehaviour
 
     void OnClickBackInstructions()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/close");
         core.SetActive(true);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);

@@ -9382,10 +9382,10 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1640347092
-      Data2: 1289599559
-      Data3: 299702719
-      Data4: -1897854102
+      Data1: 231326225
+      Data2: 1244174082
+      Data3: -1852512384
+      Data4: -1804514993
     Path: event:/Project/SoundScape/newworld
   Event: 
   PlayEvent: 1
@@ -13655,6 +13655,7 @@ MonoBehaviour:
   bloodOverlay: {fileID: 836437004}
   changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
+  musicPlayer: {fileID: 1354911054}
   TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
 CharacterController:

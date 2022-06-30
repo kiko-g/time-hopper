@@ -64,7 +64,14 @@ public class BossBehaviour : MonoBehaviour
     private string factory_base = "footstep_factory_boss_";
     private string forest_base = "footstep_newworld_boss_";
 
+    private int lowerId = 1;
+    private int higherId = 2;
+
+    private bool talking = false;
+
     private string footstepsBase;
+
+    private string[] sentences = new string[] {"voicerecording_boss_sentence1_1", "voicerecording_boss_sentence1_2", "voicerecording_boss_sentence2_1", "voicerecording_boss_sentence2_2", "voicerecording_boss_sentence2_3", "voicerecording_boss_sentence3_1", "voicerecording_boss_sentence3_2"};
 
     // Start is called before the first frame update
     void Start()
@@ -108,8 +115,13 @@ public class BossBehaviour : MonoBehaviour
     }
 
     void Step(){
-        int id = Random.Range(1, 3);
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Footstep/" + footstepsBase + id, transform.position);
+        int id = Random.Range(lowerId, higherId+1);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Footstep/Boss/" + footstepsBase + id, transform.position);
+    }
+
+    void Talk(){
+        int id = Random.Range(0, sentences.Length);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentences[id], transform.position);
     }
     
     // Update is called once per frame
@@ -125,11 +137,16 @@ public class BossBehaviour : MonoBehaviour
             // if animation is not run, then movespeed is 0
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
             {
+                talking = false;
                 moveSpeed = 0f;
                 navMeshAgent.speed = moveSpeed;
             }
             else
             {
+                if (!talking){
+                    Talk();
+                    talking = true;
+                }
                 moveSpeed = 4f;
                 navMeshAgent.speed = moveSpeed;
             }

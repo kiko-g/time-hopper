@@ -44,6 +44,8 @@ public class HubPause : MonoBehaviour
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);
 
+        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+
         if (PlayerPrefs.HasKey("sfxVolume"))
         {
             sliderSFX.value = PlayerPrefs.GetFloat("sfxVolume");
@@ -64,7 +66,6 @@ public class HubPause : MonoBehaviour
             masterBus.setVolume(sliderSFX.value);
         }
 
-        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
     }
 
     void Update()
@@ -119,7 +120,7 @@ public class HubPause : MonoBehaviour
 
     void OnClickResume()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/close");
         canvas.enabled = false;
         Time.timeScale = 1f;
         player.SwitchInputToPlayer();

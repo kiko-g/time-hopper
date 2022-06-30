@@ -10887,14 +10887,14 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -2037179155
-      Data2: 1315442889
-      Data3: 1935201423
-      Data4: -1113036512
+      Data1: 959308818
+      Data2: 1303669018
+      Data3: 1089543553
+      Data4: -1991715841
     Path: event:/Project/SoundScape/coliseu
   Event: 
   PlayEvent: 1
-  StopEvent: 0
+  StopEvent: 2
   AllowFadeout: 1
   TriggerOnce: 0
   Preload: 0
@@ -12849,6 +12849,7 @@ MonoBehaviour:
   bloodOverlay: {fileID: 836437004}
   changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
+  musicPlayer: {fileID: 1354911054}
   TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
 CharacterController:

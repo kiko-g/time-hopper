@@ -77,7 +77,7 @@ public class GunBehaviour : MonoBehaviour
     public bool is_rocketlauncher;
     public float innacuracyDistance;
 
-    public string gun_sound = "shot_gun_1";
+    public string gun_sound = "shot_gun1";
     
     void Start()
     {
