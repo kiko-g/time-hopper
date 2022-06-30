@@ -133,7 +133,7 @@ public class HubComputer : MonoBehaviour
 
         // FIXME: Testing
         // PlayerPrefs.SetInt("HealthLevel", 1);
-        // PlayerPrefs.SetInt("MoneyLevel", 1);
+        // PlayerPrefs.SetInt("MoneyLevel", 70);
         // PlayerPrefs.SetInt("Weapon0Level", 1);
         // PlayerPrefs.SetInt("Weapon1Level", 1);
         // PlayerPrefs.SetInt("Weapon2Level", 1);

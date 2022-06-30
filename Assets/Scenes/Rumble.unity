@@ -65158,7 +65158,7 @@ MonoBehaviour:
   rumCurrency: 0
   WeaponShopUI: {fileID: 492565985}
   _animator: {fileID: 0}
-  _input: {fileID: 0}
+  _input: {fileID: 1996843640}
   aimCamera: {fileID: 1876309382}
   reload: 0
   melee: 0

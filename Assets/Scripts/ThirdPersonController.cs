@@ -432,7 +432,8 @@ namespace StarterAssets
             Point();
             Click();
 
-            if (gunArsenal[selectedGun].reloading){
+            if (gunArsenal[selectedGun].reloading)
+            {
                 SprintSpeed = 2.0f;
             }
 
@@ -1534,7 +1535,7 @@ namespace StarterAssets
         {
             Health -= damage;
 
-            if (Health <= 0)
+            if (Health <= 0f)
             {
                 Die();
                 return;
@@ -1611,6 +1612,7 @@ namespace StarterAssets
             if (!is_dead)
             {
                 is_dead = true;
+                Debug.Log("Player pre dead");
                 _input.enabled = false;
                 //deathScreen.SetActive(true);
                 Debug.Log("Player died");
