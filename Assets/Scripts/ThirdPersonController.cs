@@ -119,7 +119,7 @@ namespace StarterAssets
 #endif
         public Animator _animator;
         private CharacterController _controller;
-        private StarterAssetsInputs _input;
+        public StarterAssetsInputs _input;
         private GameObject _mainCamera;
 
         private HealingOverTime healingOverTime;

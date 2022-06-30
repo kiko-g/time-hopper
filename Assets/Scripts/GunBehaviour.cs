@@ -237,7 +237,7 @@ public class GunBehaviour : MonoBehaviour
         }
         updateReloadUI();
         if(currentAmmo == 0){
-            Reload();
+            player._input.reload = true;
         }
     }
 
