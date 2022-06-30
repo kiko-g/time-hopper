@@ -434,8 +434,6 @@ namespace StarterAssets
 
             if (gunArsenal[selectedGun].reloading){
                 SprintSpeed = 2.0f;
-            } else {
-                SprintSpeed = 5.335f;
             }
 
 
@@ -988,6 +986,7 @@ namespace StarterAssets
 
         private void Aim()
         {
+            //Debug.Log(_input.aim);
             if (_input.aim)
             {
                 SprintSpeed = 2.0f;
