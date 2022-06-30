@@ -36,6 +36,8 @@ public class BossBehaviour : MonoBehaviour
 
     private GameObject currencyPrefab;
 
+    private BackgroundMusicPlayer musicPlayer;
+
     private GameObject currencyHolder;
 
     private GameObject enemies;
@@ -87,6 +89,7 @@ public class BossBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        musicPlayer  = GameObject.Find("BackgroundMusicPlayer").GetComponent<BackgroundMusicPlayer>();
         body = GetComponent<Rigidbody>();
         //navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
@@ -402,7 +405,8 @@ public class BossBehaviour : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if(!animator.GetBool("is_dead")){
-            health -= damage;
+            //health -= damage;
+            health -= 500f;
 
             // change text o textmeshprougui with damage on hit
             if(damageText.text != "" && addDamage){
@@ -444,6 +448,7 @@ public class BossBehaviour : MonoBehaviour
         animator.Play("Death", -1, 0f);
         GameObject bossStats = GameObject.FindGameObjectWithTag("BossStats");
         bossStats.GetComponent<Animator>().Play("BossStatsFadeOut", -1, 0f);
+        musicPlayer.stopBossMusic();
     }
 
     private void DropCurrency(){

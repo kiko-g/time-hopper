@@ -6006,6 +6006,7 @@ MonoBehaviour:
   startRoundTextUI: {fileID: 1600820641}
   enterTooltipUI: {fileID: 24398701}
   numEnemiesAliveUI: {fileID: 2064717799}
+  musicPlayer: {fileID: 1354911054}
   roundUI: {fileID: 1006331598}
   numKills: 0
   timePlayed: 0

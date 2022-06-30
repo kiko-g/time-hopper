@@ -152,6 +152,21 @@ public class BackgroundMusicPlayer : MonoBehaviour
         music.release();
     }
 
+    public void startBossMusic(){
+        music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/soundtrack_boss_music1");
+        music.start();
+        music.release();
+    }
+
+    public void stopBossMusic(){
+        music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
+        music.start();
+        music.release();
+    }
+
+
     // Update is called once per frame
     void Update()
     {

@@ -27,6 +27,9 @@ public class WaveSpawner : MonoBehaviour
     private GameObject numEnemiesAliveUI;
 
     [SerializeField]
+    private BackgroundMusicPlayer musicPlayer;
+
+    [SerializeField]
     private Text roundUI;
 
     private Text numEnemiesAliveText;
@@ -46,6 +49,10 @@ public class WaveSpawner : MonoBehaviour
     private GameObject extractionPortal;
 
     private bool startRoundFlag = false;
+
+    private bool bossIntroPlaying = false;
+    private float bossIntroTimeout = 10f;
+    private float bossIntroTime =  0f;
 
     private List<Vector3> spawnCoords = new List<Vector3>();
 
@@ -101,7 +108,13 @@ public class WaveSpawner : MonoBehaviour
 
         // print roundNr, round_active and enemiesToDefeat
         //Debug.Log("Round: " + roundNr + " active: " + round_active + " enemiesToDefeat: " + enemiesToDefeat);
-
+        if (bossIntroPlaying){
+            bossIntroTime += Time.deltaTime;
+            if (bossIntroTime >= bossIntroTimeout){
+                musicPlayer.startBossMusic();
+                bossIntroPlaying = false;
+            }
+        }
         if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){
@@ -243,6 +256,10 @@ public class WaveSpawner : MonoBehaviour
         }
         else {
             SpawnBoss();
+
+            musicPlayer.startBossIntro();
+            bossIntroPlaying = true;
+
             //get gameobject with tag BossStats
             enemiesToDefeat = 1;
             GameObject bossStats = GameObject.FindGameObjectWithTag("BossStats");
