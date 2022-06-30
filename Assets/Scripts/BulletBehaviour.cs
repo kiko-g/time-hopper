@@ -11,9 +11,12 @@ public class BulletBehaviour : MonoBehaviour
     private float livingTime = 3f;
     private float currentTime = 0f;
 
+    FMOD.Studio.EventInstance bossBulletSound;
+
     // Start is called before the first frame update
     void Start()
     {
+        bossBulletSound = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Character Related/Bullet/bullet_boss");
         player = GameObject.Find("PlayerArmature").GetComponent<StarterAssets.ThirdPersonController>();
     }
 
@@ -24,6 +27,12 @@ public class BulletBehaviour : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void startSound(){
+        bossBulletSound.start();
+        FMODUnity.RuntimeManager.AttachInstanceToGameObject(bossBulletSound, transform);
+        bossBulletSound.release();
     }
 
     public void setDamage(float d){

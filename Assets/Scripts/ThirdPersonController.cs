@@ -351,7 +351,7 @@ namespace StarterAssets
             PS.setGunSound("shot_gun2");
             AR.setGunSound("shot_gun1");
             SG.setGunSound("shot_gun3");
-            RL.setGunSound("explosion_gun4");
+            RL.setGunSound("shot_gun4");
             if (rumbleSpawner != null)
             {
                 gunArsenal.Add(AR);
@@ -398,10 +398,6 @@ namespace StarterAssets
 
         private void Update()
         {
-
-            if (SceneManager.GetActiveScene().name == "Colliseum"){
-                Cursor.lockState = CursorLockMode.None;
-            }
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();

@@ -227,6 +227,7 @@ public class BossBehaviour : MonoBehaviour
                     //bullet.transform.LookAt(playerTransform);
                     //bullet.transform.Translate(bullet.transform.forward);
                     bullet.GetComponent<BulletBehaviour>().setDamage((int)Mathf.Round(damage));
+                    bullet.GetComponent<BulletBehaviour>().startSound();
                     bullet.GetComponent<Rigidbody>().mass = 0.2f;
 
                     //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;

@@ -32,6 +32,7 @@ public class GrenadeExplosion : MonoBehaviour
     }
 
     void doExplosion(Vector3 explosionPoint) {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Objects/Guns/explosion_gun4", transform.position);
         hitColliders = Physics.OverlapSphere(explosionPoint, blastRadius);
 
         //for each collider
