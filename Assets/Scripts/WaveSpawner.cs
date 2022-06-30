@@ -21,7 +21,7 @@ public class WaveSpawner : MonoBehaviour
     private TextMeshProUGUI startRoundTextUI;
 
     [SerializeField]
-    private GameObject enterTooltipUI;
+    public GameObject enterTooltipUI;
 
     [SerializeField]
     private GameObject numEnemiesAliveUI;

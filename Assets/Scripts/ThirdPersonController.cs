@@ -399,7 +399,8 @@ namespace StarterAssets
         private void Update()
         {
 
-            if (SceneManager.GetActiveScene().name == "Colliseum"){
+            if (SceneManager.GetActiveScene().name == "Colliseum")
+            {
                 Cursor.lockState = CursorLockMode.None;
             }
             _hasAnimator = TryGetComponent(out _animator);
@@ -1616,11 +1617,8 @@ namespace StarterAssets
             if (!is_dead)
             {
                 is_dead = true;
-                Debug.Log("Player pre dead");
+                waveSpawner.enterTooltipUI.SetActive(false);
                 _input.enabled = false;
-                //deathScreen.SetActive(true);
-                Debug.Log("Player died");
-                //currencyCounter = 0;
                 float deathTime = Time.time;
                 deathScreen.SetActive(true);
                 if (onDeathTrigger == null)
@@ -1688,6 +1686,11 @@ namespace StarterAssets
             {
                 GetComponent<ImpactReceiver>().AddImpact(new Vector3(lastMoveDir.x, 0, lastMoveDir.y), 0.4f);
             }
+        }
+
+        public void GiveUp()
+        {
+            Die();
         }
 
         public void SwitchInputToUI()
