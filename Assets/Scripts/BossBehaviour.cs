@@ -81,10 +81,11 @@ public class BossBehaviour : MonoBehaviour
 
     private string footstepsBase;
 
+    private float lastBulletFired = 0f;
+    private float lastDamageTime = 0f;
+    private bool addDamage = false;
+    StarterAssets.ThirdPersonController playerController;
     private string[] sentences = new string[] {"voicerecording_boss_sentence1_1", "voicerecording_boss_sentence1_2", "voicerecording_boss_sentence2_1", "voicerecording_boss_sentence2_2", "voicerecording_boss_sentence2_3", "voicerecording_boss_sentence3_1", "voicerecording_boss_sentence3_2"};
-
-    private bool addDamage;
-    private float lastDamageTime  =  0f;
 
     // Start is called before the first frame update
     void Start()
@@ -99,7 +100,7 @@ public class BossBehaviour : MonoBehaviour
         currencyHolder = GameObject.Find("CurrencyHolder");
         bossHealth = GameObject.FindGameObjectWithTag("BossStats").GetComponent<Slider>();
         bossHealth.value = 100;
-
+        playerController = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
         // Generate random float move speed between 1 and 3 with different random seed for each enemy
         moveSpeed = 4f;
 
@@ -146,7 +147,9 @@ public class BossBehaviour : MonoBehaviour
     {
         if (transform == null)
             return;
-
+        if(playerController.Health <= 0){
+            bossHealth.gameObject.SetActive(false);
+        }
         checkForPain();
 
         if (navMeshAgent != null)
@@ -192,8 +195,8 @@ public class BossBehaviour : MonoBehaviour
                 slammedGround = true;
 
                 if (Vector3.Distance(transform.position, playerTransform.position) <= 8)
-                {
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(90 - Vector3.Distance(transform.position, playerTransform.position)*5, "Zombie");
+                {   
+                    playerController.TakeDamage(Mathf.Round(90 - Vector3.Distance(transform.position, playerTransform.position)*7), "Zombie");
                 }
             }
         }
@@ -209,27 +212,33 @@ public class BossBehaviour : MonoBehaviour
             transform.LookAt(playerTransform);
             upDir = transform.forward.y;
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.35f && animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= 0.65f){
-                Vector3 offset = new Vector3(-0.4f, 0, 0);
-                Vector3 dest = transform.forward;
-                dest.y = upDir;
-                Transform pos = GameObject.FindGameObjectWithTag("BossHead").transform;
+                if(Time.time - lastBulletFired > 0.1f){
+                    lastBulletFired = Time.time;
+                    Vector3 offset = new Vector3(-0.4f, 0, 0);
+                    Vector3 dest = transform.forward;
+                    dest.y = upDir;
+                    Transform pos = GameObject.FindGameObjectWithTag("BossHead").transform;
 
-                GameObject bullet = Instantiate(bulletPrefab, pos.position, new Quaternion(0, 0, 0, 0));
-                //bullet.transform.rotation = pos.rotation;
-                bullet.transform.Translate(offset);
-                //bullet.transform.LookAt(playerTransform);
-                //bullet.transform.Translate(bullet.transform.forward);
-                bullet.GetComponent<BulletBehaviour>().setDamage(damage);
-                bullet.GetComponent<Rigidbody>().mass = 0.2f;
+                    GameObject bullet = Instantiate(bulletPrefab, pos.position, new Quaternion(0, 0, 0, 0));
+                    //bullet.transform.rotation = pos.rotation;
+                    bullet.transform.Translate(offset);
+                    //bullet.transform.LookAt(playerTransform);
+                    //bullet.transform.Translate(bullet.transform.forward);
+                    bullet.GetComponent<BulletBehaviour>().setDamage((int)Mathf.Round(damage));
+                    bullet.GetComponent<Rigidbody>().mass = 0.2f;
 
-                //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
-                bullet.GetComponent<Rigidbody>().AddForce(dest * 200f);
+                    //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
+                    bullet.GetComponent<Rigidbody>().AddForce(dest * 200f);
+                }
             }
 
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.65f)
             {
                 elapsedTime = 0f;
             }
+        }
+        else{
+            animator.SetBool("screaming", false);
         }
 
         if (!enableNavMesh && IsOnNavMesh()){
@@ -269,11 +278,15 @@ public class BossBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage*2, "Zombie");
+                    playerController.TakeDamage(damage*2, "Zombie");
                 }
                 registeredHit = true;
                 animator.SetBool("is_attacking", false);
                 animator.SetBool("is_running", true);
+            }
+            if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.85f){
+                animator.SetBool("is_running", true);
+                animator.SetBool("is_attacking", false);
             }
         }
 
@@ -363,12 +376,10 @@ public class BossBehaviour : MonoBehaviour
     {
         if (rng <= -1)
         {
-            //rng = Random.Range(1, 101);
-            rng = 1;
+            rng = Random.Range(1, 101);
+            //rng = 1;
         }
-
-        StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
-
+        StarterAssets.ThirdPersonController player = playerController;
         if(rng <= 10 + player.waveSpawner.roundNr * 10){
             animator.SetBool("slamming", true);
             SlamAttack();
@@ -439,7 +450,7 @@ public class BossBehaviour : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<SphereCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
-        StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
+        StarterAssets.ThirdPersonController player = playerController;
         player.AddWeaponCurrency(500);
         player.waveSpawner.decreaseEnemiesToDefeat();
         player.waveSpawner.clearAllEnemies();
