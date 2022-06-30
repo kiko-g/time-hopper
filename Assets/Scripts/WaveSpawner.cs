@@ -101,8 +101,9 @@ public class WaveSpawner : MonoBehaviour
         if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){
+                ShowRoundStartUI();
+                startRoundTextUI.text = "Extraction Portal Opened";
                 extractionPortal.SetActive(true);
-                startRoundTextUI.text = "Extraction Portal Open";
             }
         }
         else{
@@ -231,6 +232,7 @@ public class WaveSpawner : MonoBehaviour
         else {
             SpawnBoss();
             //get gameobject with tag BossStats
+            enemiesToDefeat = 1;
             GameObject bossStats = GameObject.FindGameObjectWithTag("BossStats");
             bossStats.GetComponent<Animator>().Play("BossStatsFadeIn", -1, 0f);
         }
