@@ -827,6 +827,9 @@ namespace StarterAssets
 
         private void Reload()
         {
+            if (_animator.GetBool("Reloading")){
+                return;
+            }
             if (_input.reload && !reload){
                 if (gunArsenal[selectedGun].reloading || (gunArsenal[selectedGun].currentAmmo == gunArsenal[selectedGun].numBulletsPerMagazine) || (gunArsenal[selectedGun].availableAmmo == 0 && !gunArsenal[selectedGun].is_pistol)){
                     return;
