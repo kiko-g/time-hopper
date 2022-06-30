@@ -16,6 +16,14 @@ public class BackgroundMusicPlayer : MonoBehaviour
 
     private FMOD.Studio.EventInstance music;
 
+    private FMOD.Studio.EventInstance music1;
+
+    private FMOD.Studio.EventInstance music2;
+
+    private FMOD.Studio.Bus masterBus;
+
+    private int currentMusic = 0;
+
     private bool stopping = false;
     private bool rumble = false;
 
@@ -32,11 +40,12 @@ public class BackgroundMusicPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
         if (rumbleSpawner == null){
             switch(SceneManager.GetActiveScene().name)
             {
                 case "Colliseum":
-                    int id = Random.Range(1, 2);
+                    int id = Random.Range(1, 3);
                     musicBase = "soundtrack_coliseu_music" + id;
                     break;
                 case "Factory":
@@ -60,6 +69,57 @@ public class BackgroundMusicPlayer : MonoBehaviour
         } else {
             rumble = true;
         }
+        if (rumble){
+            int id = Random.Range(1, 3);
+            musicBase = "soundtrack_coliseu_music" + id;
+            music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
+            music.setVolume(0.0f);
+            music.start();
+            music.release();
+            musicBase = "soundtrack_factory_music1";
+            music1 = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
+            music1.setVolume(0.0f);
+            music1.start();
+            music1.release();
+            int idx = Random.Range(1, 3);
+            musicBase = "soundtrack_neworld_music" + idx;
+            music2 = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
+            music2.setVolume(0.0f);
+            music2.start();
+            music2.release();
+        }
+    }
+
+    void stopCurrentMusic(){
+        if (currentMusic == 0){
+            music.setVolume(0.0f);
+            Debug.Log("Stopping Colliseum Music!");
+        } else if (currentMusic  == 1){
+            music1.setVolume(0.0f);
+            Debug.Log("Stopping Factory Music!");
+        } else {
+            music2.setVolume(0.0f);
+            Debug.Log("Stopping Forest Music!");
+        }
+    }
+
+    void startCurrentMusic(string plane){
+        stopCurrentMusic();
+        float volume = PlayerPrefs.GetFloat("sfxVolume");
+        if (plane == "ColliseumPlane"){
+            currentMusic = 0;
+            music.setVolume(volume);
+        } else if (plane == "FactoryPlane"){
+            currentMusic = 1;
+            music1.setVolume(volume);
+        } else if (plane == "ForestPlane"){
+            currentMusic = 2;
+            music2.setVolume(volume);
+        }
+
+        music.getVolume(out volume);
+        music1.getVolume(out volume);
+        music2.getVolume(out volume);
     }
 
     void getNewMusic(string plane){
@@ -77,12 +137,35 @@ public class BackgroundMusicPlayer : MonoBehaviour
     }
 
     public void startNewMusic(string plane){
-        music.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        /*music.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         getNewMusic(plane);
+        music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack_rumble/" + musicBase);
+        music.start();
+        music.release();*/
+        startCurrentMusic(plane);
+    }
+
+    public void startBossIntro(){
+        music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/soundtrack_boss_introduction");
+        music.start();
+        music.release();
+    }
+
+    public void startBossMusic(){
+        music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/soundtrack_boss_music1");
+        music.start();
+        music.release();
+    }
+
+    public void stopBossMusic(){
+        music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         music = FMODUnity.RuntimeManager.CreateInstance("event:/Project/Soundtrack/" + musicBase);
         music.start();
         music.release();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -91,5 +174,13 @@ public class BackgroundMusicPlayer : MonoBehaviour
             stopping = true;
             music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
+    }
+
+    public void StopMusic(){
+        masterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    void OnDestroy(){
+        music.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }

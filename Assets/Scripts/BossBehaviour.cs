@@ -24,7 +24,7 @@ public class BossBehaviour : MonoBehaviour
     public int dropPercentage;
 
     bool dropped = false, alreadyAttacked = false, registeredHit = false;
-    
+
     [SerializeField]
     private GameObject colCurrencyPrefab;
 
@@ -36,8 +36,10 @@ public class BossBehaviour : MonoBehaviour
 
     private GameObject currencyPrefab;
 
+    private BackgroundMusicPlayer musicPlayer;
+
     private GameObject currencyHolder;
-    
+
     private GameObject enemies;
 
     private NavMeshAgent navMeshAgent;
@@ -72,16 +74,23 @@ public class BossBehaviour : MonoBehaviour
     private string factory_base = "footstep_factory_boss_";
     private string forest_base = "footstep_newworld_boss_";
 
+    private int lowerId = 1;
+    private int higherId = 2;
+
+    private bool talking = false;
+
     private string footstepsBase;
 
     private float lastBulletFired = 0f;
     private float lastDamageTime = 0f;
     private bool addDamage = false;
     StarterAssets.ThirdPersonController playerController;
+    private string[] sentences = new string[] {"voicerecording_boss_sentence1_1", "voicerecording_boss_sentence1_2", "voicerecording_boss_sentence2_1", "voicerecording_boss_sentence2_2", "voicerecording_boss_sentence2_3", "voicerecording_boss_sentence3_1", "voicerecording_boss_sentence3_2"};
 
     // Start is called before the first frame update
     void Start()
     {
+        musicPlayer  = GameObject.Find("BackgroundMusicPlayer").GetComponent<BackgroundMusicPlayer>();
         body = GetComponent<Rigidbody>();
         //navMeshAgent = GetComponent<NavMeshAgent>();
         health = baseHealth;
@@ -113,7 +122,7 @@ public class BossBehaviour : MonoBehaviour
                 footstepsBase = colliseum_base;
                 break;
         }
-        
+
     }
 
     void initNavMeshAgent()
@@ -124,13 +133,18 @@ public class BossBehaviour : MonoBehaviour
     }
 
     void Step(){
-        int id = Random.Range(1, 3);
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Footstep/" + footstepsBase + id, transform.position);
+        int id = Random.Range(lowerId, higherId+1);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Footstep/Boss/" + footstepsBase + id, transform.position);
     }
-    
+
+    void Talk(){
+        int id = Random.Range(0, sentences.Length);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Voice Recording/" + sentences[id], transform.position);
+    }
+
     // Update is called once per frame
     void Update()
-    {   
+    {
         if (transform == null)
             return;
         if(playerController.Health <= 0){
@@ -143,11 +157,16 @@ public class BossBehaviour : MonoBehaviour
             // if animation is not run, then movespeed is 0
             if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run"))
             {
+                talking = false;
                 moveSpeed = 0f;
                 navMeshAgent.speed = moveSpeed;
             }
             else
             {
+                if (!talking){
+                    Talk();
+                    talking = true;
+                }
                 moveSpeed = 4f;
                 navMeshAgent.speed = moveSpeed;
             }
@@ -212,7 +231,7 @@ public class BossBehaviour : MonoBehaviour
                     bullet.GetComponent<Rigidbody>().AddForce(dest * 200f);
                 }
             }
-            
+
             if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.65f)
             {
                 elapsedTime = 0f;
@@ -249,7 +268,7 @@ public class BossBehaviour : MonoBehaviour
             {
                 registeredHit = false;
             }
-            
+
             if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
                 alreadyAttacked = false;
@@ -282,7 +301,7 @@ public class BossBehaviour : MonoBehaviour
             if (elapsedTime > 2.0f)
             {
                 if (enableNavMesh)
-                    navMeshAgent.enabled = false; 
+                    navMeshAgent.enabled = false;
                 Scream();
             }
             else if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){
@@ -291,7 +310,7 @@ public class BossBehaviour : MonoBehaviour
                     navMeshAgent.SetDestination(playerTransform.position);
                     //Debug.Log("NavMeshAgent: " + navMeshAgent.enabled);
                 }
-                            
+
                 transform.LookAt(playerTransform);
 
                 Vector3 eulerAngles = transform.rotation.eulerAngles;
@@ -304,17 +323,17 @@ public class BossBehaviour : MonoBehaviour
                 animator.SetBool("is_running", true);
                 animator.SetBool("is_attacking", false);
                 rng = -1;
-                
+
                 elapsedTime += Time.deltaTime;
             } else {
                 if (enableNavMesh)
-                    navMeshAgent.enabled = false; 
+                    navMeshAgent.enabled = false;
                 animator.SetBool("is_running", false);
 
                 Attack();
             }
         }
-        else 
+        else
         {
             animator.SetBool("is_running", false);
         }
@@ -333,7 +352,7 @@ public class BossBehaviour : MonoBehaviour
         {
             bullet.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles);
         }
-    
+
         slamParticles.gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
     }
 
@@ -395,9 +414,10 @@ public class BossBehaviour : MonoBehaviour
     }
 
     public void TakeDamage(float damage)
-    {   
+    {
         if(!animator.GetBool("is_dead")){
-            health -= damage;
+            //health -= damage;
+            health -= 500f;
 
             // change text o textmeshprougui with damage on hit
             if(damageText.text != "" && addDamage){
@@ -439,6 +459,7 @@ public class BossBehaviour : MonoBehaviour
         animator.Play("Death", -1, 0f);
         GameObject bossStats = GameObject.FindGameObjectWithTag("BossStats");
         bossStats.GetComponent<Animator>().Play("BossStatsFadeOut", -1, 0f);
+        musicPlayer.stopBossMusic();
     }
 
     private void DropCurrency(){
@@ -448,7 +469,7 @@ public class BossBehaviour : MonoBehaviour
             for(int i = 0; i < randomCurrencyNr; i++){
                 Vector3 spawnPos = new Vector3(transform.position.x + Random.Range(0.0f, 0.5f), transform.position.y + Random.Range(1.5f, 2.5f), transform.position.z + Random.Range(0.0f, 0.5f));
                 GameObject currency = Instantiate(currencyPrefab, spawnPos, new Quaternion(0, 0, 0, 0));
-                currency.GetComponent<CurrencyBehaviour>().setDespawnTimer(Random.Range(28f,32f)); 
+                currency.GetComponent<CurrencyBehaviour>().setDespawnTimer(Random.Range(28f,32f));
                 currency.transform.SetParent(currencyHolder.transform);
             }
             Debug.Log("Dropped " + randomCurrencyNr + " currency");

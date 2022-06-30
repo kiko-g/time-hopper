@@ -38671,6 +38671,7 @@ MonoBehaviour:
   bloodOverlay: {fileID: 0}
   changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
+  musicPlayer: {fileID: 1153605744}
   TrainingHUD: {fileID: 270587064}
 --- !u!143 &4416926083347132233
 CharacterController:

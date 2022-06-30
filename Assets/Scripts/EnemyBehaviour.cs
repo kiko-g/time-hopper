@@ -52,6 +52,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     private string[] sentencesAlt = new string[] {"voicerecording_zombie_sentence1_1", "voicerecording_zombie_sentence1_2", "voicerecording_zombie_sentence1_3", "voicerecording_zombie_sentence2_1", "voicerecording_zombie_sentence2_2", "voicerecording_zombie_sentence2_3", "voicerecording_zombie_sentence2_4"};
 
+    private string footstepsGladiatorBase = "Gladiator/footstep_coliseu_gladiator_";
+    private string footstepsZombieBase = "Zombie/footstep_newworld_zombie_";
+
+    private string footstepsBase;
+
+    private int footstepsLowerBound = 1;
+    private int footstepsHigherBound = 7;
+
     public float sentenceLowerBoundTimeout = 5f;
     public float sentenceHigherBoundTimeout = 20f;
 
@@ -78,6 +86,8 @@ public class EnemyBehaviour : MonoBehaviour
         // Generate random float move speed between 1 and 3 with different random seed for each enemy
         moveSpeed = Random.Range(1f,3f);
 
+        footstepsBase = footstepsGladiatorBase;
+
         StartCoroutine(speakingCoroutine);
 
         //Debug.Log("Start Coroutine");
@@ -103,6 +113,7 @@ public class EnemyBehaviour : MonoBehaviour
             string sentence = sentences[sentenceIndex];
             if (type == 0)
             {
+                sentenceIndex = Random.Range(0, sentencesAlt.Length);
                 sentence = sentencesAlt[sentenceIndex];
             }
             float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
@@ -160,10 +171,10 @@ public class EnemyBehaviour : MonoBehaviour
                 if (Vector3.Distance(transform.position, playerTransform.position) < 5)
                 {
                     if (transform.GetChild(0).name == "Gladiador"){
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch/punch_gladiator", transform.position);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Punch Shot/punch_gladiator", transform.position);
                         playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Gladiador");
                     } else {
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch/punch_zombie", transform.position);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Punch Shot/punch_zombie", transform.position);
                         playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Zombie");
                     }
                 }
@@ -231,6 +242,14 @@ public class EnemyBehaviour : MonoBehaviour
             lastDamageTime = Time.time;
             damageText.GetComponent<Animator>().Play("EnemyDamageOnHit", -1, 0f);
 
+            if (transform.GetChild(0).name == "Gladiador"){
+                int id = Random.Range(1, 4);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Scream/ah_gladiator_" + id, transform.position);
+            } else {
+                int id = Random.Range(1, 4);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch and Shot/Scream/ah_zombie_" + id, transform.position);
+            }
+
             if (health <= 0){
                 Die();
             }
@@ -242,7 +261,7 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     void Step(){
-        return;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Footstep/" + footstepsBase + Random.Range(footstepsLowerBound, footstepsHigherBound+1), transform.position);
     }
 
     public void Die()
@@ -318,6 +337,9 @@ public class EnemyBehaviour : MonoBehaviour
     public void setType(int t){
         // 0 = zombie, 1 = gladiator
         type = t;
+        if (t == 0){
+            footstepsBase = footstepsZombieBase;
+        }
     }
 
     public void setStats(int roundNum, int t){
@@ -326,5 +348,8 @@ public class EnemyBehaviour : MonoBehaviour
         
         // 0 = zombie, 1 = gladiator
         type = t;
+        if (t == 0){
+            footstepsBase = footstepsZombieBase;
+        }
     }
 }
