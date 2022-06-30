@@ -26321,6 +26321,7 @@ MonoBehaviour:
     m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   grenadePrefab: {fileID: 0}
+  SmokeTrail: {fileID: 0}
   muzzle: {fileID: 1462629463}
   fadeDuration: 0.2
   numBulletsPerShot: 0
@@ -26881,6 +26882,7 @@ MonoBehaviour:
     m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   grenadePrefab: {fileID: 0}
+  SmokeTrail: {fileID: 0}
   muzzle: {fileID: 1584837227}
   fadeDuration: 0.3
   numBulletsPerShot: 6
@@ -27577,6 +27579,7 @@ MonoBehaviour:
     m_Bits: 65
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   grenadePrefab: {fileID: 0}
+  SmokeTrail: {fileID: 0}
   muzzle: {fileID: 1541978666}
   fadeDuration: 0.2
   numBulletsPerShot: 0
@@ -35534,6 +35537,7 @@ MonoBehaviour:
     m_Bits: 1
   bullet: {fileID: 491652049579260557, guid: 95dcda4a428f03045a16b83f74c48ce2, type: 3}
   grenadePrefab: {fileID: 7375085798727607416, guid: 7707ad7e1af1dac42b79c3615e0b5735, type: 3}
+  SmokeTrail: {fileID: 6934614904041225016, guid: 401acf9b0d53ff943b2de005c858eb16, type: 3}
   muzzle: {fileID: 1000338620}
   fadeDuration: 0.2
   numBulletsPerShot: 0

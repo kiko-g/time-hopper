@@ -66,6 +66,7 @@ public class GunBehaviour : MonoBehaviour
     [Header("Bullet")]
     public GameObject bullet;
     public GameObject grenadePrefab;
+    public GameObject SmokeTrail;
     public Transform muzzle;
     public float fadeDuration = 0.2f;
 
@@ -176,6 +177,12 @@ public class GunBehaviour : MonoBehaviour
                 //add force to the hit direction
                 Vector3 direction = hit.point - grenadeInstance.transform.position;
                 grenadeInstance.GetComponent<Rigidbody>().AddForce(direction.normalized * propulsionForce, ForceMode.Impulse);
+                //instantiate smoke trail and make it follow the grenade
+                GameObject smokeTrailInstance = Instantiate(SmokeTrail, grenadeInstance.transform.position, Quaternion.identity);
+                smokeTrailInstance.transform.forward = direction;
+                smokeTrailInstance.transform.Rotate(0, 180, 0);
+                smokeTrailInstance.transform.parent = grenadeInstance.transform;
+                Destroy(smokeTrailInstance, 2.5f);
             }
         }
         else{

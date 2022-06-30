@@ -8,12 +8,16 @@ public class GrenadeExplosion : MonoBehaviour
     public float blastRadius = 5f;
     public float explosionForce = 20f;
     public float damage = 0f;
+    public GameObject explosionPrefab;
 
     private Collider[] hitColliders;
 
     void OnCollisionEnter(Collision col) {
         //Debug.Log(col.contacts[0].point.ToString());
+        //instantiate explosion prefab at collision point
         Destroy(gameObject);
+        GameObject explosion = Instantiate(explosionPrefab, col.contacts[0].point, Quaternion.identity);
+        Destroy(explosion, 2f);
         doExplosion(col.contacts[0].point);
     }
     // Start is called before the first frame update
