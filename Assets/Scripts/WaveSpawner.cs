@@ -26,6 +26,9 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField]
     private GameObject numEnemiesAliveUI;
 
+    [SerializeField]
+    private Text roundUI;
+
     private Text numEnemiesAliveText;
 
     private bool round_active = false;
@@ -215,6 +218,7 @@ public class WaveSpawner : MonoBehaviour
         roundNr++;
 
         ShowRoundStartUI();
+        roundUI.text = "Round: " + roundNr;
         //Debug.Log("Round Number: " + roundNr);
         if (roundNr % 5 != 0)
         {

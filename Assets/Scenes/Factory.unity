@@ -17137,8 +17137,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -730, y: 455}
-  m_SizeDelta: {x: 173.9, y: 102.5}
+  m_AnchoredPosition: {x: -960, y: 455}
+  m_SizeDelta: {x: 174, y: 102.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &355020004
 MonoBehaviour:
@@ -17167,7 +17167,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 300
-    m_Alignment: 3
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -25810,6 +25810,7 @@ MonoBehaviour:
   startRoundTextUI: {fileID: 1630860278}
   enterTooltipUI: {fileID: 575228905}
   numEnemiesAliveUI: {fileID: 1870624971}
+  roundUI: {fileID: 2095883571}
   numKills: 0
   timePlayed: 0
   roundNr: 0
@@ -26025,7 +26026,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -868, y: 454}
+  m_AnchoredPosition: {x: -820, y: 454}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &958634291
@@ -26310,7 +26311,6 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 2
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1210133351}
@@ -26495,7 +26495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &999744004
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26871,7 +26871,6 @@ MonoBehaviour:
   fireRateTimer: 1
   reloadTime: 2
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 185005982}
@@ -27284,7 +27283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -12, y: 0}
+  m_AnchoredPosition: {x: -70, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1100769682
@@ -27568,7 +27567,6 @@ MonoBehaviour:
   fireRateTimer: 0.4
   reloadTime: 1.5
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 185005982}
@@ -28070,8 +28068,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -717, y: -449}
-  m_SizeDelta: {x: 350, y: 120}
+  m_AnchoredPosition: {x: -717, y: -480}
+  m_SizeDelta: {x: 350, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1284242666
 MonoBehaviour:
@@ -28542,6 +28540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1996843642}
+  rumbleSpawner: {fileID: 0}
 --- !u!4 &1354911055
 Transform:
   m_ObjectHideFlags: 0
@@ -33947,7 +33946,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 317, y: 0}
+  m_AnchoredPosition: {x: 305, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1398430707
@@ -35526,7 +35525,6 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 3.5
   reloading: 0
-  hasFullMagazine: 1
   impactEffects: []
   muzzleFlash: {fileID: 1192616575}
   currentAmmoUI: {fileID: 1862294539}
@@ -35993,7 +35991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 208, y: 0}
+  m_AnchoredPosition: {x: 185, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1673550003
@@ -51473,7 +51471,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 98, y: 0}
+  m_AnchoredPosition: {x: 60, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!64 &1856553598
@@ -51847,7 +51845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 593, y: -384}
+  m_AnchoredPosition: {x: 530, y: -420}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1876309382 stripped
@@ -56774,7 +56772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 610, y: -455}
+  m_AnchoredPosition: {x: 1020, y: -415}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1912756058
@@ -57838,8 +57836,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 681, y: 468}
-  m_SizeDelta: {x: 620, y: 100}
+  m_AnchoredPosition: {x: 720, y: 470}
+  m_SizeDelta: {x: 520, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2055906571
 MonoBehaviour:

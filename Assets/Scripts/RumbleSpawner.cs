@@ -26,6 +26,9 @@ public class RumbleSpawner : MonoBehaviour
     private GameObject enterTooltipUI;
 
     [SerializeField]
+    private Text roundUI;
+
+    [SerializeField]
     private BackgroundMusicPlayer backgroundMusicPlayer;
 
     private float startTime;
@@ -178,6 +181,7 @@ public class RumbleSpawner : MonoBehaviour
         startRoundFlag = false;
         roundNr++;
         ShowRoundStartUI();
+        roundUI.text = "Round: " + roundNr;
         totalEnemiesToDefeat = 10 + (5*roundNr);
         if(totalEnemiesToDefeat > 50){
             totalEnemiesToDefeat = 50;
