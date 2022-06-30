@@ -20,8 +20,10 @@ public class EnemyBehaviour : MonoBehaviour
     public float baseDamage = 5f;
     public float healthIncreasePerRound = 5f;
     public float damageIncreasePerRound = 2f;
+    public int baseDroppedCurrency = 5;
     private float health;
     private float damage;
+    private int droppedCurrency;
     public int dropPercentage;
 
     bool dropped = false, alreadyAttacked = false, registeredHit = false;
@@ -87,9 +89,11 @@ public class EnemyBehaviour : MonoBehaviour
         if (rumbleSpawner != null){
             health = baseHealth + healthIncreasePerRound * (rumbleSpawner.roundNr);
             damage = baseDamage + damageIncreasePerRound * (rumbleSpawner.roundNr);
+            droppedCurrency = baseDroppedCurrency + rumbleSpawner.roundNr;
         } else {
             health = baseHealth + healthIncreasePerRound * (waveSpawner.roundNr);
             damage = baseDamage + damageIncreasePerRound * (waveSpawner.roundNr);
+            droppedCurrency = baseDroppedCurrency + waveSpawner.roundNr;
         }
         
         playerTransform = GameObject.Find("PlayerArmature").transform;
@@ -285,7 +289,7 @@ public class EnemyBehaviour : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         StarterAssets.ThirdPersonController player = playerTransform.GetComponent<StarterAssets.ThirdPersonController>();
-        player.AddWeaponCurrency(5);
+        player.AddWeaponCurrency(droppedCurrency);
         if(player.waveSpawner != null)
             player.waveSpawner.decreaseEnemiesToDefeat();
         else if(player.rumbleSpawner != null){
