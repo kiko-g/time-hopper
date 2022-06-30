@@ -69,8 +69,16 @@ public class HubComputer : MonoBehaviour
     public GameObject rumbleAttempts;
 
     // abilities (upgrades tab)
+    public TMPro.TMP_Dropdown abilityDropdown;
+    public TextMeshProUGUI abilitiesUpgradingText;
+    private int moneyLevel;
+    private int healthLevel;
     public GameObject moneyUpgrade;
     public GameObject healthUpgrade;
+
+    // weapons (upgrades tab)
+    public TMPro.TMP_Dropdown weaponDropdown;
+    public TextMeshProUGUI weaponsUpgradingText;
 
     void Start()
     {
@@ -83,13 +91,23 @@ public class HubComputer : MonoBehaviour
         upgradesButton.onClick.AddListener(OnClickUpgrades);
         unlockRumbleButton.onClick.AddListener(OnClickUnlockRumble);
 
+        abilityDropdown.onValueChanged.AddListener(delegate
+        {
+            OnAbilityDropdownValueChanged(abilityDropdown);
+        });
+
+        weaponDropdown.onValueChanged.AddListener(delegate
+        {
+            OnAbilityDropdownValueChanged(weaponDropdown);
+        });
+
+        // Initial Values
         hint.SetActive(false);
         canvas.enabled = false;
 
         overviewCore.SetActive(true); // Overview is the default tab
         arenasCore.SetActive(false);
         upgradesCore.SetActive(false);
-
         overviewButtonActive.SetActive(true); // Overview is the default tab
         arenasButtonActive.SetActive(false);
         upgradesButtonActive.SetActive(false);
@@ -105,6 +123,10 @@ public class HubComputer : MonoBehaviour
             RumblePortal.SetActive(false);
         }
 
+        abilitiesUpgradingText.text = "Upgrading " + abilityDropdown.options[0].text;
+        weaponsUpgradingText.text = "Upgrading " + weaponDropdown.options[0].text;
+
+        // Refreshable UI Values
         UpdateUIValues();
     }
 
@@ -170,6 +192,10 @@ public class HubComputer : MonoBehaviour
         factoryAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("FactoryAttempts"));
         forestAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("ForestAttempts"));
         rumbleAttempts.GetComponent<TextMeshProUGUI>().text = buildAttemptsString(PlayerPrefs.GetInt("RumbleAttempts"));
+
+        // abilities (upgrades core)
+
+        // weapons (upgrades core)
 
         // sidebar currency strings (all cores)
         int colliseumCurrencyNumber = PlayerPrefs.GetInt("ColliseumCurrency");
@@ -241,6 +267,17 @@ public class HubComputer : MonoBehaviour
         HideHint();
     }
 
+    // On value changed functions
+    void OnAbilityDropdownValueChanged(TMPro.TMP_Dropdown changed)
+    {
+        abilitiesUpgradingText.text = "Upgrading " + abilityDropdown.options[changed.value].text;
+    }
+
+    void OnWeaponDropdownValueChanged(TMPro.TMP_Dropdown changed)
+    {
+        weaponsUpgradingText.text = "Upgrading " + weaponDropdown.options[changed.value].text;
+    }
+
     void OnClickUnlockRumble()
     {
         FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
@@ -291,6 +328,7 @@ public class HubComputer : MonoBehaviour
         upgradesCore.SetActive(true);
     }
 
+    // Auxiliary functions
     string buildRoundString(int numRounds)
     {
         if (numRounds == 1)

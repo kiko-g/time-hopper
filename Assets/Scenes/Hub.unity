@@ -943,7 +943,6 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 2
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1761664262}
@@ -7993,7 +7992,6 @@ MonoBehaviour:
   fireRateTimer: 1
   reloadTime: 2
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1948164245}
@@ -10067,7 +10065,6 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 3.5
   reloading: 0
-  hasFullMagazine: 1
   impactEffects: []
   muzzleFlash: {fileID: 126957472}
   currentAmmoUI: {fileID: 1621923785}
@@ -13482,7 +13479,6 @@ MonoBehaviour:
   fireRateTimer: 0.4
   reloadTime: 1.5
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1761664262}
@@ -17036,8 +17032,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: 32, y: 0}
+  m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &967746946
 MonoBehaviour:
@@ -17051,15 +17047,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 4bf694876d0a33642a024f18dbcc44a3, type: 3}
-  m_Color: {r: 0.2688679, g: 1, b: 0.49959832, a: 1}
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: ae3e9a9272ccdd142ac21c147f87c72c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17977,7 +17973,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: -5}
-  m_SizeDelta: {x: 0, y: 240}
+  m_SizeDelta: {x: 0, y: 320}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1047610439
 MonoBehaviour:
@@ -19337,6 +19333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4416926083347132232}
+  rumbleSpawner: {fileID: 0}
 --- !u!4 &1153605745
 Transform:
   m_ObjectHideFlags: 0
@@ -20362,7 +20359,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: field of view
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: far clip plane
@@ -20386,7 +20383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.5
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22120,15 +22117,15 @@ RectTransform:
   m_GameObject: {fileID: 1325880760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 779783791}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -35, y: 0}
+  m_SizeDelta: {x: 32, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325880762
 MonoBehaviour:
@@ -22142,7 +22139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 3d731047a276f8149a561ee5162b87cf, type: 3}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -22150,7 +22147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: dc7e578e48816de4984639f625be7812, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -28584,17 +28581,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4ec8e29716847459f78ce059ba4314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1724960682}
+  hint: {fileID: 693850631}
   arenasButton: {fileID: 1322655391}
   overviewButton: {fileID: 170646217}
   upgradesButton: {fileID: 301093703}
-  rumbleProgress: {fileID: 561971779}
-  unlockRumbleButton: {fileID: 965985994}
-  arenasCore: {fileID: 1785210544}
-  overviewCore: {fileID: 220619328}
-  upgradesCore: {fileID: 1857434852}
   arenasButtonActive: {fileID: 1385413899}
   overviewButtonActive: {fileID: 1594780406}
   upgradesButtonActive: {fileID: 721131459}
+  arenasCore: {fileID: 1785210544}
+  overviewCore: {fileID: 220619328}
+  upgradesCore: {fileID: 1857434852}
+  colliseumCurrency: {fileID: 658128658}
+  factoryCurrency: {fileID: 1427438391}
+  forestCurrency: {fileID: 1351426717}
+  rumbleCurrency: {fileID: 595003013}
+  rumbleProgress: {fileID: 561971779}
+  unlockRumbleButton: {fileID: 965985994}
+  RumblePortal: {fileID: 1137543404}
+  colliseumCurrencyDone: {fileID: 1739020869}
+  colliseumCurrencySliderText: {fileID: 1265834486}
+  factoryCurrencyDone: {fileID: 1902040714}
+  factoryCurrencySliderText: {fileID: 1814945479}
+  forestCurrencyDone: {fileID: 131396305}
+  forestCurrencySliderText: {fileID: 397252723}
   colliseumBestRound: {fileID: 1508934053}
   factoryBestRound: {fileID: 1102443634}
   forestBestRound: {fileID: 840194437}
@@ -28611,19 +28621,12 @@ MonoBehaviour:
   factoryAttempts: {fileID: 2014563024}
   forestAttempts: {fileID: 2002274032}
   rumbleAttempts: {fileID: 781939976}
-  colliseumCurrency: {fileID: 658128658}
-  factoryCurrency: {fileID: 1427438391}
-  forestCurrency: {fileID: 1351426717}
-  rumbleCurrency: {fileID: 595003013}
-  colliseumCurrencyDone: {fileID: 1739020869}
-  colliseumCurrencySliderText: {fileID: 1265834486}
-  factoryCurrencyDone: {fileID: 1902040714}
-  factoryCurrencySliderText: {fileID: 1814945479}
-  forestCurrencyDone: {fileID: 131396305}
-  forestCurrencySliderText: {fileID: 397252723}
-  RumblePortal: {fileID: 1137543404}
-  canvas: {fileID: 1724960682}
-  hint: {fileID: 693850631}
+  abilityDropdown: {fileID: 510580275}
+  moneyUpgrade: {fileID: 1800926041}
+  healthUpgrade: {fileID: 1428389021}
+  abilitiesUpgradingText: {fileID: 1821133587}
+  weaponDropdown: {fileID: 779783792}
+  weaponsUpgradingText: {fileID: 1998228577}
 --- !u!1 &1726716237 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1727348531506677991, guid: dc263f68cd947d146b45c9600be247b9, type: 3}
@@ -30556,7 +30559,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Upgrading ability Option A
+  m_text: Upgrading Option A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
   m_sharedMaterial: {fileID: -4778838868984246059, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
@@ -30583,8 +30586,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -30679,15 +30682,15 @@ RectTransform:
   m_GameObject: {fileID: 1825969783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 510580274}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -30, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: -35, y: 0}
+  m_SizeDelta: {x: 32, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1825969785
 MonoBehaviour:
@@ -30701,7 +30704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 3d731047a276f8149a561ee5162b87cf, type: 3}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -30709,7 +30712,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: dc7e578e48816de4984639f625be7812, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -32882,7 +32885,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Upgrading weapon Option A
+  m_text: Upgrading Option A
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
   m_sharedMaterial: {fileID: -4778838868984246059, guid: 7a6f96276bde6df4983ba07beb024695, type: 2}
@@ -32909,8 +32912,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -34924,8 +34927,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchoredPosition: {x: 32, y: 0}
+  m_SizeDelta: {x: 35, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2099599549
 MonoBehaviour:
@@ -34939,15 +34942,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 4bf694876d0a33642a024f18dbcc44a3, type: 3}
-  m_Color: {r: 0.2688679, g: 1, b: 0.49959832, a: 1}
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: ae3e9a9272ccdd142ac21c147f87c72c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
