@@ -1346,7 +1346,7 @@ namespace StarterAssets
 
             UpdateHealthUI();
 
-            if (Health > 20 && !heartBeat)
+            if (Health > 25 && !heartBeat)
             {
                 float scale;
                 if (hitsNumber >= 5)
