@@ -98,7 +98,7 @@ public class HubComputer : MonoBehaviour
 
         weaponDropdown.onValueChanged.AddListener(delegate
         {
-            OnAbilityDropdownValueChanged(weaponDropdown);
+            OnWeaponDropdownValueChanged(weaponDropdown);
         });
 
         // Initial Values
@@ -275,6 +275,8 @@ public class HubComputer : MonoBehaviour
 
     void OnWeaponDropdownValueChanged(TMPro.TMP_Dropdown changed)
     {
+        Debug.Log(changed.value);
+        Debug.Log(weaponDropdown.options.Count);
         weaponsUpgradingText.text = "Upgrading " + weaponDropdown.options[changed.value].text;
     }
 
