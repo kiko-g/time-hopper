@@ -217,8 +217,8 @@ public class HubComputer : MonoBehaviour
         weapons[0].SetActive(true);
 
         weaponLevels = new int[4];
-        foreach (int level in weaponLevels)
-            weaponLevels[level] = PlayerPrefs.GetInt("Weapon" + level + "Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon" + level + "Level");
+        for (int i = 0; i < weaponLevels.Length; i++)
+            weaponLevels[i] = PlayerPrefs.GetInt("Weapon" + i + "Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon" + i + "Level");
 
         weaponsUpgradingText.text = buildUpgradeString(weaponDropdown.options[0].text);
         weaponsCurrentLevelText.text = buildLevelString(weaponDropdown.options[0].text, weaponLevels[0]);
@@ -356,7 +356,6 @@ public class HubComputer : MonoBehaviour
     void OnDropdownValueChangedWeapon(TMPro.TMP_Dropdown changed)
     {
         int index = changed.value;
-        weaponLevels[index]++;
         int level = weaponLevels[index];
         string name = weaponDropdown.options[index].text;
 
