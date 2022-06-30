@@ -155,7 +155,7 @@ public class BossBehaviour : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, playerTransform.position) <= 8)
                 {   
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(50 - Vector3.Distance(transform.position, playerTransform.position)*5, "Zombie");
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(90 - Vector3.Distance(transform.position, playerTransform.position)*5, "Zombie");
                 }
             }
         }
