@@ -365,13 +365,7 @@ public class BossBehaviour : MonoBehaviour
     }
 
     public void TakeDamage(float damage)
-    {
-        damage = 500;
-        if (checkIfInPain())
-        {
-            damage = 0;
-        }
-        
+    {   
         if(!animator.GetBool("is_dead")){
             health -= damage;
 
