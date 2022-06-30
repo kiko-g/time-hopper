@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using Cinemachine;
@@ -165,6 +166,9 @@ namespace StarterAssets
 
         [SerializeField]
         private Slider healthBar;
+
+        [SerializeField]
+        private TextMeshProUGUI healthBarText;
 
         [SerializeField]
         private Text currencyAmountUI;
@@ -1593,7 +1597,8 @@ namespace StarterAssets
 
         private void UpdateHealthUI()
         {
-            healthBar.value = (int)Health;
+            healthBar.value = 100.0f * Mathf.Round((Health / MaxHealth) * 100.0f) * 0.01f;
+            healthBarText.text = "HP " + Health.ToString() + "/" + MaxHealth.ToString();
         }
 
         private void Die()
