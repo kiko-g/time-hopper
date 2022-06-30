@@ -80,7 +80,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
         health = baseHealth;
         damage = baseDamage;
         //layerMask = new LayerMask();
-        playerOffset = new Vector3(0f, 1f, 0f);
+        playerOffset = new Vector3(0f, 1.5f, 0f);
         body = GetComponent<Rigidbody>();
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
@@ -181,15 +181,20 @@ public class RangedEnemyBehaviour : MonoBehaviour
             // navMeshAgent.isStopped = false;
             navMeshAgent.enabled = true;
             navMeshAgent.SetDestination(playerTransform.position);
-            //transform.LookAt(playerTransform);
 
-            //upDir = transform.forward.y;
 
-            //Vector3 eulerAngles = transform.rotation.eulerAngles;
-            //eulerAngles = new Vector3(0, eulerAngles.y, 0);
-            //transform.rotation = Quaternion.Euler(eulerAngles);
+            /*if (!navMeshAgent.enabled){
+                transform.LookAt(playerTransform);
 
-            //transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                upDir = transform.forward.y;
+
+                Vector3 eulerAngles = transform.rotation.eulerAngles;
+                eulerAngles = new Vector3(0, eulerAngles.y, 0);
+                transform.rotation = Quaternion.Euler(eulerAngles);
+
+                transform.position += transform.forward * moveSpeed * Time.deltaTime;
+            }*/
+
 
             animator.SetBool("is_shooting", false);
             animator.SetBool("is_walking", true);
@@ -309,7 +314,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
     private bool hasLineOfSightToPlayer()
     {
         RaycastHit hit;
-        //Debug.DrawLine(transform.position + bulletOffset, playerTransform.position + playerOffset, Color.yellow, 1f);
+        Debug.DrawLine(transform.position + bulletOffset, playerTransform.position + playerOffset, Color.yellow, 1f);
         if (Physics.Linecast(transform.position + bulletOffset, playerTransform.position + playerOffset, out hit, layerMask)){
             //Debug.Log("Raycast hit!");
             //Debug.Log(hit.transform.gameObject.tag);
