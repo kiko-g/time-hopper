@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrenadeExplosion : MonoBehaviour
 {
 
-    public float blastRadius = 5f;
+    public float blastRadius = 3f;
     public float explosionForce = 20f;
     public float damage = 0f;
     public GameObject explosionPrefab;
