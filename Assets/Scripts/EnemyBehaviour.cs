@@ -50,10 +50,14 @@ public class EnemyBehaviour : MonoBehaviour
 
     private string[] sentences = new string[] {"voicerecording_gladiator_sentence1_1", "voicerecording_gladiator_sentence1_2", "voicerecording_gladiator_sentence1_3", "voicerecording_gladiator_sentence2_1", "voicerecording_gladiator_sentence2_2", "voicerecording_gladiator_sentence3_1", "voicerecording_gladiator_sentence3_2", "voicerecording_gladiator_sentence4_1", "voicerecording_gladiator_sentence4_2"};
 
+    private string[] sentencesAlt = new string[] {"voicerecording_zombie_sentence1_1", "voicerecording_zombie_sentence1_2", "voicerecording_zombie_sentence1_3", "voicerecording_zombie_sentence2_1", "voicerecording_zombie_sentence2_2", "voicerecording_zombie_sentence2_3", "voicerecording_zombie_sentence2_4"};
+
     public float sentenceLowerBoundTimeout = 5f;
     public float sentenceHigherBoundTimeout = 20f;
 
     private IEnumerator speakingCoroutine;
+
+    private int type = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -94,6 +98,10 @@ public class EnemyBehaviour : MonoBehaviour
         while (true){
             int sentenceIndex = Random.Range(0, sentences.Length);
             string sentence = sentences[sentenceIndex];
+            if (type == 0)
+            {
+                sentence = sentencesAlt[sentenceIndex];
+            }
             float timeout = Random.Range(sentenceLowerBoundTimeout, sentenceHigherBoundTimeout+1);
             //Debug.Log("Timeout: " + timeout);
             yield return new WaitForSeconds(timeout);
@@ -296,8 +304,16 @@ public class EnemyBehaviour : MonoBehaviour
         return false;
     }
 
-    public void setStats(int roundNum){
+    public void setType(int t){
+        // 0 = zombie, 1 = gladiator
+        type = t;
+    }
+
+    public void setStats(int roundNum, int t){
         health = baseHealth + healthIncreasePerRound * (roundNum - 1);
         damage = baseDamage + damageIncreasePerRound * (roundNum - 1);
+        
+        // 0 = zombie, 1 = gladiator
+        type = t;
     }
 }

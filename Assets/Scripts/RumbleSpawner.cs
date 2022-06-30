@@ -213,51 +213,72 @@ public class RumbleSpawner : MonoBehaviour
         GameObject enemy = null;
         float random = Random.Range(0, 10);
         Vector3 auxSpawn = new Vector3(0, 0, 0);
+
+        // 0 = zombie, 1 = gladiator, 2 = ranged
+        int enemyType = 0;
         switch(currentScene){
             case "ColliseumPlane":
                 auxSpawn = colliseumSpawn;
                 if(random == 8){
                     enemyPrefab = factoryEnemy;
+                    enemyType = 2;
                 }
                 else if(random == 9){
                     enemyPrefab = forestEnemy;
+                    enemyType = 0;
                     auxSpawn = auxSpawn + new Vector3(0, -2f, 0);
                 }
                 else{
+                    enemyType = 1;
                     enemyPrefab = colliseumEnemy;
                 }
                 enemy = Instantiate(enemyPrefab, auxSpawn, Quaternion.identity);
                 enemy.transform.SetParent(colEnemiesHolder.transform);
+                if (enemyType == 0){
+                    enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setType(enemyType);
+                }
                 break;
             case "ForestPlane":
                 auxSpawn = forestSpawn;
                 if(random == 8){
                     enemyPrefab = factoryEnemy;
+                    enemyType = 2;
                 }
                 else if(random == 9){
                     enemyPrefab = colliseumEnemy;
+                    enemyType = 1;
                 }
                 else{
                     enemyPrefab = forestEnemy;
+                    enemyType = 0;
                     auxSpawn = auxSpawn + new Vector3(0, -2f, 0);
                 }
                 enemy = Instantiate(enemyPrefab, auxSpawn, Quaternion.identity);
                 enemy.transform.SetParent(forEnemiesHolder.transform);
+                if (enemyType == 0){
+                    enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setType(enemyType);
+                }
                 break;
             case "FactoryPlane":
                 auxSpawn = factorySpawn;
                 if(random == 8){
                     enemyPrefab = colliseumEnemy;
+                    enemyType = 1;
                 }
                 else if(random == 9){
                     enemyPrefab = forestEnemy;
+                    enemyType = 0;
                     auxSpawn = auxSpawn + new Vector3(0, -2f, 0);
                 }
                 else{
                     enemyPrefab = factoryEnemy;
+                    enemyType = 2;
                 }
                 enemy = Instantiate(enemyPrefab, auxSpawn, Quaternion.identity);
                 enemy.transform.SetParent(facEnemiesHolder.transform);
+                if (enemyType == 0){
+                    enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setType(enemyType);
+                }
                 break;
         }
 
