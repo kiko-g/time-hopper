@@ -153,7 +153,10 @@ public class HubComputer : MonoBehaviour
         {
             if (canvas.enabled) HideHint();
             else ShowHint();
-            if (WasPressed()) Toggle(!canvas.enabled);
+            if (WasPressed()){
+                Toggle(!canvas.enabled);
+                player._input.interact = false;
+            }
         }
         else
         {
@@ -306,7 +309,7 @@ public class HubComputer : MonoBehaviour
 
     bool WasPressed()
     {
-        return Input.GetKeyUp(KeyCode.E);
+        return player._input.interact;
     }
 
     bool IsWithinRange(Vector3 pos)

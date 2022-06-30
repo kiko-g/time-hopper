@@ -101,7 +101,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{731871b4-fb36-424f-b6be-b48e1703afab}">
 		<property name="volume">
-			<value>-38</value>
+			<value>-45</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -123,7 +123,6 @@
 		<property name="length">
 			<value>6.5</value>
 		</property>
-		<property name="name" />
 		<relationship name="timeline">
 			<destination>{bdfc73b2-14cc-4980-9c02-b2e98a9fd8b1}</destination>
 		</relationship>
