@@ -438,7 +438,7 @@ public class HubComputer : MonoBehaviour
         UpdateUpgradeAvailable("Weapon", level);
         UpdateCostsText("Weapon", level);
         weaponsCurrentLevelText.text = buildLevelString(name, level);
-        abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Money", moneyLevel);
+        weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildWeaponUpgradeButtonString(name, level);
     }
 
     void OnClickUnlockRumble()
@@ -632,7 +632,6 @@ public class HubComputer : MonoBehaviour
                 break;
         }
 
-        Debug.Log(step * Math.Max(0, level - 1));
         return (100 + (step * Math.Max(0, level - 1))).ToString();
     }
 
