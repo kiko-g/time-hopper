@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 2294963666865725166}
   - component: {fileID: 8997557973389818517}
   - component: {fileID: 1467202637019729660}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: zombiemasked
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -7587,7 +7587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1431063070145292941}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ZombieBoss
   m_TagString: Boss
   m_Icon: {fileID: 0}

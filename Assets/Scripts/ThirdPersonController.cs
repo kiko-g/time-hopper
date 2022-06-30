@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 using Cinemachine;
@@ -167,6 +168,9 @@ namespace StarterAssets
         private Slider healthBar;
 
         [SerializeField]
+        private TextMeshProUGUI healthBarText;
+
+        [SerializeField]
         private Text currencyAmountUI;
 
         [SerializeField]
@@ -295,6 +299,7 @@ namespace StarterAssets
             {
                 UpdateHealthUI();
                 updateCurrencyUI();
+                AdaptToWeaponLevels();
             }
 
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -393,9 +398,6 @@ namespace StarterAssets
 
         private void Update()
         {
-            // Debug.Log("HEALTH: " + Health);
-            // Debug.Log("MAX HEALTH: " + MaxHealth);
-            // Debug.Log("MONEY: " + weaponCurrency);
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -1536,7 +1538,7 @@ namespace StarterAssets
 
             UpdateHealthUI();
 
-            if (Health > 20 && !heartBeat)
+            if (Health > 25 && !heartBeat)
             {
                 float scale;
                 if (hitsNumber >= 5)
@@ -1593,7 +1595,8 @@ namespace StarterAssets
 
         private void UpdateHealthUI()
         {
-            healthBar.value = (int)Health;
+            healthBar.value = 100.0f * Mathf.Round((Health / MaxHealth) * 100.0f) * 0.01f;
+            healthBarText.text = "HP " + Health.ToString() + "/" + MaxHealth.ToString();
         }
 
         private void Die()
@@ -1695,7 +1698,6 @@ namespace StarterAssets
             int step = 10;
             int level = PlayerPrefs.GetInt("HealthLevel") == 0 ? 1 : PlayerPrefs.GetInt("HealthLevel");
 
-            Debug.Log("heath: " + (100.0f + (float)(step * (level - 1))));
             return (100.0f + (float)(step * (level - 1)));
         }
 
@@ -1704,8 +1706,29 @@ namespace StarterAssets
             int step = 25;
             int level = PlayerPrefs.GetInt("MoneyLevel") == 0 ? 1 : PlayerPrefs.GetInt("MoneyLevel");
 
-            Debug.Log("money: " + (100 + (int)(step * (level - 1))));
             return (100 + (int)(step * (level - 1)));
+        }
+
+        void AdaptToWeaponLevels()
+        {
+            int levelPS = PlayerPrefs.GetInt("Weapon0Level");
+            int levelAR = PlayerPrefs.GetInt("Weapon1Level");
+            int levelSG = PlayerPrefs.GetInt("Weapon2Level");
+            int levelRL = PlayerPrefs.GetInt("Weapon3Level");
+
+            PS.damage += levelPS * 1.0f;
+            AR.damage += levelAR * 1.0f;
+            SG.damage += levelSG * 1.0f;
+            RL.damage += levelRL * 1.0f;
+
+            PS.range += levelPS * 1.0f;
+            AR.range += levelAR * 1.0f;
+            SG.range += levelSG * 1.0f;
+            RL.range += levelRL * 1.0f;
+
+            PS.fireRateTimer -= levelPS * 0.001f;
+
+            SG.innacuracyDistance -= levelSG * 0.05f;
         }
     }
 }

@@ -129,10 +129,12 @@ public class HubComputer : MonoBehaviour
         factoryCostMultiplier = 1.0f;
         forestCostMultiplier = 1.25f;
         colliseumCostMultiplier = 1.50f;
-        rumbleCostMultiplier = 0.25f;
+        rumbleCostMultiplier = 2.0f;
 
         InitialUIValues();
         UpdateUIValues();
+
+        for (int i = 0; i < 20; i++) getCosts(i);
     }
 
     void Update()
@@ -217,8 +219,8 @@ public class HubComputer : MonoBehaviour
         weapons[0].SetActive(true);
 
         weaponLevels = new int[4];
-        foreach (int level in weaponLevels)
-            weaponLevels[level] = PlayerPrefs.GetInt("Weapon" + level + "Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon" + level + "Level");
+        for (int i = 0; i < weaponLevels.Length; i++)
+            weaponLevels[i] = PlayerPrefs.GetInt("Weapon" + i + "Level") == 0 ? 1 : PlayerPrefs.GetInt("Weapon" + i + "Level");
 
         weaponsUpgradingText.text = buildUpgradeString(weaponDropdown.options[0].text);
         weaponsCurrentLevelText.text = buildLevelString(weaponDropdown.options[0].text, weaponLevels[0]);
@@ -356,7 +358,6 @@ public class HubComputer : MonoBehaviour
     void OnDropdownValueChangedWeapon(TMPro.TMP_Dropdown changed)
     {
         int index = changed.value;
-        weaponLevels[index]++;
         int level = weaponLevels[index];
         string name = weaponDropdown.options[index].text;
 
@@ -519,11 +520,19 @@ public class HubComputer : MonoBehaviour
     /* Upgrades */
     int[] getCosts(int level)
     {
+        int levelOffset = 4;
+        int rumbleStartLevel = Mathf.Max(level - levelOffset, 0);
+
+        int baseCostFac = 10;
+        int baseCostFor = 15;
+        int baseCostCol = 20;
+        int baseCostRumble = rumbleStartLevel == 0 ? 0 : 10;
+
         return new int[] {
-            Mathf.FloorToInt(level * colliseumCostMultiplier),
-            Mathf.FloorToInt(level * factoryCostMultiplier),
-            Mathf.FloorToInt(level * forestCostMultiplier),
-            Mathf.FloorToInt(level * level * rumbleCostMultiplier)
+            Mathf.FloorToInt(baseCostCol + level * colliseumCostMultiplier),
+            Mathf.FloorToInt(baseCostFac + level * factoryCostMultiplier),
+            Mathf.FloorToInt(baseCostFor + level * forestCostMultiplier),
+            Mathf.FloorToInt(baseCostRumble + rumbleStartLevel * rumbleCostMultiplier)
         };
     }
 
