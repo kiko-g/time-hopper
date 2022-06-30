@@ -391,6 +391,7 @@ public class BossBehaviour : MonoBehaviour
 
     private void Die()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Boss Animation/boss_animation_death", transform.position);
         moveSpeed = 0;
         animator.SetBool("is_dead", true);
         // deactivate the colliders
