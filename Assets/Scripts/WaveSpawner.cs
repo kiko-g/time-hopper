@@ -98,12 +98,24 @@ public class WaveSpawner : MonoBehaviour
     void Update()
     {
         timePlayed += Time.deltaTime;
+
+        // print roundNr, round_active and enemiesToDefeat
+        Debug.Log("Round: " + roundNr + " active: " + round_active + " enemiesToDefeat: " + enemiesToDefeat);
+
         if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){
-                ShowRoundStartUI();
+                Debug.Log("AQUI");
                 startRoundTextUI.text = "Extraction Portal Opened";
-                extractionPortal.SetActive(true);
+                Color c = startRoundTextUI.color;
+                c.a = 1f;
+                startRoundTextUI.color = c;
+                startRoundTextUI.gameObject.GetComponent<Animator>().Play("Visible", -1, 0f);
+                /*ShowRoundStartUI();
+                startRoundTextUI.text = "Extraction Portal Opened";
+                extractionPortal.SetActive(true);*/
+                // change startRoundTextUI.text opacity to 1
+                //ShowRoundStartUI();
             }
         }
         else{
