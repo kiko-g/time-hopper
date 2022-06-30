@@ -56,7 +56,8 @@ public class ArenaPause : MonoBehaviour
             sliderSFX.value = 0.7f;
             masterBus.setVolume(sliderSFX.value);
         }
-        if (PlayerPrefs.HasKey("musicVolume")){
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
             sliderMusic.value = PlayerPrefs.GetFloat("musicVolume");
             masterBus.setVolume(sliderSFX.value);
         }
@@ -75,6 +76,8 @@ public class ArenaPause : MonoBehaviour
         {
             Toggle(!canvas.enabled);
         }
+
+        MakeSureInputIsAdapted();
     }
 
     void UpdateSliders()
@@ -157,4 +160,23 @@ public class ArenaPause : MonoBehaviour
     //     player.SwitchInputToPlayer();
     //     Cursor.lockState = CursorLockMode.Locked;
     // }
+
+    void MakeSureInputIsAdapted()
+    {
+#if UNITY_EDITOR
+#else
+        if (canvas.enabled)
+        {
+            Time.timeScale = 0f;
+            player.SwitchInputToUI();
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            player.SwitchInputToPlayer();
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+#endif
+    }
 }
