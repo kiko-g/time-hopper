@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ArenaPause : MonoBehaviour
 {
-    // public Button backButton;
     public Button resumeButton;
     public Button settingsButton;
     public Button instructionsButton;
@@ -33,7 +32,6 @@ public class ArenaPause : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
 
-        // backButton.onClick.AddListener(OnClickBack);
         resumeButton.onClick.AddListener(OnClickResume);
         settingsButton.onClick.AddListener(OnClickSettings);
         instructionsButton.onClick.AddListener(OnClickInstructions);
@@ -76,8 +74,6 @@ public class ArenaPause : MonoBehaviour
         {
             Toggle(!canvas.enabled);
         }
-
-        MakeSureInputIsAdapted();
     }
 
     void UpdateSliders()
@@ -85,8 +81,8 @@ public class ArenaPause : MonoBehaviour
         masterBus.setVolume(sliderSFX.value);
         PlayerPrefs.SetFloat("sfxVolume", sliderSFX.value);
 
-        //masterBus.setVolume(sliderMusic.value);
-        //PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
+        // musicBus.setVolume(sliderMusic.value);
+        // PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
 
         textSFX.text = "Sound Effects Volume (" + Mathf.RoundToInt(sliderSFX.value * 100) + "%)";
         textMusic.text = "Music Volume (" + Mathf.RoundToInt(sliderMusic.value * 100) + "%)";
@@ -151,32 +147,5 @@ public class ArenaPause : MonoBehaviour
         core.SetActive(true);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);
-    }
-
-    // void OnClickBack()
-    // {
-    //     canvas.enabled = false;
-    //     Time.timeScale = 1f;
-    //     player.SwitchInputToPlayer();
-    //     Cursor.lockState = CursorLockMode.Locked;
-    // }
-
-    void MakeSureInputIsAdapted()
-    {
-#if UNITY_EDITOR
-#else
-        if (canvas.enabled)
-        {
-            Time.timeScale = 0f;
-            player.SwitchInputToUI();
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Time.timeScale = 1f;
-            player.SwitchInputToPlayer();
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-#endif
     }
 }

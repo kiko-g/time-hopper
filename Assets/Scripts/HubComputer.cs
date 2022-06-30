@@ -131,6 +131,18 @@ public class HubComputer : MonoBehaviour
         colliseumCostMultiplier = 1.50f;
         rumbleCostMultiplier = 2.0f;
 
+        // FIXME: Testing
+        // PlayerPrefs.SetInt("HealthLevel", 1);
+        // PlayerPrefs.SetInt("MoneyLevel", 1);
+        // PlayerPrefs.SetInt("Weapon0Level", 1);
+        // PlayerPrefs.SetInt("Weapon1Level", 1);
+        // PlayerPrefs.SetInt("Weapon2Level", 1);
+        // PlayerPrefs.SetInt("Weapon3Level", 1);
+        // PlayerPrefs.SetInt("ColliseumCurrency", 200);
+        // PlayerPrefs.SetInt("FactoryCurrency", 200);
+        // PlayerPrefs.SetInt("ForestCurrency", 200);
+        // PlayerPrefs.SetInt("RumbleCurrency", 200);
+
         InitialUIValues();
         UpdateUIValues();
     }
@@ -263,9 +275,7 @@ public class HubComputer : MonoBehaviour
         rumbleCurrency.GetComponent<TextMeshProUGUI>().text = buildCurrencyString(rumbleCurrencyNumber);
 
         // can purchase upgrade (upgrades core)
-        UpdateUpgradeAvailable("Weapon", weaponLevels[0]);
-        if (abilityDropdown.value == 0) UpdateUpgradeAvailable("Ability", healthLevel);
-        else if (abilityDropdown.value == 1) UpdateUpgradeAvailable("Ability", moneyLevel);
+        UpdateUpgradeAvailable();
 
         // rumble unlock progress bars (overview core)
         colliseumCurrencyDone.transform.localScale = new Vector3((float)(0.01f * Mathf.Min(colliseumCurrencyNumber, 100)), 1f, 1f);
@@ -384,7 +394,7 @@ public class HubComputer : MonoBehaviour
                 healthValueText.text = buildAbilityValueString("Health", healthLevel);
                 healthCurrentLevelText.text = buildLevelString("Health", healthLevel);
                 abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Health", healthLevel);
-                UpdateUpgradeAvailable("Ability", healthLevel);
+                UpdateUpgradeAvailable();
                 UpdateCostsText("Ability", healthLevel);
                 UpdateUserMoney();
                 break;
@@ -399,7 +409,7 @@ public class HubComputer : MonoBehaviour
                 moneyValueText.text = buildAbilityValueString("Money", moneyLevel);
                 moneyCurrentLevelText.text = buildLevelString("Money", moneyLevel);
                 abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildAbilityUpgradeButtonString("Money", moneyLevel);
-                UpdateUpgradeAvailable("Ability", moneyLevel);
+                UpdateUpgradeAvailable();
                 UpdateCostsText("Ability", moneyLevel);
                 UpdateUserMoney();
                 break;
@@ -423,7 +433,7 @@ public class HubComputer : MonoBehaviour
         PlayerPrefs.SetInt("RumbleCurrency", PlayerPrefs.GetInt("RumbleCurrency") - costs[3]);
         weaponsCurrentLevelText.text = buildLevelString(name, level);
         weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = buildWeaponUpgradeButtonString(name, level);
-        UpdateUpgradeAvailable("Weapon", level);
+        UpdateUpgradeAvailable();
         UpdateCostsText("Weapon", level);
         UpdateUserMoney();
     }
@@ -534,45 +544,67 @@ public class HubComputer : MonoBehaviour
         };
     }
 
-    void UpdateUpgradeAvailable(string type, int level)
+    void UpdateUpgradeAvailable()
     {
-        int[] costs = getCosts(level);
-        bool cantPurchaseUpgrade =
-            PlayerPrefs.GetInt("FactoryCurrency") < costs[0] ||
-            PlayerPrefs.GetInt("ForestCurrency") < costs[1] ||
-            PlayerPrefs.GetInt("ColliseumCurrency") < costs[2] ||
-            PlayerPrefs.GetInt("RumbleCurrency") < costs[3];
+        // health upgrade
+        int[] healthCosts = getCosts(healthLevel);
+        bool cantPurchaseHealthUpgrade =
+            PlayerPrefs.GetInt("FactoryCurrency") < healthCosts[0] ||
+            PlayerPrefs.GetInt("ForestCurrency") < healthCosts[1] ||
+            PlayerPrefs.GetInt("ColliseumCurrency") < healthCosts[2] ||
+            PlayerPrefs.GetInt("RumbleCurrency") < healthCosts[3];
 
-        switch (type)
+        if (cantPurchaseHealthUpgrade)
         {
-            case "Ability":
-                if (cantPurchaseUpgrade)
-                {
-                    abilityUpgradeButton.interactable = false;
-                    abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
-                }
-                else
-                {
-                    abilityUpgradeButton.interactable = true;
-                    abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-                }
-                break;
-            case "Weapon":
-                if (cantPurchaseUpgrade)
-                {
-                    weaponUpgradeButton.interactable = false;
-                    weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
-                }
-                else
-                {
-                    weaponUpgradeButton.interactable = true;
-                    weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
-                }
-                break;
-            default:
-                break;
+            abilityUpgradeButton.interactable = false;
+            abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+        }
+        else
+        {
+            abilityUpgradeButton.interactable = true;
+            abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
         }
 
+        // money upgrade
+        int[] moneyCosts = getCosts(moneyLevel);
+        bool cantPurchaseMoneyUpgrade =
+            PlayerPrefs.GetInt("FactoryCurrency") < moneyCosts[0] ||
+            PlayerPrefs.GetInt("ForestCurrency") < moneyCosts[1] ||
+            PlayerPrefs.GetInt("ColliseumCurrency") < moneyCosts[2] ||
+            PlayerPrefs.GetInt("RumbleCurrency") < moneyCosts[3];
+
+        if (cantPurchaseMoneyUpgrade)
+        {
+            abilityUpgradeButton.interactable = false;
+            abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+        }
+        else
+        {
+            abilityUpgradeButton.interactable = true;
+            abilityUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+        }
+
+        // weapon upgrades
+        foreach (int level in weaponLevels)
+        {
+            int[] costs = getCosts(level);
+            bool cantPurchaseWeaponUpgrade =
+                PlayerPrefs.GetInt("FactoryCurrency") < costs[0] ||
+                PlayerPrefs.GetInt("ForestCurrency") < costs[1] ||
+                PlayerPrefs.GetInt("ColliseumCurrency") < costs[2] ||
+                PlayerPrefs.GetInt("RumbleCurrency") < costs[3];
+
+            if (cantPurchaseWeaponUpgrade)
+            {
+                weaponUpgradeButton.interactable = false;
+                weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
+            }
+            else
+            {
+                weaponUpgradeButton.interactable = true;
+                weaponUpgradeButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
+            }
+        }
     }
 
     void UpdateCostsText(string type, int level)
