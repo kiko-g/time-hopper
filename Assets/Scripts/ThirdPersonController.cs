@@ -291,7 +291,11 @@ namespace StarterAssets
             Health = GetStartingHealth();
             MaxHealth = GetStartingMaxHealth();
             weaponCurrency = GetStartingMoney();
-            // updateCurrencyUI();
+            if (SceneManager.GetActiveScene().name != "Hub")
+            {
+                UpdateHealthUI();
+                updateCurrencyUI();
+            }
 
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
