@@ -24,6 +24,8 @@ public class ArenaPause : MonoBehaviour
     public Canvas canvas;
     private StarterAssets.ThirdPersonController player;
 
+    private FMOD.Studio.Bus masterBus;
+
     void Start()
     {
         canvas = GetComponent<Canvas>();
@@ -42,8 +44,27 @@ public class ArenaPause : MonoBehaviour
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);
 
-        sliderSFX.value = 0.7f;
-        sliderMusic.value = 0.7f;
+        if (PlayerPrefs.HasKey("sfxVolume"))
+        {
+            sliderSFX.value = PlayerPrefs.GetFloat("sfxVolume");
+            masterBus.setVolume(sliderSFX.value);
+        }
+        else
+        {
+            sliderSFX.value = 0.7f;
+            masterBus.setVolume(sliderSFX.value);
+        }
+        if (PlayerPrefs.HasKey("musicVolume")){
+            sliderMusic.value = PlayerPrefs.GetFloat("musicVolume");
+            masterBus.setVolume(sliderSFX.value);
+        }
+        else
+        {
+            sliderMusic.value = 0.7f;
+            masterBus.setVolume(sliderSFX.value);
+        }
+
+        masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
     }
 
     void Update()
@@ -57,8 +78,11 @@ public class ArenaPause : MonoBehaviour
 
     void UpdateSliders()
     {
-        // TODO: Apply slider value to audio values
-        AudioListener.volume = sliderSFX.value;
+        masterBus.setVolume(sliderSFX.value);
+        PlayerPrefs.SetFloat("sfxVolume", sliderSFX.value);
+
+        //masterBus.setVolume(sliderMusic.value);
+        //PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
 
         textSFX.text = "Sound Effects Volume (" + Mathf.RoundToInt(sliderSFX.value * 100) + "%)";
         textMusic.text = "Music Volume (" + Mathf.RoundToInt(sliderMusic.value * 100) + "%)";

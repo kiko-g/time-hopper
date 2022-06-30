@@ -40,6 +40,8 @@ public class GunBehaviour : MonoBehaviour
     private float reloadStart;
 
     public bool hasFullMagazine = true;
+
+    private StarterAssets.ThirdPersonController player;
     
     private Transform cam;
 
@@ -90,6 +92,7 @@ public class GunBehaviour : MonoBehaviour
         updateReloadUI();
         screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
         cam = Camera.main.transform;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<StarterAssets.ThirdPersonController>();
     }
 
     void Update(){
@@ -267,6 +270,7 @@ public class GunBehaviour : MonoBehaviour
             availableAmmoString = availableAmmo.ToString();
         }
         hasFullMagazine = true;
+        player._animator.SetBool("Reloading", false);
         updateReloadUI();
     }
 
