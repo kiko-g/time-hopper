@@ -128,6 +128,7 @@ public class EnemyBehaviour : MonoBehaviour
         
         if (animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Contains("Attack"))
         {
+            transform.LookAt(playerTransform);
             if (enableNavMesh){
                 navMeshAgent.enabled = false;
             }
@@ -157,6 +158,7 @@ public class EnemyBehaviour : MonoBehaviour
 
             }
         } else {
+            //transform.LookAt(playerTransform);
             if (enableNavMesh){
                 navMeshAgent.enabled = true;
             }
