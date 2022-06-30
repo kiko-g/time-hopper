@@ -125,8 +125,8 @@ public class WaveSpawner : MonoBehaviour
                 startRoundTextUI.color = c;
                 startRoundTextUI.gameObject.GetComponent<Animator>().Play("Visible", -1, 0f);
                 /*ShowRoundStartUI();
-                startRoundTextUI.text = "Extraction Portal Opened";
-                extractionPortal.SetActive(true);*/
+                startRoundTextUI.text = "Extraction Portal Opened";*/
+                extractionPortal.SetActive(true);
                 // change startRoundTextUI.text opacity to 1
                 //ShowRoundStartUI();
             }
@@ -300,6 +300,8 @@ public class WaveSpawner : MonoBehaviour
 
                     GameObject enemy = Instantiate(enemyPrefab, position, new Quaternion(0, 0, 0, 0));
                     //GameObject enemy = Instantiate(enemyPrefab, RandomNavmeshLocation(100f), new Quaternion(0, 0, 0, 0));
+                    Debug.Log(enemy.transform.GetChild(0).name);
+                    Debug.Log(enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>());
                     enemy.transform.GetChild(0).GetComponent<EnemyBehaviour>().setStats(roundNr, 1);
                     enemy.transform.SetParent(enemiesHolder.transform);
                     num_spawned++;

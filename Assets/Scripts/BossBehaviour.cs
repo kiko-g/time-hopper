@@ -405,8 +405,7 @@ public class BossBehaviour : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if(!animator.GetBool("is_dead")){
-            //health -= damage;
-            health -= 500f;
+            health -= damage;
 
             // change text o textmeshprougui with damage on hit
             if(damageText.text != "" && addDamage){

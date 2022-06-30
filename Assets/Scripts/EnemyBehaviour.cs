@@ -44,6 +44,9 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI damageText;
 
+    private WaveSpawner waveSpawner;
+    private RumbleSpawner rumbleSpawner;
+
     private bool enableNavMesh = false;
 
     private Rigidbody body;
@@ -76,9 +79,22 @@ public class EnemyBehaviour : MonoBehaviour
         
         speakingCoroutine = sentencesCoroutine();
         body = GetComponent<Rigidbody>();
+        if (SceneManager.GetActiveScene().name == "Rumble"){
+            rumbleSpawner = GameObject.Find("RumbleSpawner").GetComponent<RumbleSpawner>();
+        } else {
+            waveSpawner = GameObject.Find("WaveSpawner").GetComponent<WaveSpawner>();
+        }
+        if (rumbleSpawner != null){
+            health = baseHealth + healthIncreasePerRound * (rumbleSpawner.roundNr);
+            damage = baseDamage + damageIncreasePerRound * (rumbleSpawner.roundNr);
+        } else {
+            health = baseHealth + healthIncreasePerRound * (waveSpawner.roundNr);
+            damage = baseDamage + damageIncreasePerRound * (waveSpawner.roundNr);
+        }
+        
         //navMeshAgent = GetComponent<NavMeshAgent>();
-        health = baseHealth;
-        damage = baseDamage;
+        //health = baseHealth;
+        //damage = baseDamage;
         playerTransform = GameObject.Find("PlayerArmature").transform;
         animator = GetComponentInChildren<Animator>();
         currencyHolder = GameObject.Find("CurrencyHolder");
@@ -126,6 +142,8 @@ public class EnemyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Health: " + health);
+        Debug.Log("Damage: " + damage);
         if (transform == null)
             return;
         if (transform.position.y <= 3 && !enableNavMesh && IsOnNavMesh()){
@@ -343,13 +361,15 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     public void setStats(int roundNum, int t){
-        health = baseHealth + healthIncreasePerRound * (roundNum - 1);
-        damage = baseDamage + damageIncreasePerRound * (roundNum - 1);
+        //health = baseHealth + healthIncreasePerRound * (roundNum - 1);
+        //damage = baseDamage + damageIncreasePerRound * (roundNum - 1);
         
         // 0 = zombie, 1 = gladiator
         type = t;
         if (t == 0){
             footstepsBase = footstepsZombieBase;
         }
+        Debug.Log("Health: " + health);
+        Debug.Log("Damage: " + damage);
     }
 }
