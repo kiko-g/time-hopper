@@ -22,7 +22,7 @@ public class BulletBehaviour : MonoBehaviour
         if (other.gameObject.tag == "RangedEnemy" || other.gameObject.tag == "Boss" || other.gameObject.tag == "Enemy"){
             return;
         } else if (other.gameObject.tag == "Player"){
-            player.TakeDamage(damage);
+            player.TakeDamage(damage, "Robo");
             Destroy(this.gameObject);
         } else {
             Destroy(this.gameObject);

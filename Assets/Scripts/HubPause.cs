@@ -111,6 +111,7 @@ public class HubPause : MonoBehaviour
 
     void OnClickExit()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         canvas.enabled = false;
         Time.timeScale = 1f;
         ExitApplication();
@@ -118,6 +119,7 @@ public class HubPause : MonoBehaviour
 
     void OnClickResume()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         canvas.enabled = false;
         Time.timeScale = 1f;
         player.SwitchInputToPlayer();
@@ -126,6 +128,7 @@ public class HubPause : MonoBehaviour
 
     void OnClickSettings()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(false);
         settingsCore.SetActive(true);
         instructionsCore.SetActive(false);
@@ -133,6 +136,7 @@ public class HubPause : MonoBehaviour
 
     void OnClickInstructions()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(false);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(true);
@@ -140,6 +144,7 @@ public class HubPause : MonoBehaviour
 
     void OnClickBackSettings()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(true);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);
@@ -147,6 +152,7 @@ public class HubPause : MonoBehaviour
 
     void OnClickBackInstructions()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Menu/button");
         core.SetActive(true);
         settingsCore.SetActive(false);
         instructionsCore.SetActive(false);

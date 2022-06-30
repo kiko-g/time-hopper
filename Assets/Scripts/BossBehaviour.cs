@@ -155,7 +155,7 @@ public class BossBehaviour : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, playerTransform.position) <= 8)
                 {   
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(50 - Vector3.Distance(transform.position, playerTransform.position)*5);
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(50 - Vector3.Distance(transform.position, playerTransform.position)*5, "Zombie");
                 }
             }
         }
@@ -231,7 +231,7 @@ public class BossBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, playerTransform.position) < 1.5)
                 {
-                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage);
+                    playerTransform.GetComponent<StarterAssets.ThirdPersonController>().TakeDamage(damage, "Zombie");
                 }
                 registeredHit = true;
                 animator.SetBool("is_attacking", false);

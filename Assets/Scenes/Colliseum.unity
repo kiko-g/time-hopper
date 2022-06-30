@@ -4929,7 +4929,6 @@ MonoBehaviour:
   fireRateTimer: 1
   reloadTime: 2
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 298461147}
@@ -5078,7 +5077,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: far clip plane
@@ -5106,7 +5105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: -6.5
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6623,7 +6622,6 @@ MonoBehaviour:
   fireRateTimer: 0.4
   reloadTime: 1.5
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 486503530}
@@ -8457,7 +8455,6 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 3.5
   reloading: 0
-  hasFullMagazine: 1
   impactEffects: []
   muzzleFlash: {fileID: 1068098538}
   currentAmmoUI: {fileID: 167761155}
@@ -13562,7 +13559,6 @@ MonoBehaviour:
   fireRateTimer: 0
   reloadTime: 2
   reloading: 0
-  hasFullMagazine: 1
   impactEffects:
   - {fileID: 6166636287162596712, guid: 3c76f8fa61e81dd418b6d358f69b4fce, type: 3}
   muzzleFlash: {fileID: 1749381996}
