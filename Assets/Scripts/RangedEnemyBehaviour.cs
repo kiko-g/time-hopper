@@ -236,6 +236,7 @@ public class RangedEnemyBehaviour : MonoBehaviour
         bullet.GetComponent<BulletBehaviour>().setDamage(damage);
         //bullet.GetComponent<Rigidbody>().velocity = transform.forward * 3f;
         bullet.GetComponent<Rigidbody>().AddForce(dest * 250f);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Project/Character Related/Punch/shot_robot", transform.position);
     }
 
     public void StartShootingTimer()

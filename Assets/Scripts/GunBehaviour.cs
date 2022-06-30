@@ -38,9 +38,6 @@ public class GunBehaviour : MonoBehaviour
     public bool reloading = false;
 
     private float reloadStart;
-
-    public bool hasFullMagazine = true;
-
     private StarterAssets.ThirdPersonController player;
     
     private Transform cam;
@@ -232,7 +229,6 @@ public class GunBehaviour : MonoBehaviour
             }
         }
         updateReloadUI();
-        hasFullMagazine = false;
         if(currentAmmo == 0){
             Reload();
         }
@@ -269,7 +265,6 @@ public class GunBehaviour : MonoBehaviour
             }
             availableAmmoString = availableAmmo.ToString();
         }
-        hasFullMagazine = true;
         player._animator.SetBool("Reloading", false);
         updateReloadUI();
     }

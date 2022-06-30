@@ -828,8 +828,7 @@ namespace StarterAssets
         private void Reload()
         {
             if (_input.reload && !reload){
-                Debug.Log( gunArsenal[selectedGun].availableAmmo);
-                if (gunArsenal[selectedGun].reloading || gunArsenal[selectedGun].hasFullMagazine || (gunArsenal[selectedGun].availableAmmo == 0 && !gunArsenal[selectedGun].is_pistol)){
+                if (gunArsenal[selectedGun].reloading || (gunArsenal[selectedGun].currentAmmo == gunArsenal[selectedGun].numBulletsPerMagazine) || (gunArsenal[selectedGun].availableAmmo == 0 && !gunArsenal[selectedGun].is_pistol)){
                     return;
                 }
                 reload = true;
