@@ -220,6 +220,10 @@ public class EnemyBehaviour : MonoBehaviour
             TakeDamage(1);
     }
 
+    void Step(){
+        return;
+    }
+
     public void Die()
     {
         StopCoroutine(speakingCoroutine);
