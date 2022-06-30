@@ -64,7 +64,7 @@ public class GrenadeExplosion : MonoBehaviour
             Rigidbody rb = hit.GetComponent<Rigidbody>();
             if(rb != null){
                 if(!rb.isKinematic){
-                    rb.AddExplosionForce(explosionForce, explosionPoint, blastRadius, .04f, ForceMode.Impulse);
+                    //rb.AddExplosionForce(explosionForce, explosionPoint, blastRadius, .04f, ForceMode.Impulse);
                     // verify if the object is tagged enemy
                 }
             }
