@@ -126,27 +126,10 @@ public class HubComputer : MonoBehaviour
             OnDropdownValueChangedWeapon(weaponDropdown);
         });
 
-        // FIXME: TESTING
         factoryCostMultiplier = 1.0f;
         forestCostMultiplier = 1.25f;
         colliseumCostMultiplier = 1.50f;
         rumbleCostMultiplier = 0.25f;
-        // factoryCostMultiplier = 0f;
-        // forestCostMultiplier = 0f;
-        // colliseumCostMultiplier = 0f;
-        // rumbleCostMultiplier = 0f;
-
-        PlayerPrefs.SetInt("MoneyLevel", 1);
-        PlayerPrefs.SetInt("HealthLevel", 1);
-        PlayerPrefs.SetInt("Weapon0Level", 1);
-        PlayerPrefs.SetInt("Weapon1Level", 1);
-        PlayerPrefs.SetInt("Weapon2Level", 1);
-        PlayerPrefs.SetInt("Weapon3Level", 1);
-        PlayerPrefs.SetInt("FactoryCurrency", 100);
-        PlayerPrefs.SetInt("ForestCurrency", 100);
-        PlayerPrefs.SetInt("ColliseumCurrency", 100);
-        PlayerPrefs.SetInt("RumbleCurrency", 100);
-        PlayerPrefs.SetInt("RumbleUnlocked", 0);
 
         InitialUIValues();
         UpdateUIValues();
