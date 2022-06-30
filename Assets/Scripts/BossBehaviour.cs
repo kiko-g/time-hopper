@@ -194,7 +194,7 @@ public class BossBehaviour : MonoBehaviour
             }
         }
 
-        if (transform.position.y <= 3 && !enableNavMesh && IsOnNavMesh()){
+        if (!enableNavMesh && IsOnNavMesh()){
             gameObject.AddComponent<NavMeshAgent>();
             navMeshAgent = GetComponent<NavMeshAgent>();
             initNavMeshAgent();
@@ -249,6 +249,8 @@ public class BossBehaviour : MonoBehaviour
         {
             if (elapsedTime > 2.0f)
             {
+                if (enableNavMesh)
+                    navMeshAgent.enabled = false; 
                 Scream();
             }
             else if (Vector3.Distance(transform.position, playerTransform.position) > 1.5){
