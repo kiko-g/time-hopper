@@ -684,7 +684,7 @@ namespace StarterAssets
                 {
                     if (weaponCurrency >= RL.ammoPrice & gunArsenal.Contains(RL))
                     {
-                        UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG Ammo (Cost: " + SG.ammoPrice + ")";
+                        UItext.GetComponent<Text>().text = "Press [E] to buy Bazooka M270 RL Ammo (Cost: " + SG.ammoPrice + ")";
                         WeaponShopUI.SetActive(true);
                         if (_input.interact)
                         {
@@ -701,7 +701,7 @@ namespace StarterAssets
                     }
                     else
                     {
-                        UItext.GetComponent<Text>().text = "Baligant XU772 SG not acquired";
+                        UItext.GetComponent<Text>().text = "Bazooka M270 RL not acquired";
                         WeaponShopUI.SetActive(true);
                     }
                 }
