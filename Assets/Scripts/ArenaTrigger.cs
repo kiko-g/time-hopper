@@ -19,15 +19,15 @@ public class ArenaTrigger : MonoBehaviour
             }
         }
         if(player.colCurrency != 0){
-            if(reduceCurrencies) player.colCurrency = Mathf.Round(player.colCurrency * 0.5f);
+            if(reduceCurrencies) player.colCurrency = Mathf.RoundToInt(player.colCurrency * 0.5f);
             PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") + player.colCurrency);
         }
         if(player.forCurrency != 0){
-            if(reduceCurrencies) player.forCurrency = Mathf.Round(player.forCurrency * 0.5f);
+            if(reduceCurrencies) player.forCurrency = Mathf.RoundToInt(player.forCurrency * 0.5f);
             PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") + player.forCurrency);
         }
         if(player.facCurrency != 0){
-            if(reduceCurrencies) player.facCurrency = Mathf.Round(player.facCurrency * 0.5f);
+            if(reduceCurrencies) player.facCurrency = Mathf.RoundToInt(player.facCurrency * 0.5f);
             PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") + player.facCurrency);
         }
         if(player.rumCurrency != 0){
