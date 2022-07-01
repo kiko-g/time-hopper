@@ -576,10 +576,7 @@ namespace StarterAssets
                             {
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                             }
                         }
                     }
@@ -607,10 +604,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("SG");
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -640,10 +634,7 @@ namespace StarterAssets
                             if (SG.BuyAmmo(1))
                             {
                                 weaponCurrency -= SG.ammoPrice;
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                             }
                         }
                     }
@@ -671,10 +662,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("RL");
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -974,9 +962,10 @@ namespace StarterAssets
             }
         }
 
-        public void AddWeaponCurrency(int ammount)
+        public void AddWeaponCurrency(int amount)
         {
-            weaponCurrency += ammount;
+            weaponCurrency += amount;
+            if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
         }
 
         private void Fire()
