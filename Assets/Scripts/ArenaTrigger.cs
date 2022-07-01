@@ -19,7 +19,7 @@ public class ArenaTrigger : MonoBehaviour
                 reduceCurrencies = true;
                 ExtractionStatus = "Extraction sequence completed with errors. Half of the currencies have been lost.";
             }
-            
+            else ExtractionStatus = "Successfully completed extraction sequence. All currencies have been extracted.";
         }
     	else{
             ExtractionStatus = "Successfully completed extraction sequence. All currencies have been extracted.";
