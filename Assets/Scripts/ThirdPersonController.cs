@@ -684,7 +684,7 @@ namespace StarterAssets
                 {
                     if (weaponCurrency >= RL.ammoPrice & gunArsenal.Contains(RL))
                     {
-                        UItext.GetComponent<Text>().text = "Press [E] to buy Bazooka M270 RL Ammo (Cost: " + SG.ammoPrice + ")";
+                        UItext.GetComponent<Text>().text = "Press [E] to buy Bazooka M270 RL Ammo (Cost: " + RL.ammoPrice + ")";
                         WeaponShopUI.SetActive(true);
                         if (_input.interact)
                         {
