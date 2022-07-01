@@ -31,13 +31,14 @@ public class ArenaTrigger : MonoBehaviour
             PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") + player.colCurrency);
         }
         else ExtractionStatus += "0";
-        ExtractionStatus += "\nFactory Currency: ";
+        ExtractionStatus += "\nForest Currency: ";
         if(player.forCurrency >= 0){
             if(reduceCurrencies) player.forCurrency = Mathf.RoundToInt(player.forCurrency * 0.5f);
+            ExtractionStatus += player.forCurrency;
             PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") + player.forCurrency);
         }
         else ExtractionStatus += "0";
-        ExtractionStatus += "\nForest Currency: ";
+        ExtractionStatus += "\nFactory Currency: ";
         if(player.facCurrency >= 0){
             if(reduceCurrencies) player.facCurrency = Mathf.RoundToInt(player.facCurrency * 0.5f);
             ExtractionStatus += player.facCurrency;
