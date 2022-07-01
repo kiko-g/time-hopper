@@ -212,7 +212,6 @@ namespace StarterAssets
         [SerializeField]
         private GameObject bloodOverlay;
 
-        private ArenaTrigger onDeathTrigger;
         private bool foundArenaTrigger = false;
 
         private bool playerGotHit = false;
@@ -244,6 +243,9 @@ namespace StarterAssets
 
         [SerializeField]
         private BackgroundMusicPlayer musicPlayer;
+
+        [SerializeField]
+        private ArenaTrigger onDeathTrigger;
 
         [SerializeField]
         private GameObject TrainingHUD;
@@ -574,10 +576,7 @@ namespace StarterAssets
                             {
                                 _input.interact = false;
                                 weaponCurrency -= AR.ammoPrice;
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                             }
                         }
                     }
@@ -605,10 +604,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("SG");
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -638,10 +634,7 @@ namespace StarterAssets
                             if (SG.BuyAmmo(1))
                             {
                                 weaponCurrency -= SG.ammoPrice;
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                             }
                         }
                     }
@@ -669,10 +662,7 @@ namespace StarterAssets
                                 selectedGun = gunArsenal.Count - 1;
                                 gunArsenal[selectedGun].gameObject.SetActive(true);
                                 addGunHUD("RL");
-                                if (SceneManager.GetActiveScene().name != "Hub")
-                                {
-                                    updateCurrencyUI();
-                                }
+                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
                                 _animator.SetBool("Pistol", false);
                             }
                         }
@@ -972,9 +962,10 @@ namespace StarterAssets
             }
         }
 
-        public void AddWeaponCurrency(int ammount)
+        public void AddWeaponCurrency(int amount)
         {
-            weaponCurrency += ammount;
+            weaponCurrency += amount;
+            if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
         }
 
         private void Fire()
@@ -1345,7 +1336,7 @@ namespace StarterAssets
             if (!foundArenaTrigger)
             {
                 foundArenaTrigger = true;
-                onDeathTrigger = arenaTrigger;
+                //onDeathTrigger = arenaTrigger;
             }
             if (other.gameObject.tag == "Lava")
             {
@@ -1509,6 +1500,7 @@ namespace StarterAssets
         private void Die()
         {
             musicPlayer.StopMusic();
+            Debug.Log("After music");
             if (!is_dead)
             {
                 is_dead = true;
@@ -1522,7 +1514,7 @@ namespace StarterAssets
                 deathScreen.SetActive(true);
                 if (onDeathTrigger == null)
                 {
-                    onDeathTrigger = GameObject.Find("DeathTrigger").GetComponent<ArenaTrigger>();
+                    onDeathTrigger = GameObject.Find("ExtractionPortal").GetComponent<ArenaTrigger>();
                 }
                 onDeathTrigger.performAction(true);
             }

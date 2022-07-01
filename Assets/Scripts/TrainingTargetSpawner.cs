@@ -21,18 +21,6 @@ public class TrainingTargetSpawner : MonoBehaviour
     int counter = 1;
     int timeBetweenSpawns = 6;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void startTraining(){
         counter = 1;
         timeBetweenSpawns = 6;
