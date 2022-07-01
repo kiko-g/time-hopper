@@ -123,6 +123,7 @@ public class HubComputer : MonoBehaviour
         if(PlayerPrefs.GetString("ExtractionStatus") != "") {
             extractionStatusPanel.SetActive(true);
             extractionStatusPanel.GetComponentInChildren<TextMeshProUGUI>().text = PlayerPrefs.GetString("ExtractionStatus");
+            PlayerPrefs.SetString("ExtractionStatus", "");
         }
 
         // Listeners
