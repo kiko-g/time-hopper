@@ -87,7 +87,7 @@ public class ArenaTrigger : MonoBehaviour
                 int currentTimePlayedNew = PlayerPrefs.GetInt("ColliseumTimePlayed");
             }
         }
-        if(death && ExtractionStatus != ""){
+        if(ExtractionStatus != ""){
             PlayerPrefs.SetString("ExtractionStatus", ExtractionStatus);
         }
         else{
