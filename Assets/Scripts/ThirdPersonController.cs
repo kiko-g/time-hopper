@@ -212,7 +212,6 @@ namespace StarterAssets
         [SerializeField]
         private GameObject bloodOverlay;
 
-        private ArenaTrigger onDeathTrigger;
         private bool foundArenaTrigger = false;
 
         private bool playerGotHit = false;
@@ -244,6 +243,9 @@ namespace StarterAssets
 
         [SerializeField]
         private BackgroundMusicPlayer musicPlayer;
+
+        [SerializeField]
+        private ArenaTrigger onDeathTrigger;
 
         [SerializeField]
         private GameObject TrainingHUD;
@@ -1345,7 +1347,7 @@ namespace StarterAssets
             if (!foundArenaTrigger)
             {
                 foundArenaTrigger = true;
-                onDeathTrigger = arenaTrigger;
+                //onDeathTrigger = arenaTrigger;
             }
             if (other.gameObject.tag == "Lava")
             {
@@ -1509,6 +1511,7 @@ namespace StarterAssets
         private void Die()
         {
             musicPlayer.StopMusic();
+            Debug.Log("After music");
             if (!is_dead)
             {
                 is_dead = true;
@@ -1522,7 +1525,7 @@ namespace StarterAssets
                 deathScreen.SetActive(true);
                 if (onDeathTrigger == null)
                 {
-                    onDeathTrigger = GameObject.Find("DeathTrigger").GetComponent<ArenaTrigger>();
+                    onDeathTrigger = GameObject.Find("ExtractionPortal").GetComponent<ArenaTrigger>();
                 }
                 onDeathTrigger.performAction(true);
             }
