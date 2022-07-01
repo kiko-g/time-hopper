@@ -53479,6 +53479,7 @@ MonoBehaviour:
   _loaderCanvas: {fileID: 312732207}
   _progressBar: {fileID: 756720862}
   ArenaName: Rumble
+  comingBackFromRumble: 0
 --- !u!4 &1670409617
 Transform:
   m_ObjectHideFlags: 0
@@ -54184,7 +54185,7 @@ GameObject:
   - component: {fileID: 1735931590}
   - component: {fileID: 1735931589}
   m_Layer: 0
-  m_Name: DeathTrigger
+  m_Name: ExtractionPortal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
