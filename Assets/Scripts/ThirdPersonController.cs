@@ -467,7 +467,7 @@ namespace StarterAssets
 
             if (heartBeat)
             {
-                if (Health > 20)
+                if (Health > 25)
                 {
                     heartBeat = false;
                     heartBeatSound.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);

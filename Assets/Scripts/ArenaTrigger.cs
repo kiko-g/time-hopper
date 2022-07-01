@@ -12,13 +12,22 @@ public class ArenaTrigger : MonoBehaviour
 
     public void performAction(bool death = false)
     {
+        bool reduceCurrencies = false;
+        if(death){
+            if(waveSpawner != null){
+                reduceCurrencies = true;
+            }
+        }
         if(player.colCurrency != 0){
+            if(reduceCurrencies) player.colCurrency = Mathf.Round(player.colCurrency * 0.5f);
             PlayerPrefs.SetInt("ColliseumCurrency", PlayerPrefs.GetInt("ColliseumCurrency") + player.colCurrency);
         }
         if(player.forCurrency != 0){
+            if(reduceCurrencies) player.forCurrency = Mathf.Round(player.forCurrency * 0.5f);
             PlayerPrefs.SetInt("ForestCurrency", PlayerPrefs.GetInt("ForestCurrency") + player.forCurrency);
         }
         if(player.facCurrency != 0){
+            if(reduceCurrencies) player.facCurrency = Mathf.Round(player.facCurrency * 0.5f);
             PlayerPrefs.SetInt("FactoryCurrency", PlayerPrefs.GetInt("FactoryCurrency") + player.facCurrency);
         }
         if(player.rumCurrency != 0){
