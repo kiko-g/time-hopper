@@ -70,7 +70,6 @@ public class HubPause : MonoBehaviour
             PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
             musicBus.setVolume(sliderSFX.value);
         }
-
     }
 
     void Update()
@@ -93,6 +92,7 @@ public class HubPause : MonoBehaviour
 
         textSFX.text = "Sound Effects Volume (" + Mathf.RoundToInt(sliderSFX.value * 100) + "%)";
         textMusic.text = "Music Volume (" + Mathf.RoundToInt(sliderMusic.value * 100) + "%)";
+        PlayerPrefs.Save();
     }
 
     public void Toggle(bool value)

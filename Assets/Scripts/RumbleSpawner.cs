@@ -169,6 +169,7 @@ public class RumbleSpawner : MonoBehaviour
         if(PlayerPrefs.GetInt("RumbleUnlocked") == 1){
             PlayerPrefs.SetInt("RumbleUnlocked", 0);
         }
+        PlayerPrefs.Save();
         enterTooltipUI.SetActive(false);
         startTime = Time.time;
         startRoundFlag = false;

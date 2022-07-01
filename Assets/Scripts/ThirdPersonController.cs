@@ -1521,7 +1521,6 @@ namespace StarterAssets
                 if (waveSpawner != null) waveSpawner.enterTooltipUI.SetActive(false);
                 else {
                     rumbleSpawner.enterTooltipUI.SetActive(false);
-                    PlayerPrefs.SetInt("ComingBackFromRumble", 1);
                 }
                 _input.enabled = false;
                 float deathTime = Time.time;

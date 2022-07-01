@@ -427,6 +427,7 @@ public class HubComputer : MonoBehaviour
         UpdateUpgradeAvailable();
         UpdateCostsText("Weapon", level);
         UpdateUserMoney();
+        PlayerPrefs.Save();
     }
 
     void OnClickUnlockRumble()
@@ -441,6 +442,7 @@ public class HubComputer : MonoBehaviour
         unlockRumbleButton.gameObject.SetActive(false);
 
         UpdateUIValues();
+        PlayerPrefs.Save();
     }
 
     void OnClickOverview()
