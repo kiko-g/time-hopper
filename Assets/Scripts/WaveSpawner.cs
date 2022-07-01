@@ -114,7 +114,7 @@ public class WaveSpawner : MonoBehaviour
                 bossIntroPlaying = false;
             }
         }
-        if(roundNr % 5 == 0 && !round_active && enemiesToDefeat == 0){
+        if(roundNr % 5 == 0 && !round_active && enemiesToDefeat <= 0){
             // set extractionportal active
             if(extractionPortal != null && roundNr != 0){
                 startRoundTextUI.text = "Extraction Portal Opened";
@@ -202,7 +202,7 @@ public class WaveSpawner : MonoBehaviour
     {
         enemiesToDefeat--;
         numKills++;
-        if (enemiesToDefeat == 0)
+        if (enemiesToDefeat <= 0)
         {
             round_active = false;
             elapsedTime = 0f;
@@ -213,6 +213,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void UpdateNumEnemiesAlive()
     {
+        enemiesToDefeat = Mathf.Max(enemiesToDefeat,0);
         numEnemiesAliveText.text = enemiesToDefeat.ToString();
     }
 
