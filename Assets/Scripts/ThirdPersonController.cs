@@ -565,19 +565,23 @@ namespace StarterAssets
                 }
                 else if (hit.collider.gameObject.name == "ARAmmo")
                 {
-
-                    if (weaponCurrency >= AR.ammoPrice & gunArsenal.Contains(AR))
-                    {
-                        UItext.GetComponent<Text>().text = "Press [E] to buy Tango-45 AR Ammo (Cost: " + AR.ammoPrice + ")";
-                        WeaponShopUI.SetActive(true);
-                        if (_input.interact)
-                        {
-                            if (AR.BuyAmmo(1))
+                    if(gunArsenal.Contains(AR)){
+                        if(weaponCurrency >= AR.ammoPrice){
+                            UItext.GetComponent<Text>().text = "Press [E] to buy Tango-45 AR Ammo (Cost: " + AR.ammoPrice + ")";
+                            WeaponShopUI.SetActive(true);
+                            if (_input.interact)
                             {
-                                _input.interact = false;
-                                weaponCurrency -= AR.ammoPrice;
-                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
+                                if (AR.BuyAmmo(1))
+                                {
+                                    _input.interact = false;
+                                    weaponCurrency -= AR.ammoPrice;
+                                    if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
+                                }
                             }
+                        }
+                        else{
+                            UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + AR.ammoPrice + ")";
+                            WeaponShopUI.SetActive(true);
                         }
                     }
                     else
@@ -624,18 +628,23 @@ namespace StarterAssets
                 }
                 else if (hit.collider.gameObject.name == "SGAmmo")
                 {
-                    if (weaponCurrency >= SG.ammoPrice & gunArsenal.Contains(SG))
-                    {
-                        UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG Ammo (Cost: " + SG.ammoPrice + ")";
-                        WeaponShopUI.SetActive(true);
-                        if (_input.interact)
-                        {
-                            _input.interact = false;
-                            if (SG.BuyAmmo(1))
+                    if(gunArsenal.Contains(SG)){
+                        if(weaponCurrency >= SG.ammoPrice){
+                            UItext.GetComponent<Text>().text = "Press [E] to buy Baligant XU772 SG Ammo (Cost: " + SG.ammoPrice + ")";
+                            WeaponShopUI.SetActive(true);
+                            if (_input.interact)
                             {
-                                weaponCurrency -= SG.ammoPrice;
-                                if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
+                                _input.interact = false;
+                                if (SG.BuyAmmo(1))
+                                {
+                                    weaponCurrency -= SG.ammoPrice;
+                                    if (SceneManager.GetActiveScene().name != "Hub") updateCurrencyUI();
+                                }
                             }
+                        }
+                        else{
+                            UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + SG.ammoPrice + ")";
+                            WeaponShopUI.SetActive(true);
                         }
                     }
                     else
@@ -682,21 +691,26 @@ namespace StarterAssets
                 }
                 else if (hit.collider.gameObject.name == "RLAmmo")
                 {
-                    if (weaponCurrency >= RL.ammoPrice & gunArsenal.Contains(RL))
-                    {
-                        UItext.GetComponent<Text>().text = "Press [E] to buy Bazooka M270 RL Ammo (Cost: " + RL.ammoPrice + ")";
-                        WeaponShopUI.SetActive(true);
-                        if (_input.interact)
-                        {
-                            _input.interact = false;
-                            if (RL.BuyAmmo(1))
+                    if(gunArsenal.Contains(RL)){
+                        if(weaponCurrency >= RL.ammoPrice){
+                            UItext.GetComponent<Text>().text = "Press [E] to buy Bazooka M270 RL Ammo (Cost: " + RL.ammoPrice + ")";
+                            WeaponShopUI.SetActive(true);
+                            if (_input.interact)
                             {
-                                weaponCurrency -= RL.ammoPrice;
-                                if (SceneManager.GetActiveScene().name != "Hub")
+                                _input.interact = false;
+                                if (RL.BuyAmmo(1))
                                 {
-                                    updateCurrencyUI();
+                                    weaponCurrency -= RL.ammoPrice;
+                                    if (SceneManager.GetActiveScene().name != "Hub")
+                                    {
+                                        updateCurrencyUI();
+                                    }
                                 }
                             }
+                        }
+                        else{
+                            UItext.GetComponent<Text>().text = "Not enough currency. (Cost: " + RL.ammoPrice + ")";
+                            WeaponShopUI.SetActive(true);
                         }
                     }
                     else

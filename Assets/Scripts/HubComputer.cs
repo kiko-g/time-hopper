@@ -404,8 +404,9 @@ public class HubComputer : MonoBehaviour
                 UpdateUserMoney();
                 break;
             default:
-                break;
+                return;
         }
+        PlayerPrefs.Save();
     }
 
     void OnClickUpgradeWeapon()

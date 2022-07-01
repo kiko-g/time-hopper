@@ -72,7 +72,7 @@ public class ArenaPause : MonoBehaviour
             PlayerPrefs.SetFloat("musicVolume", sliderMusic.value);
             musicBus.setVolume(sliderSFX.value);
         }
-
+        PlayerPrefs.Save();
     }
 
     void Update()
@@ -95,6 +95,7 @@ public class ArenaPause : MonoBehaviour
 
         textSFX.text = "Sound Effects Volume (" + Mathf.RoundToInt(sliderSFX.value * 100) + "%)";
         textMusic.text = "Music Volume (" + Mathf.RoundToInt(sliderMusic.value * 100) + "%)";
+        PlayerPrefs.Save();
     }
 
     public void Toggle(bool value)

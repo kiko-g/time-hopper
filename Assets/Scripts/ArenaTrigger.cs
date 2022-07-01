@@ -73,7 +73,7 @@ public class ArenaTrigger : MonoBehaviour
 
         string arenaAttempts = sceneSwitch.ArenaName+"Attempts";
         PlayerPrefs.SetInt(arenaAttempts, PlayerPrefs.GetInt(arenaAttempts) + 1);
-
+        PlayerPrefs.Save();
         sceneSwitch.setArenaName("Hub");
         sceneSwitch.LoadArenaScene(death);
     }
