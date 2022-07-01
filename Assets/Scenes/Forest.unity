@@ -12038,7 +12038,6 @@ MonoBehaviour:
   _loaderCanvas: {fileID: 667343794}
   _progressBar: {fileID: 748906195}
   ArenaName: Forest
-  comingBackFromRumble: 0
 --- !u!4 &1670409617
 Transform:
   m_ObjectHideFlags: 0
@@ -15631,7 +15630,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 11.25123, y: 34.365143, z: 32.329723}
-  m_Center: {x: 22.2, y: -5, z: 22.806181}
+  m_Center: {x: 33, y: -5, z: 22.806181}
 --- !u!1 &950778532993832914
 GameObject:
   m_ObjectHideFlags: 0

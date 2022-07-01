@@ -237,10 +237,24 @@ public class WaveSpawner : MonoBehaviour
         roundUI.text = "Round: " + roundNr;
         if (roundNr % 5 != 0)
         {
-            waveSize = waveSize + 1;
+            switch (roundNr % 5)
+            {
+                case 1:
+                    waveSize = 5;
+                    break;
+                case 2:
+                    waveSize = 7;
+                    break;
+                case 3:
+                    waveSize = 8;
+                    break;
+                case 4:
+                    waveSize = 10;
+                    break;
+            }
             SpawnHorde(waveSize);
             numWaves = 1;
-            enemiesToDefeat = waveSize * (roundNr + 1);
+            enemiesToDefeat = waveSize * ((roundNr % 5) + 1);
         }
         else {
             SpawnBoss();
