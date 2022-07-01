@@ -5552,7 +5552,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: field of view
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409496, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: far clip plane
@@ -5580,7 +5580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.5
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6443,7 +6443,7 @@ MonoBehaviour:
   startRoundTextUI: {fileID: 1600820641}
   enterTooltipUI: {fileID: 24398701}
   numEnemiesAliveUI: {fileID: 2064717799}
-  musicPlayer: {fileID: 0}
+  musicPlayer: {fileID: 1354911054}
   roundUI: {fileID: 1006331598}
   numKills: 0
   timePlayed: 0
@@ -13751,6 +13751,7 @@ MonoBehaviour:
   changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
   musicPlayer: {fileID: 1354911054}
+  onDeathTrigger: {fileID: 1665507050}
   TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
 CharacterController:
