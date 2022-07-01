@@ -7166,7 +7166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5f91b28ff35104fa5e134877e8f3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1000
+  damage: 10
   propulsionForce: 0
   range: 30
   weaponPrice: 0
