@@ -26020,7 +26020,7 @@ MonoBehaviour:
   startRoundTextUI: {fileID: 1800239395}
   enterTooltipUI: {fileID: 575228905}
   numEnemiesAliveUI: {fileID: 1870624971}
-  musicPlayer: {fileID: 0}
+  musicPlayer: {fileID: 1354911054}
   roundUI: {fileID: 2095883571}
   numKills: 0
   timePlayed: 0
@@ -36538,7 +36538,6 @@ MonoBehaviour:
   _loaderCanvas: {fileID: 2016067033}
   _progressBar: {fileID: 1958762010}
   ArenaName: Factory
-  comingBackFromRumble: 0
 --- !u!4 &1670409617
 Transform:
   m_ObjectHideFlags: 0
