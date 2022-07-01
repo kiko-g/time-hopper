@@ -15,7 +15,6 @@ public class SceneSwitch : MonoBehaviour
     private Slider _progressBar;
 
     public string ArenaName;
-    public bool comingBackFromRumble = false;
 
     void Awake()
     {
@@ -39,7 +38,6 @@ public class SceneSwitch : MonoBehaviour
         if (!PlayerPrefs.HasKey("FactoryAttempts")) PlayerPrefs.SetInt("FactoryAttempts", 0);
         if (!PlayerPrefs.HasKey("ForestAttempts")) PlayerPrefs.SetInt("ForestAttempts", 0);
         if (!PlayerPrefs.HasKey("RumbleAttempts")) PlayerPrefs.SetInt("RumbleAttempts", 0);
-        if (!PlayerPrefs.HasKey("ComingBackFromRumble")) PlayerPrefs.SetInt("ComingBackFromRumble", 0);
 
         PlayerPrefs.Save();
 

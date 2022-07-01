@@ -65532,6 +65532,7 @@ MonoBehaviour:
   changingScene: 0
   bladeOffset: {x: 0.0114, y: -0.045, z: 0.0053}
   musicPlayer: {fileID: 1354911054}
+  onDeathTrigger: {fileID: 0}
   TrainingHUD: {fileID: 0}
 --- !u!143 &1996843643
 CharacterController:
