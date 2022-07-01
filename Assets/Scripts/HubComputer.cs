@@ -7,6 +7,7 @@ public class HubComputer : MonoBehaviour
 {
     public Canvas canvas;
     public GameObject hint;
+    public GameObject welcomePanel;
     private Canvas pauseCanvas;
     private StarterAssets.ThirdPersonController player;
 
@@ -109,6 +110,11 @@ public class HubComputer : MonoBehaviour
         canvas = GetComponent<Canvas>();
         player = GameObject.Find("PlayerArmature").GetComponent<StarterAssets.ThirdPersonController>();
         pauseCanvas = GameObject.FindGameObjectWithTag("PauseHUD").GetComponent<Canvas>();
+        if(!PlayerPrefs.HasKey("WelcomePanel")) {
+            welcomePanel.SetActive(true);
+            PlayerPrefs.SetInt("WelcomePanel", 1);
+            PlayerPrefs.Save();
+        }
 
         // Listeners
         arenasButton.onClick.AddListener(OnClickArenas);

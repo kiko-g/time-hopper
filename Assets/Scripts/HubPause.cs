@@ -166,6 +166,7 @@ public class HubPause : MonoBehaviour
 
     void ExitApplication()
     {
+        PlayerPrefs.DeleteKey("WelcomePanel");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

@@ -18447,7 +18447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1043874940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29086,6 +29086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1724960682}
   hint: {fileID: 693850631}
+  welcomePanel: {fileID: 1043874939}
   arenasButton: {fileID: 1322655391}
   overviewButton: {fileID: 170646217}
   upgradesButton: {fileID: 301093703}
