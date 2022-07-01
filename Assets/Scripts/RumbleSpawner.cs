@@ -296,7 +296,6 @@ public class RumbleSpawner : MonoBehaviour
     {
         startRoundText = true;
         startRoundTextUI.text = "Round " + roundNr.ToString();
-
         startRoundTextUI.gameObject.GetComponent<Animator>().Play("RoundStartTextFadeOut", -1, 0f);
     }
 
